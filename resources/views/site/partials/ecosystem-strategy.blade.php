@@ -13,7 +13,7 @@
                     <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
                     
                     <div class="relative bg-gray-900 rounded-2xl overflow-hidden border border-white/10">
-                        <img src="{{ asset('images/estrategia-digital.webp') }}" 
+                        <img src="{{ asset('imgs/cidade.jpg') }}" 
                              alt="Análise de Ecossistema Digital e Marketing de Performance" 
                              title="Estratégia de Ecossistema Digital"
                              class="w-full h-auto transform transition duration-700 group-hover:scale-105"

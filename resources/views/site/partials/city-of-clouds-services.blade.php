@@ -16,21 +16,21 @@
                 <div class="absolute transform -skew-x-12 -translate-x-16 -translate-y-20 z-10 animate-float-slow" data-aos="zoom-in-right">
                     <div class="relative group">
                         <div class="absolute -inset-1 bg-blue-500/30 blur opacity-40 group-hover:opacity-100 transition"></div>
-                        <img src="{{ asset('images/scraping-ui.webp') }}" class="w-64 h-80 object-cover rounded-lg border border-white/10 shadow-2xl grayscale group-hover:grayscale-0 transition duration-700">
+                        <img src="{{ asset('imgs/cidade.jpg') }}" class="w-64 h-80 object-cover rounded-lg border border-white/10 shadow-2xl grayscale group-hover:grayscale-0 transition duration-700">
                     </div>
                 </div>
 
                 <div class="absolute transform -skew-x-12 z-30 animate-float-medium" data-aos="zoom-in" data-aos-delay="200">
                     <div class="relative group">
                         <div class="absolute -inset-2 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-70 transition"></div>
-                        <img src="{{ asset('images/app-dev.webp') }}" class="w-72 h-96 object-cover rounded-xl border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                        <img src="{{ asset('imgs/cidade.jpg') }}" class="w-72 h-96 object-cover rounded-xl border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
                         <div class="absolute inset-0 bg-blue-500/10 group-hover:bg-transparent transition"></div>
                     </div>
                 </div>
 
                 <div class="absolute transform skew-x-6 translate-x-24 translate-y-24 z-40 animate-float-reverse" data-aos="zoom-in-left" data-aos-delay="400">
                     <div class="relative group">
-                        <img src="{{ asset('images/data-brain.webp') }}" class="w-56 h-64 object-cover rounded-lg border border-white/10 shadow-2xl brightness-75 group-hover:brightness-110 transition">
+                        <img src="{{ asset('imgs/cidade.jpg') }}" class="w-56 h-64 object-cover rounded-lg border border-white/10 shadow-2xl brightness-75 group-hover:brightness-110 transition">
                         <div class="absolute -top-4 -left-4 bg-blue-600 px-4 py-2 font-black text-xs italic">CITY_CLOUD_OS</div>
                     </div>
                 </div>

@@ -12,27 +12,27 @@
                 <div class="col-span-7" data-aos="fade-down" data-aos-delay="100">
                     <div class="relative group animate-float-slow">
                         <div class="absolute -inset-1 bg-blue-500/20 rounded-xl blur opacity-75"></div>
-                        <img src="{{ asset('images/shark1.webp') }}" alt="Shark Tank 1" class="relative rounded-xl border border-white/10 w-full object-cover h-64 shadow-2xl transition duration-500 group-hover:scale-105">
+                        <img src="{{ asset('imgs/cidade.jpg') }}" alt="Shark Tank 1" class="relative rounded-xl border border-white/10 w-full object-cover h-64 shadow-2xl transition duration-500 group-hover:scale-105">
                     </div>
                 </div>
 
                 <div class="col-span-5" data-aos="fade-left" data-aos-delay="300">
                     <div class="relative group animate-float-medium">
-                        <img src="{{ asset('images/shark2.webp') }}" alt="Shark Tank 2" class="relative rounded-xl border border-white/10 w-full object-cover h-40 shadow-2xl transition duration-500 group-hover:scale-105 font-bold text-center">
+                        <img src="{{ asset('imgs/cidade.jpg') }}" alt="Shark Tank 2" class="relative rounded-xl border border-white/10 w-full object-cover h-40 shadow-2xl transition duration-500 group-hover:scale-105 font-bold text-center">
                         <div class="absolute inset-0 bg-blue-600/10 rounded-xl"></div>
                     </div>
                 </div>
 
                 <div class="col-span-5 mt-[-40px]" data-aos="fade-up" data-aos-delay="500">
                     <div class="relative group animate-float-reverse">
-                        <img src="{{ asset('images/shark3.webp') }}" alt="Shark Tank 3" class="relative rounded-xl border border-white/10 w-full object-cover h-48 shadow-2xl transition duration-500 group-hover:scale-105">
+                        <img src="{{ asset('imgs/cidade.jpg') }}" alt="Shark Tank 3" class="relative rounded-xl border border-white/10 w-full object-cover h-48 shadow-2xl transition duration-500 group-hover:scale-105">
                     </div>
                 </div>
 
                 <div class="col-span-7 mt-[-100px]" data-aos="zoom-in" data-aos-delay="700">
                     <div class="relative group animate-float-slow">
                         <div class="absolute -inset-1 bg-gradient-to-tr from-blue-600/30 to-purple-600/30 rounded-xl blur opacity-50 group-hover:opacity-100 transition"></div>
-                        <img src="{{ asset('images/shark4.webp') }}" alt="Shark Tank 4" class="relative rounded-xl border border-white/20 w-full object-cover h-72 shadow-2xl transition duration-500 group-hover:scale-105">
+                        <img src="{{ asset('imgs/cidade.jpg') }}" alt="Shark Tank 4" class="relative rounded-xl border border-white/20 w-full object-cover h-72 shadow-2xl transition duration-500 group-hover:scale-105">
                         <div class="absolute bottom-4 left-4 bg-blue-600 px-3 py-1 rounded text-xs font-bold text-white uppercase tracking-tighter">Método Validado</div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
             <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition"></div>
             
             <div class="relative aspect-video bg-gray-900 flex items-center justify-center">
-                <img src="{{ asset('images/capa-video-shark.webp') }}" alt="Explicação Modelo de Negócio" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition duration-700">
+                <img src="{{ asset('imgs/cidade.jpg') }}" alt="Explicação Modelo de Negócio" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition duration-700">
                 
                 <div class="relative z-20">
                     <div class="absolute -inset-4 bg-blue-500 rounded-full blur-xl opacity-40 animate-pulse"></div>

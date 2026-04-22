@@ -3,7 +3,7 @@
     <template x-if="!finished">
         <section class="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden">
             <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-30">
-                <source src="{{ asset('videos/background-agencia.mp4') }}" type="video/mp4">
+                <source src="{{ asset('imgs/cidade.jpg') }}" type="video/mp4">
             </video>
 
             <div class="relative z-10 text-center px-4">
@@ -67,7 +67,7 @@
         <section class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-black">
             <div class="absolute inset-0 z-0">
                 <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-60">
-                    <source src="{{ asset('videos/background-agencia.mp4') }}" type="video/mp4">
+                    <source src="{{ asset('imgs/cidade.jpg') }}" type="video/mp4">
                 </video>
                 <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] pointer-events-none"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950 opacity-80"></div>
@@ -131,7 +131,6 @@
     @keyframes gradient-move { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
 </style>
-
 <script>
 function kineticStory() {
     return {
@@ -156,6 +155,27 @@ function kineticStory() {
                 } else {
                     this.finished = true;
                     clearInterval(interval);
+                    
+                    // --- O PULO DO GATO ESTÁ AQUI ---
+                    // Esperamos um tempinho para o HTML aparecer e resetamos as animações
+                    this.$nextTick(() => {
+                        
+                        // 1. Reinicia o AOS (Animações de entrada de texto/titulo)
+                        if (typeof AOS !== 'undefined') {
+                            AOS.init({
+                                duration: 1000,
+                                once: true,
+                                offset: 100
+                            });
+                            AOS.refresh(); 
+                        }
+
+                        // 2. Dispara o evento para os cards de manutenção (Intersection Observer)
+                        // Se você usou a função neuralSectionIsolated(), precisamos garantir 
+                        // que o Observer dela comece a olhar agora.
+                        window.dispatchEvent(new Event('resize')); 
+                        window.dispatchEvent(new Event('scroll'));
+                    });
                 }
             }, 1100);
         }
