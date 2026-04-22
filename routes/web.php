@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // 1. A One-Page Principal (Pública e rastreável pelo Google)
 Route::get('/', function () {
-    return view('welcome');
+    return view('site.index');
 })->name('home');
 
 // 2. Página de Assinatura (Acessível após registro, antes do painel)
