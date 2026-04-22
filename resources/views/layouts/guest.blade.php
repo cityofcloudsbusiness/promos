@@ -33,7 +33,7 @@
         {{ $slot }}
     </main>
 
-    @include('site.partials.08-contact-footer')
+    @include('site.partials.contact-footer')
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>

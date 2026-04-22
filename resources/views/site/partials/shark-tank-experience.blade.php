@@ -72,7 +72,7 @@
         <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[100px] rounded-full"></div>
 
         <div class="text-center mb-16">
-            <h3 class="text-3xl lg:text-5xl font-black text-white uppercase mb-4">O Acordo dos Tubarões</h3>
+            <h3 class="text-3xl lg:text-5xl font-black text-white uppercase mb-4">Acordo Shark Tank</h3>
             <p class="text-gray-400 max-w-2xl mx-auto italic">"Nós não prestamos um serviço, nós investimos no seu sucesso."</p>
         </div>
 
