@@ -1,7 +1,7 @@
 <section class="relative bg-white py-10">
     <div class="container mx-auto px-6 relative z-10">
         <div class="flex flex-col lg:flex-row items-center gap-12">
-            
+
             <div class="w-full lg:w-1/2" data-aos="fade-right">
                 <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
                     Domine a Mídia com <span class="text-purple-600">Impacto Visual</span> Absoluto.
@@ -73,18 +73,27 @@
                 <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-100 rounded-full mix-blend-multiply animate-blob animation-delay-2000"></div>
 
                 <div class="relative w-full h-full transform lg:rotate-[-5deg]">
-                    
+
                     <div class="absolute top-0 left-0 w-[70%] h-64 rounded-2xl overflow-hidden shadow-2xl border-4 border-white z-20 animate-puzzle-1 transform -skew-x-6 group">
-                        <img src="{{ asset('imgs/slidett.jpg') }}" class="w-full h-full object-cover skew-x-6 scale-110 group-hover:scale-125 transition-transform duration-700" alt="Produção de Vídeo">
+                        <video
+                            autoplay
+                            loop
+                            muted
+                            playsinline
+                            poster="{{ Vite::asset('resources/imgs/sec5.png')}}"
+                            class="w-full h-auto object-cover rounded-xl shadow-lg">
+                            <source src="{{ Vite::asset('resources/videos/sec5.webm')}}" type="video/webm">
+                            Seu navegador não suporta vídeos.
+                        </video>
                         <div class="absolute inset-0 bg-purple-900/20 group-hover:bg-transparent transition-colors"></div>
                     </div>
 
                     <div class="absolute top-10 right-0 w-[35%] h-48 rounded-2xl overflow-hidden shadow-xl border-4 border-white z-10 animate-puzzle-2 transform skew-y-3 group">
-                        <img src="{{ asset('imgs/slidettt.jpg') }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Fotografia Profissional">
+                        <img src="{{ Vite::asset('resources/imgs/sec52.jpg')}}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Fotografia Profissional">
                     </div>
 
                     <div class="absolute bottom-10 left-10 w-[85%] h-56 rounded-2xl overflow-hidden shadow-2xl border-4 border-white z-30 animate-puzzle-3 transform -skew-x-12 group">
-                        <img src="{{ asset('imgs/slidett.jpg') }}" class="w-full h-full object-cover skew-x-12 scale-110 group-hover:scale-125 transition-transform duration-700" alt="Edição Audiovisual">
+                        <img src="{{ Vite::asset('resources/imgs/sec53.jpg')}}" class="w-full h-full object-cover skew-x-12 scale-110 group-hover:scale-125 transition-transform duration-700" alt="Edição Audiovisual">
                         <div class="absolute inset-0 bg-gradient-to-tr from-purple-600/40 to-transparent opacity-60"></div>
                     </div>
 
@@ -98,30 +107,80 @@
 <style>
     /* Manter sua animação blob */
     @keyframes blob {
-        0%, 100% { transform: translate(0px, 0px) scale(1); }
-        33% { transform: translate(30px, -50px) scale(1.1); }
-        66% { transform: translate(-20px, 20px) scale(0.9); }
+
+        0%,
+        100% {
+            transform: translate(0px, 0px) scale(1);
+        }
+
+        33% {
+            transform: translate(30px, -50px) scale(1.1);
+        }
+
+        66% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
     }
-    .animate-blob { animation: blob 7s infinite; }
-    .animation-delay-2000 { animation-delay: 2s; }
+
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
 
     /* ANIMAÇÕES DO QUEBRA-CABEÇA */
     @keyframes puzzle-float-1 {
-        0%, 100% { transform: translate(0, 0) -skew-x-6; }
-        50% { transform: translate(-10px, 15px) -skew-x-6; }
+
+        0%,
+        100% {
+            transform: translate(0, 0) -skew-x-6;
+        }
+
+        50% {
+            transform: translate(-10px, 15px) -skew-x-6;
+        }
     }
+
     @keyframes puzzle-float-2 {
-        0%, 100% { transform: translate(0, 0) skew-y-3; }
-        50% { transform: translate(15px, -10px) skew-y-3; }
+
+        0%,
+        100% {
+            transform: translate(0, 0) skew-y-3;
+        }
+
+        50% {
+            transform: translate(15px, -10px) skew-y-3;
+        }
     }
+
     @keyframes puzzle-float-3 {
-        0%, 100% { transform: translate(0, 0) -skew-x-12; }
-        50% { transform: translate(5px, -15px) -skew-x-12; }
+
+        0%,
+        100% {
+            transform: translate(0, 0) -skew-x-12;
+        }
+
+        50% {
+            transform: translate(5px, -15px) -skew-x-12;
+        }
     }
 
-    .animate-puzzle-1 { animation: puzzle-float-1 6s ease-in-out infinite; }
-    .animate-puzzle-2 { animation: puzzle-float-2 5s ease-in-out infinite; }
-    .animate-puzzle-3 { animation: puzzle-float-3 7s ease-in-out infinite; }
+    .animate-puzzle-1 {
+        animation: puzzle-float-1 6s ease-in-out infinite;
+    }
 
-    .rounded-2xl { backface-visibility: hidden; will-change: transform; }
+    .animate-puzzle-2 {
+        animation: puzzle-float-2 5s ease-in-out infinite;
+    }
+
+    .animate-puzzle-3 {
+        animation: puzzle-float-3 7s ease-in-out infinite;
+    }
+
+    .rounded-2xl {
+        backface-visibility: hidden;
+        will-change: transform;
+    }
 </style>
