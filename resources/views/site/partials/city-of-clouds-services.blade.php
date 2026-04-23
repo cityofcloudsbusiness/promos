@@ -12,7 +12,6 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
             <div class="lg:col-span-6 relative h-[600px] flex items-center justify-center">
-                
                 <div class="absolute transform -skew-x-12 -translate-x-16 -translate-y-20 z-10 animate-float-slow" data-aos="zoom-in-right">
                     <div class="relative group">
                         <div class="absolute -inset-1 bg-blue-500/30 blur opacity-40 group-hover:opacity-100 transition"></div>
@@ -31,61 +30,65 @@
                 <div class="absolute transform skew-x-6 translate-x-24 translate-y-24 z-40 animate-float-reverse" data-aos="zoom-in-left" data-aos-delay="400">
                     <div class="relative group">
                         <img src="{{ asset('imgs/cidade.jpg') }}" class="w-56 h-64 object-cover rounded-lg border border-white/10 shadow-2xl brightness-75 group-hover:brightness-110 transition">
-                        <div class="absolute -top-4 -left-4 bg-blue-600 px-4 py-2 font-black text-xs italic">CITY_CLOUD_OS</div>
+                        <div class="absolute -top-4 -left-4 bg-blue-600 px-4 py-2 font-black text-xs italic">CITY_CLOUD_INFRA</div>
                     </div>
                 </div>
             </div>
 
             <div class="lg:col-span-6 text-white">
                 <header class="mb-12" data-aos="fade-left">
-                    <h2 class="text-6xl font-black italic uppercase leading-none tracking-tighter">
-                        Web <span class="text-blue-500">Scraping</span>
+                    <h2 class="text-6xl font-black italic uppercase leading-[0.8] tracking-tighter">
+                        Infraestrutura <br><span class="text-blue-500 italic">De Gigante.</span>
                     </h2>
-                    <p class="text-blue-400 font-mono mt-2 tracking-[0.3em] text-sm">Transforme a Web no seu Banco de Dados</p>
+                    <p class="text-blue-400 font-mono mt-4 tracking-[0.3em] text-sm uppercase">Sua ideia com o poder de uma multinacional</p>
                 </header>
 
                 <div class="space-y-6 mb-12">
-                    <p class="text-gray-400 text-lg leading-relaxed" data-aos="fade-up">
-                        Extraímos informações estratégicas de qualquer site de forma automática. Tenha dados de concorrentes, preços e produtos na palma da mão com nossos robôs.
+                    <p class="text-gray-400 text-lg leading-relaxed border-l-4 border-blue-600 pl-6" data-aos="fade-up">
+                        Ao se tornar um **Shark Associado**, você não ganha apenas um software; você herda nossa **máquina de guerra**. Mobilizamos especialistas em Mobile, Backend, APIs e Marketing para que seu projeto nasça pronto para dominar o mercado mundial.
                     </p>
                     
                     <div class="flex gap-8" data-aos="fade-up" data-aos-delay="200">
                         <div class="border-l-2 border-blue-600 pl-4">
-                            <span class="block text-4xl font-black text-blue-500">80%</span>
-                            <span class="text-xs uppercase text-gray-500">Redução de Custos</span>
+                            <span class="block text-4xl font-black text-blue-500">FULL</span>
+                            <span class="text-xs uppercase text-gray-500">Stack Development</span>
                         </div>
                         <div class="border-l-2 border-purple-600 pl-4">
-                            <span class="block text-4xl font-black text-purple-500">150%</span>
-                            <span class="text-xs uppercase text-gray-500">Crescimento real</span>
+                            <span class="block text-4xl font-black text-purple-500">24/7</span>
+                            <span class="text-xs uppercase text-gray-500">Support & R&D</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[300px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-blue-600" data-aos="fade-up" data-aos-delay="400">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[400px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-blue-600" data-aos="fade-up" data-aos-delay="400">
                     @php
-                        $etapas = [
-                            '1° Análise' => 'Consultoria exclusiva para entender sua visão.',
-                            '2° Arquitetura' => 'Modelagem do cérebro de dados e backend.',
-                            '3° UI/UX Premium' => 'Design intuitivo e interfaces elegantes.',
-                            '4° Back-End & APIs' => 'Motores de conexão e segurança.',
-                            '5° Front-End' => 'Codificação nativa iOS e Android.',
-                            '6° Integrações' => 'Pagamentos, mapas e notificações push.',
-                            '7° Stress Test' => 'Simulação de acessos massivos e segurança.',
-                            '8° Deploy' => 'Publicação e entrega das chaves.'
+                        $armada = [
+                            '🚀 Mobile iOS/Android' => 'Desenvolvimento nativo e híbrido para dominar as App Stores.',
+                            '🧠 Inteligência Artificial' => 'Integração com LLMs e modelos preditivos para automação inteligente.',
+                            '🛡️ Conexões Governamentais' => 'APIs de alta segurança para integração com sistemas do Governo e Autarquias.',
+                            '⚡ Laravel & Magnetum' => 'Arquitetura de Backend ultra veloz com Silienx para processamento massivo.',
+                            '📈 Agência de Marketing' => 'Nosso time de especialistas cuidando da sua tração e aquisição de leads.',
+                            '📡 Google Cloud APIs' => 'Conexão profunda com ecossistema Google para mapas, buscas e dados.',
+                            '💻 Desktop & Softwares' => 'Criação de executáveis complexos para Windows, macOS e sistemas internos.',
+                            '🔍 Pesquisa & Inovação' => 'Turma dedicada a caçar novas tecnologias antes da sua concorrência.',
+                            '📊 Big Data & Scraping' => 'Robôs mineradores que transformam a web no seu maior banco de dados.',
+                            '🔥 Stress Test & Sec' => 'Simulações de milhões de acessos para garantir que você nunca caia.'
                         ];
                     @endphp
 
-                    @foreach($etapas as $titulo => $desc)
-                        <div class="p-4 bg-white/5 border border-white/10 hover:bg-blue-600/20 hover:border-blue-500 transition-all group">
-                            <h4 class="text-blue-500 font-bold text-sm uppercase group-hover:text-white">{{ $titulo }}</h4>
-                            <p class="text-gray-500 text-[10px] leading-tight">{{ $desc }}</p>
+                    @foreach($armada as $titulo => $desc)
+                        <div class="p-5 bg-white/5 border border-white/10 hover:bg-blue-600/20 hover:border-blue-500 transition-all group cursor-pointer relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-1 h-full bg-blue-600 transform scale-y-0 group-hover:scale-y-100 transition-transform origin-top"></div>
+                            <h4 class="text-blue-500 font-bold text-sm uppercase group-hover:text-white mb-2">{{ $titulo }}</h4>
+                            <p class="text-gray-500 text-[11px] leading-tight group-hover:text-gray-300">{{ $desc }}</p>
                         </div>
                     @endforeach
                 </div>
 
                 <div class="mt-10" data-aos="fade-up" data-aos-delay="600">
-                    <a href="#contato" class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-black px-10 py-4 rounded-full transition-transform hover:scale-110 shadow-[0_0_30px_rgba(37,99,235,0.4)] uppercase">
-                        Orçar agora
+                    <a href="#contato" class="group relative inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-black px-12 py-5 rounded-full transition-all hover:scale-110 shadow-[0_0_30px_rgba(37,99,235,0.4)] uppercase italic tracking-widest">
+                        <span class="mr-3">Ativar Parceria Shark</span>
+                        <svg class="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                     </a>
                 </div>
             </div>
@@ -94,7 +97,6 @@
 </section>
 
 <style>
-    /* MANTENHA SUAS ANIMAÇÕES DE GIRO E FLUTUAÇÃO ACIMA */
     @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     @keyframes spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
     @keyframes float-slow { 0%, 100% { transform: translate(-64px, -80px) rotate(-12deg); } 50% { transform: translate(-64px, -100px) rotate(-10deg); } }
@@ -107,55 +109,40 @@
     .animate-float-medium { animation: float-medium 4s ease-in-out infinite; }
     .animate-float-reverse { animation: float-reverse 5s ease-in-out infinite; }
 
-    /* NOVO ESTILO: ONDAS DE SONAR NO MOUSE */
+    .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+
+    /* SONAR WAVE */
     .sonar-wave {
         position: fixed;
         width: 10px;
         height: 10px;
         background: none;
-        border: 2px solid #3b82f6; /* Azul City of Clouds */
+        border: 2px solid #3b82f6;
         border-radius: 50%;
         pointer-events: none;
         z-index: 9999;
         transform: translate(-50%, -50%);
         animation: sonar-expand 0.8s ease-out forwards;
     }
-
     @keyframes sonar-expand {
-        0% {
-            width: 5px;
-            height: 5px;
-            opacity: 0.8;
-            border-width: 3px;
-        }
-        100% {
-            width: 100px;
-            height: 100px;
-            opacity: 0;
-            border-width: 1px;
-        }
+        0% { width: 5px; height: 5px; opacity: 0.8; border-width: 3px; }
+        100% { width: 100px; height: 100px; opacity: 0; border-width: 1px; }
     }
 </style>
 
 <script>
-    // NOVO SCRIPT: EFEITO SONAR (ONDAS SONORAS)
     let lastTime = 0;
     window.addEventListener('mousemove', (e) => {
         const now = Date.now();
-        // Limitador para não criar ondas demais (máximo 1 a cada 50ms)
         if (now - lastTime < 50) return;
         lastTime = now;
-
         const wave = document.createElement('div');
         wave.className = 'sonar-wave';
         wave.style.left = e.clientX + 'px';
         wave.style.top = e.clientY + 'px';
-        
         document.body.appendChild(wave);
-
-        // Remove do DOM após a animação acabar
-        setTimeout(() => {
-            wave.remove();
-        }, 800);
+        setTimeout(() => { wave.remove(); }, 800);
     });
 </script>
