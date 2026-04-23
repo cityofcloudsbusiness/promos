@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[400px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-blue-600" data-aos="fade-up" data-aos-delay="400">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[550px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-blue-600" data-aos="fade-up" data-aos-delay="400">
                     @php
                         $armada = [
                             '🚀 Mobile iOS/Android' => 'Desenvolvimento nativo e híbrido para dominar as App Stores.',
