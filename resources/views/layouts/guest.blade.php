@@ -25,7 +25,7 @@
 
 </head>
 
-<body class="font-sans text-gray-900 antialiased dark:bg-dark-950 dark:text-gray-100">
+<body class="font-sans text-gray-900 antialiased dark:bg-dark-950 dark:text-gray-100 overflow-x-hidden">
 
     @include('site.partials.nav')
 
@@ -33,8 +33,7 @@
         {{ $slot }}
     </main>
 
-    @include('site.partials.contact-footer')
-
+    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({

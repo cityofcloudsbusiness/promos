@@ -7,7 +7,7 @@
             </video>
 
             <div class="relative z-10 text-center px-4">
-                <h2 x-text="steps[currentStep].text" 
+                <h2 x-text="steps[currentStep].text"
                     :class="steps[currentStep].class"
                     class="text-white font-black italic uppercase tracking-tighter leading-none transition-all duration-500"
                     x-transition:enter="transition ease-out duration-300"
@@ -21,21 +21,26 @@
         </section>
     </template>
 
-    <div x-show="finished" 
-         x-transition:enter="transition ease-out duration-[1500ms]" 
-         x-transition:enter-start="opacity-0 scale-110 blur-2xl" 
-         x-transition:enter-end="opacity-100 scale-100 blur-0">
-        
+    <div x-show="finished"
+        x-transition:enter="transition ease-out duration-[1500ms]"
+        x-transition:enter-start="opacity-0 scale-110 blur-2xl"
+        x-transition:enter-end="opacity-100 scale-100 blur-0">
+
         <header class="fixed top-0 left-0 w-full z-50 transition-all duration-500" x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
             <nav :class="scrolled ? 'bg-black/60 backdrop-blur-md py-3' : 'bg-transparent py-6'" class="container mx-auto px-6 flex justify-between items-center transition-all">
+
                 <div class="relative group cursor-pointer">
                     <div class="absolute -inset-2 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+
                     <div class="relative flex items-center gap-2">
-                        <div class="w-10 h-10 bg-white flex items-center justify-center rounded-tr-xl rounded-bl-xl overflow-hidden animate-pulse border border-white/20">
-                            <span class="text-black font-black text-2xl italic">A</span>
+                        <div class="w-10 h-10 flex items-center justify-center rounded-tr-xl rounded-bl-xl overflow-hidden animate-pulse border border-none">
+                            <span class="text-black font-black text-2xl italic">
+                                <img src="{{Vite::asset('resources/imgs/icon_logo.png')}}" alt="Logo City Of Clouds" class="w-full h-full object-cover" style="filter: hue-rotate(53deg);">
+                            </span>
                         </div>
+
                         <span class="text-white font-black uppercase italic tracking-tighter text-xl hidden md:block">
-                            Agência<span class="text-pink-500 animate-pulse">5</span>
+                            City Of Cloud<span class="text-pink-500 animate-pulse">S</span>
                         </span>
                     </div>
                 </div>
@@ -96,7 +101,7 @@
                 </div>
 
                 <h1 class="text-6xl md:text-8xl font-black text-white italic uppercase leading-none tracking-tighter" data-aos="zoom-out" data-aos-delay="200">
-                    Design <br> 
+                    Web Site <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-500 to-purple-600 animate-gradient-x">Sem Custos</span>
                 </h1>
 
@@ -113,7 +118,7 @@
                         <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-pink-500 transition-all">
                             <div class="w-0 h-0 border-y-[6px] border-y-transparent border-l-[10px] border-l-white ml-1 group-hover:border-l-pink-500"></div>
                         </div>
-                        <span class="text-white font-black uppercase text-[10px] tracking-widest group-hover:text-pink-500">Ver Processo</span>
+                        <span class="text-white font-black uppercase text-[10px] tracking-widest group-hover:text-pink-500">Entenda Melhor</span>
                     </button>
                 </div>
             </div>
@@ -127,58 +132,112 @@
 </div>
 
 <style>
-    .animate-gradient-x { background-size: 200% 200%; animation: gradient-move 5s linear infinite; }
-    @keyframes gradient-move { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-</style>
-<script>
-function kineticStory() {
-    return {
-        currentStep: 0,
-        finished: false,
-        steps: [
-            { text: 'Atenção', class: 'text-5xl md:text-7xl' },
-            { text: 'O mercado mudou', class: 'text-4xl md:text-6xl text-pink-500' },
-            { text: 'E nós também', class: 'text-5xl md:text-8xl underline' },
-            { text: 'Seu Site Profissional', class: 'text-6xl md:text-8xl' },
-            { text: 'Custo Zero', class: 'text-8xl md:text-[10rem] text-cyan-400 rotate-[-3deg]' },
-            { text: 'Sem pegadinhas', class: 'text-4xl md:text-6xl' },
-            { text: 'Design de Elite', class: 'text-5xl md:text-7xl text-purple-500' },
-            { text: 'Apenas a Manutenção', class: 'text-4xl md:text-6xl border-y border-white py-2' },
-            { text: 'O lucro é seu', class: 'text-5xl md:text-7xl font-light tracking-widest' },
-            { text: 'Conectando...', class: 'text-6xl md:text-8xl animate-pulse' }
-        ],
-        init() {
-            let interval = setInterval(() => {
-                if (this.currentStep < this.steps.length - 1) {
-                    this.currentStep++;
-                } else {
-                    this.finished = true;
-                    clearInterval(interval);
-                    
-                    // --- O PULO DO GATO ESTÁ AQUI ---
-                    // Esperamos um tempinho para o HTML aparecer e resetamos as animações
-                    this.$nextTick(() => {
-                        
-                        // 1. Reinicia o AOS (Animações de entrada de texto/titulo)
-                        if (typeof AOS !== 'undefined') {
-                            AOS.init({
-                                duration: 1000,
-                                once: true,
-                                offset: 100
-                            });
-                            AOS.refresh(); 
-                        }
+    .animate-gradient-x {
+        background-size: 200% 200%;
+        animation: gradient-move 5s linear infinite;
+    }
 
-                        // 2. Dispara o evento para os cards de manutenção (Intersection Observer)
-                        // Se você usou a função neuralSectionIsolated(), precisamos garantir 
-                        // que o Observer dela comece a olhar agora.
-                        window.dispatchEvent(new Event('resize')); 
-                        window.dispatchEvent(new Event('scroll'));
-                    });
-                }
-            }, 1100);
+    @keyframes gradient-move {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
         }
     }
-}
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+</style>
+
+<script>
+    function kineticStory() {
+        return {
+            currentStep: 0,
+            finished: false,
+            steps: [{
+                    text: 'Atenção',
+                    class: 'text-5xl md:text-7xl'
+                },
+                {
+                    text: 'O mercado mudou',
+                    class: 'text-4xl md:text-6xl text-pink-500'
+                },
+                {
+                    text: 'E nós também',
+                    class: 'text-5xl md:text-8xl underline'
+                },
+                {
+                    text: 'Seu Site Profissional',
+                    class: 'text-6xl md:text-8xl'
+                },
+                {
+                    text: 'Custo Zero',
+                    class: 'text-8xl md:text-[10rem] text-cyan-400 rotate-[-3deg]'
+                },
+                {
+                    text: 'Sem pegadinhas',
+                    class: 'text-4xl md:text-6xl'
+                },
+                {
+                    text: 'Design de Elite',
+                    class: 'text-5xl md:text-7xl text-purple-500'
+                },
+                {
+                    text: 'Apenas a Manutenção',
+                    class: 'text-4xl md:text-6xl border-y border-white py-2'
+                },
+                {
+                    text: 'O lucro é seu',
+                    class: 'text-5xl md:text-7xl font-light tracking-widest'
+                },
+                {
+                    text: 'Conectando...',
+                    class: 'text-6xl md:text-8xl animate-pulse'
+                }
+            ],
+            init() {
+                let interval = setInterval(() => {
+                    if (this.currentStep < this.steps.length - 1) {
+                        this.currentStep++;
+                    } else {
+                        this.finished = true;
+                        clearInterval(interval);
+
+                        this.$nextTick(() => {
+                            if (typeof AOS !== 'undefined') {
+                                // O SEGREDO: refreshHard força o AOS a mapear as sessões novas
+                                AOS.init({
+                                    duration: 1000,
+                                    once: true,
+                                    offset: 50 // Um valor pequeno para disparar logo na entrada
+                                });
+                                // RefreshHard é mais potente que o refresh comum
+                                AOS.refreshHard();
+                            }
+
+                            // Simula um scroll para "acordar" os observadores das sessões de baixo
+                            window.scrollTo(window.scrollX, window.scrollY + 1);
+                            window.dispatchEvent(new Event('resize'));
+                        });
+                    }
+                }, 1100);
+
+            }
+        }
+    }
 </script>

@@ -1,7 +1,7 @@
 <x-guest-layout>
 
-    @include('site.partials.start-gratis')
-    @include('site.partials.ecosystem-strategy') {{-- O código que te enviei acima --}}
+    <!-- @include('site.partials.start-gratis') -->
+    @include('site.partials.ecosystem-strategy') 
     @include('site.partials.explica-site')
 
     
@@ -18,5 +18,6 @@
     
     @include('site.partials.faq-transparency')
     @include('site.partials.contact-footer')
+
 
 </x-guest-layout>

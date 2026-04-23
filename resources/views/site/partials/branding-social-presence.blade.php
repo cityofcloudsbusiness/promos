@@ -1,4 +1,4 @@
-<section id="marketing-elite" class="relative py-32 bg-white overflow-hidden">
+<section id="marketing-elite" class="relative py-32 bg-white overflow-hidden" style="padding-bottom:0;">
     <div class="absolute top-0 right-0 w-1/3 h-full bg-purple-50/50 -skew-x-12 translate-x-1/2"></div>
 
     <div class="container mx-auto px-6 relative z-10">
@@ -6,16 +6,16 @@
             
             <div class="w-full lg:w-1/2 grid grid-cols-12 gap-3 h-[600px] relative" id="mosaico-marketing">
                 <div class="col-span-8 h-64 rounded-2xl overflow-hidden shadow-xl transform transition-all duration-700 hover:scale-105 hover:z-20 cursor-none" data-aos="fade-right">
-                    <img src="{{ asset('imgs/slidett.png') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    <img src="{{ Vite::asset('resources/imgs/sec4/sec41.jpg') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
                 </div>
                 <div class="col-span-4 h-64 rounded-2xl overflow-hidden shadow-xl mt-12 transform transition-all duration-700 hover:scale-105 hover:z-20 cursor-none" data-aos="fade-down" data-aos-delay="200">
-                    <img src="{{ asset('imgs/slidett.png') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    <img src="{{ Vite::asset('resources/imgs/sec4/sec42.jpg') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
                 </div>
                 <div class="col-span-5 h-72 -mt-10 rounded-2xl overflow-hidden shadow-xl transform transition-all duration-700 hover:scale-105 hover:z-20 cursor-none" data-aos="fade-up" data-aos-delay="400">
-                    <img src="{{ asset('imgs/cidade.jpg') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    <img src="{{ Vite::asset('resources/imgs/sec4/sec43.jpg') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
                 </div>
                 <div class="col-span-7 h-72 -mt-4 rounded-2xl overflow-hidden shadow-xl transform transition-all duration-700 hover:scale-105 hover:z-20 cursor-none" data-aos="fade-left" data-aos-delay="600">
-                    <img src="{{ asset('imgs/cidade.jpg') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    <img src="{{ Vite::asset('resources/imgs/sec4/sec44.png') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
                 </div>
             </div>
 
