@@ -1,144 +1,185 @@
-<section id="contato-ia" class="relative py-24 bg-black overflow-hidden" x-data="neuralContact()">
-    <div class="absolute inset-0 opacity-20 pointer-events-none">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#22d3ee22,transparent_70%)]"></div>
-    </div>
+<footer id="skynet-footer" class="relative bg-[#020205] text-white py-20 overflow-hidden border-t border-blue-900/20">
+    
+    <canvas id="skynet-canvas" class="absolute inset-0 z-0"></canvas>
 
     <div class="container mx-auto px-6 relative z-10">
-        <div class="flex flex-col lg:flex-row items-center gap-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             
-            <div class="w-full lg:w-1/2" data-aos="fade-right">
-                <header class="mb-10">
-                    <h2 class="text-4xl lg:text-6xl font-black italic uppercase text-white tracking-tighter">
-                        Iniciar <span class="text-cyan-400">Sincronia</span>
-                    </h2>
-                    <p class="text-slate-500 font-mono text-xs uppercase tracking-[0.3em] mt-2">Protocolo de Expansão Digital v1.0</p>
-                </header>
-
-                <form @submit.prevent="sendProtocol" class="space-y-4">
-                    <div class="relative group">
-                        <input type="text" placeholder="SEU NOME" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm">
-                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-cyan-500 group-focus-within:w-full transition-all duration-500"></div>
-                    </div>
+            <div class="lg:col-span-5 space-y-8" data-aos="fade-up">
+                <div class="relative group inline-block">
+                    <div class="absolute -inset-2 border border-blue-500/50 rounded-full animate-[spin_10s_linear_infinite] border-dashed"></div>
+                    <div class="absolute -inset-4 border border-purple-500/30 rounded-full animate-[spin_15s_linear_infinite_reverse] border-dotted"></div>
                     
-                    <div class="relative group">
-                        <input type="email" placeholder="EMAIL DE CONTATO" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm">
-                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-cyan-500 group-focus-within:w-full transition-all duration-500"></div>
+                    <div class="relative bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(59,130,246,0.2)]">
+                        <img src="{{ Vite::asset('resources/imgs/logo_otimizada.png') }}" alt="City Of CloudS" class="w-56 h-auto">
                     </div>
-
-                    <div class="relative group">
-                        <textarea rows="4" placeholder="QUAL O SEU DESAFIO?" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm resize-none"></textarea>
+                </div>
+                
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-blue-600 uppercase">
+                        City of Clouds: Engenharia de Software
+                    </h2>
+                    <div class="relative">
+                        <div class="absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-blue-500 to-transparent"></div>
+                        <p class="pl-6 text-gray-400 text-sm leading-relaxed font-light text-justify">
+                            Não somos apenas uma agência ou software house; somos um centro de alta performance técnica. 
+                            Nascemos para unir o desenvolvimento de sistemas robustos — de Apps a Desktop — 
+                            à estratégia do Marketing Digital e Audiovisual, tudo executado por um time de elite 
+                            treinado em nossa própria plataforma para atingir o máximo potencial do seu negócio.
+                        </p>
                     </div>
+                </div>
 
-                    <button type="submit" class="w-full bg-cyan-500 hover:bg-white text-black font-black py-5 rounded-xl transition-all transform hover:scale-[1.02] uppercase italic tracking-[0.2em] shadow-[0_0_30px_rgba(34,211,238,0.3)]">
-                        Enviar Mensagem
-                    </button>
-                </form>
+                <div class="flex gap-4">
+                    @foreach(['facebook', 'instagram', 'linkedin', 'youtube', 'github'] as $social)
+                    <a href="#" class="group relative w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-xl hover:border-blue-500/50 transition-all duration-500">
+                        <div class="absolute inset-0 bg-blue-600/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/{{ $social }}.svg" class="w-5 h-5 invert opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all" alt="{{ $social }}">
+                    </a>
+                    @endforeach
+                </div>
             </div>
 
-            <div class="w-full lg:w-1/2 flex justify-center items-center relative min-h-[400px]">
-                <div class="ai-orb-container relative">
-                    <div class="orb-layer layer-1"></div>
-                    <div class="orb-layer layer-2"></div>
-                    <div class="orb-layer layer-3"></div>
-                    <div class="orb-core flex items-center justify-center">
-                        <div class="orb-inner"></div>
-                        <svg class="w-12 h-12 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <div class="lg:col-span-7">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+                    @php
+                    $categorias = [
+                        'Sistemas' => ['ERP Custom', 'SaaS Core', 'Desktop App', 'Dashboards', 'API Gateway'],
+                        'Mobile' => ['iOS Nativo', 'Android SDK', 'Flutter Hub', 'React Native', 'UI/UX Pro'],
+                        'Marketing' => ['SEO Global', 'Ads Strategy', 'Copywriting', 'Audiovisual', 'Growth Hacking'],
+                        'Ecossistema' => ['Cloud Ops', 'Data Mining', 'Cyber Security', 'IA Neural', 'Suporte Elite']
+                    ];
+                    @endphp
+
+                    @foreach($categorias as $cat => $links)
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-bold tracking-[0.2em] text-blue-500 uppercase flex items-center gap-2">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                            {{ $cat }}
+                        </h4>
+                        <ul class="space-y-2">
+                            @foreach($links as $link)
+                            <li>
+                                <a href="#" class="text-gray-500 hover:text-white text-xs font-medium transition-colors duration-300 flex items-center group">
+                                    <span class="w-0 group-hover:w-3 h-[1px] bg-blue-500 transition-all mr-0 group-hover:mr-2"></span>
+                                    {{ $link }}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-    </div>
 
-    <template x-if="successOverlay">
-        <div class="fixed inset-0 z-[200] bg-black flex items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 bg-cyan-500/10 animate-pulse"></div>
-            
-            <div class="relative z-10 flex flex-wrap justify-center max-w-4xl px-10">
-                <template x-for="(word, i) in finalPhrase.split(' ')">
-                    <span x-text="word" 
-                          class="word-beam text-4xl md:text-7xl font-black text-white italic uppercase tracking-tighter mx-2"
-                          :style="`animation-delay: ${i * 0.1}s`"></span>
-                </template>
-            </div>
-
-            <button @click="successOverlay = false" class="absolute bottom-20 text-cyan-400 font-mono text-xs uppercase tracking-[0.5em] border border-cyan-400/30 px-6 py-2 hover:bg-cyan-400 hover:text-black transition-all">
-                Reiniciar Terminal
-            </button>
+        <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <span class="text-[10px] font-mono text-gray-600 tracking-[0.3em]">SKYNET PROTOCOL v2.0 - ACTIVE</span>
+            <span class="text-[10px] font-mono text-gray-600">© 2026 CITY OF CLOUDS - ALL RIGHTS RESERVED</span>
         </div>
-    </template>
-</section>
-
-<style>
-    /* ANIMAÇÃO DA ORB IA (CORTANA) */
-    .ai-orb-container {
-        width: 300px;
-        height: 300px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .orb-layer {
-        position: absolute;
-        border-radius: 50%;
-        border: 2px solid #22d3ee;
-        width: 100%;
-        height: 100%;
-        animation: orb-pulse 4s infinite linear;
-        opacity: 0.3;
-    }
-    .layer-2 { width: 80%; height: 80%; animation-delay: -1s; border-color: #8b5cf6; }
-    .layer-3 { width: 60%; height: 60%; animation-delay: -2s; border-color: #ec4899; }
-    
-    @keyframes orb-pulse {
-        0% { transform: scale(1) rotate(0deg); opacity: 0.1; }
-        50% { transform: scale(1.1) rotate(180deg); opacity: 0.4; }
-        100% { transform: scale(1) rotate(360deg); opacity: 0.1; }
-    }
-
-    .orb-core {
-        width: 120px;
-        height: 120px;
-        background: radial-gradient(circle, #22d3ee, #0891b2);
-        border-radius: 50%;
-        box-shadow: 0 0 50px #22d3ee;
-        position: relative;
-        z-index: 5;
-    }
-
-    /* ANIMAÇÃO DOS FEIXES DE LUZ (SUCESSO) */
-    .word-beam {
-        opacity: 0;
-        transform: scale(3) translateY(100px);
-        filter: blur(20px);
-        animation: light-beam-in 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
-        text-shadow: 0 0 30px rgba(34, 211, 238, 0.8);
-    }
-
-    @keyframes light-beam-in {
-        0% { opacity: 0; transform: scale(5) translateY(200px); filter: blur(50px) brightness(5); }
-        100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0) brightness(1); }
-    }
-
-    /* Vindo de cantos diferentes (Randomização Visual) */
-    .word-beam:nth-child(even) { animation-name: light-beam-alt; }
-    @keyframes light-beam-alt {
-        0% { opacity: 0; transform: scale(0) translateX(-300px); filter: blur(30px); }
-        100% { opacity: 1; transform: scale(1) translateX(0); filter: blur(0); }
-    }
-</style>
+    </div>
+</footer>
 
 <script>
-function neuralContact() {
-    return {
-        successOverlay: false,
-        finalPhrase: "AGORA VAMOS ALAVANCAR O SEU NEGÓCIO",
-        sendProtocol() {
-            // Aqui você dispararia seu AJAX/Laravel Controller
-            this.successOverlay = true;
+class SkynetPortal {
+    constructor() {
+        this.canvas = document.getElementById('skynet-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.nodes = [];
+        this.portalParticles = [];
+        this.init();
+    }
+
+    init() {
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        
+        // Criar nós para as linhas pontilhadas
+        for(let i=0; i<30; i++) {
+            this.nodes.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5
+            });
+        }
+        
+        this.animate();
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = this.canvas.parentElement.offsetHeight;
+    }
+
+    drawLines() {
+        this.ctx.setLineDash([2, 4]); // Linhas Pontilhadas
+        this.ctx.strokeStyle = 'rgba(59, 130, 246, 0.15)';
+        this.ctx.lineWidth = 1;
+
+        this.nodes.forEach((node, i) => {
+            node.x += node.vx;
+            node.y += node.vy;
+
+            if(node.x < 0 || node.x > this.canvas.width) node.vx *= -1;
+            if(node.y < 0 || node.y > this.canvas.height) node.vy *= -1;
+
+            this.nodes.slice(i + 1).forEach(other => {
+                const dist = Math.hypot(node.x - other.x, node.y - other.y);
+                if(dist < 250) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(node.x, node.y);
+                    this.ctx.lineTo(other.x, other.y);
+                    this.ctx.stroke();
+                }
+            });
+        });
+    }
+
+    drawPortal() {
+        const time = Date.now() * 0.001;
+        const centerX = this.canvas.width * 0.2; // Posição atrás da logo
+        const centerY = this.canvas.height * 0.4;
+
+        this.ctx.setLineDash([]); // Reset dash para o portal
+        for(let i=0; i<3; i++) {
+            const radius = 150 + (i * 40);
+            const angle = time * (1 + i * 0.2);
             
-            // Som futurista opcional (se quiser adicionar no futuro)
-            // playSynthSound();
+            this.ctx.beginPath();
+            const grad = this.ctx.createLinearGradient(
+                centerX - radius, centerY - radius, 
+                centerX + radius, centerY + radius
+            );
+            grad.addColorStop(0, 'transparent');
+            grad.addColorStop(0.5, 'rgba(59, 130, 246, 0.2)');
+            grad.addColorStop(1, 'transparent');
+
+            this.ctx.strokeStyle = grad;
+            this.ctx.lineWidth = 20;
+            this.ctx.arc(centerX, centerY, radius, angle, angle + Math.PI * 1.5);
+            this.ctx.stroke();
         }
     }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawLines();
+        this.drawPortal();
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
+// Inicializa quando o DOM estiver pronto
+if(document.getElementById('skynet-canvas')) {
+    new SkynetPortal();
 }
 </script>
+
+<style>
+/* Animação extra para a logo */
+#skynet-footer .group:hover img {
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8)) hue-rotate(90deg);
+    transition: all 0.8s ease;
+}
+</style>

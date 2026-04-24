@@ -29,7 +29,7 @@
 
     @include('site.partials.nav')
 
-    <main>
+    <main class="overflow-x-hidden">
         {{ $slot }}
     </main>
 
