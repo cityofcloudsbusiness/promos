@@ -73,7 +73,7 @@
             <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[100px] rounded-full"></div>
 
             <div class="text-center mb-16">
-                <h3 class="text-3xl lg:text-5xl font-black text-white uppercase mb-4 tracking-tighter">Acordo Shark Tank</h3>
+                <h3 class="text-3xl lg:text-5xl font-black text-white uppercase mb-4 tracking-tighter">Acordo Nivel Shark</h3>
                 <p class="text-gray-400 max-w-2xl mx-auto italic">"Se o seu projeto é grande, nós pagamos a maior parte. Nós ganhamos quando você fatura."</p>
             </div>
 

@@ -6,30 +6,42 @@
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
     </div>
 
+    <canvas id="robot-trails" class="absolute top-0 left-0 w-full lg:w-1/2 h-full opacity-80 z-0 pointer-events-none"></canvas>
+
     <div id="cursor-trail" class="fixed top-0 left-0 w-full h-full pointer-events-none z-50"></div>
 
     <div class="container mx-auto px-6 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
-            <div class="lg:col-span-6 relative h-[600px] flex items-center justify-center">
+            <div class="lg:col-span-6 relative min-h-[600px] flex items-center justify-center">
                 <div class="absolute transform -skew-x-12 -translate-x-16 -translate-y-20 z-10 animate-float-slow" data-aos="zoom-in-right">
                     <div class="relative group">
                         <div class="absolute -inset-1 bg-blue-500/30 blur opacity-40 group-hover:opacity-100 transition"></div>
-                        <img src="{{ asset('imgs/cidade.jpg') }}" class="w-64 h-80 object-cover rounded-lg border border-white/10 shadow-2xl grayscale group-hover:grayscale-0 transition duration-700">
+                        <img src="{{ Vite::asset('resources/imgs/sec8/sec82.jpg') }}" class="w-64 h-80 object-cover rounded-lg border border-white/10 shadow-2xl grayscale group-hover:grayscale-0 transition duration-700">
                     </div>
                 </div>
 
                 <div class="absolute transform -skew-x-12 z-30 animate-float-medium" data-aos="zoom-in" data-aos-delay="200">
                     <div class="relative group">
                         <div class="absolute -inset-2 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-70 transition"></div>
-                        <img src="{{ asset('imgs/cidade.jpg') }}" class="w-72 h-96 object-cover rounded-xl border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                        <img src="{{ Vite::asset('resources/imgs/sec8/sec81.jpg') }}" class="w-72 h-96 rounded-xl object-contain border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
                         <div class="absolute inset-0 bg-blue-500/10 group-hover:bg-transparent transition"></div>
                     </div>
                 </div>
 
                 <div class="absolute transform skew-x-6 translate-x-24 translate-y-24 z-40 animate-float-reverse" data-aos="zoom-in-left" data-aos-delay="400">
                     <div class="relative group">
-                        <img src="{{ asset('imgs/cidade.jpg') }}" class="w-56 h-64 object-cover rounded-lg border border-white/10 shadow-2xl brightness-75 group-hover:brightness-110 transition">
+                        <video
+                            autoplay
+                            loop
+                            muted
+                            playsinline
+                            poster="{{ Vite::asset('resources/imgs/sec8/sec82.png')}}"
+                            class="object-cover rounded-xl w-72 h-66 border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)] brightness-75 group-hover:brightness-110 transition">
+                            <source src="{{ Vite::asset('resources/videos/sec8.webm')}}" type="video/webm">
+                            Seu navegador não suporta vídeos.
+                        </video>
+                        
                         <div class="absolute -top-4 -left-4 bg-blue-600 px-4 py-2 font-black text-xs italic">CITY_CLOUD_INFRA</div>
                     </div>
                 </div>
@@ -60,7 +72,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[550px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-blue-600" data-aos="fade-up" data-aos-delay="400">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-blue-600" data-aos="fade-up" data-aos-delay="400">
                     @php
                         $armada = [
                             '🚀 Mobile iOS/Android' => 'Desenvolvimento nativo e híbrido para dominar as App Stores.',
@@ -113,16 +125,11 @@
     .scrollbar-thin::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
     .scrollbar-thin::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
 
-    /* SONAR WAVE */
     .sonar-wave {
         position: fixed;
-        width: 10px;
-        height: 10px;
-        background: none;
-        border: 2px solid #3b82f6;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
+        width: 10px; height: 10px; background: none;
+        border: 2px solid #3b82f6; border-radius: 50%;
+        pointer-events: none; z-index: 9999;
         transform: translate(-50%, -50%);
         animation: sonar-expand 0.8s ease-out forwards;
     }
@@ -133,6 +140,112 @@
 </style>
 
 <script>
+    // --- LÓGICA DO CANVAS PARA OCUPAR TODA A SESSÃO ---
+    const canvas = document.getElementById('robot-trails');
+    const ctx = canvas.getContext('2d');
+    const section = document.getElementById('city-of-clouds');
+    let bots = [];
+
+    function resizeCanvas() {
+        // O Canvas agora herda a altura total da SECTION, não apenas da coluna
+        canvas.width = window.innerWidth / (window.innerWidth >= 1024 ? 2 : 1);
+        canvas.height = section.offsetHeight;
+    }
+
+    class RobotBot {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            const speed = 0.6 + Math.random() * 1.8;
+            
+            // Movimentação inicial
+            if (Math.random() > 0.5) {
+                this.vx = Math.random() > 0.5 ? speed : -speed;
+                this.vy = 0;
+            } else {
+                this.vy = Math.random() > 0.5 ? speed : -speed;
+                this.vx = 0;
+            }
+
+            this.history = [];
+            this.maxHistory = 15 + Math.random() * 30;
+            this.color = Math.random() > 0.5 ? '#3b82f6' : '#8b5cf6';
+        }
+        update() {
+            this.history.push({x: this.x, y: this.y});
+            if (this.history.length > this.maxHistory) this.history.shift();
+
+            // Lógica de curva 90º (estilo circuito)
+            if (Math.random() < 0.015) {
+                const speed = 0.6 + Math.random() * 1.8;
+                if (this.vx !== 0) {
+                    this.vy = Math.random() > 0.5 ? speed : -speed;
+                    this.vx = 0;
+                } else {
+                    this.vx = Math.random() > 0.5 ? speed : -speed;
+                    this.vy = 0;
+                }
+            }
+
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Reset se sair dos limites
+            if (this.x < -30 || this.x > canvas.width + 30 || this.y < -30 || this.y > canvas.height + 30) {
+                this.reset();
+            }
+        }
+        draw() {
+            if (this.history.length < 2) return;
+            ctx.beginPath();
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 1;
+            ctx.globalAlpha = 0.3;
+            ctx.moveTo(this.history[0].x, this.history[0].y);
+            for (let i = 1; i < this.history.length; i++) {
+                ctx.lineTo(this.history[i].x, this.history[i].y);
+            }
+            ctx.stroke();
+
+            // Ponto do robô
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = '#fff';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = this.color;
+            ctx.fillRect(this.x - 1, this.y - 1, 2, 2);
+            ctx.shadowBlur = 0;
+        }
+    }
+
+    function initBots() {
+        bots = [];
+        // Aumentado para 100 robôs para preencher o espaço gigante
+        for (let i = 0; i < 100; i++) bots.push(new RobotBot());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        bots.forEach(bot => {
+            bot.update();
+            bot.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        initBots();
+    });
+
+    // Inicialização
+    resizeCanvas();
+    initBots();
+    animate();
+
+    // SCRIPT DO SONAR MANTIDO
     let lastTime = 0;
     window.addEventListener('mousemove', (e) => {
         const now = Date.now();
