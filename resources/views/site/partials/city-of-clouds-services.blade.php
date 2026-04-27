@@ -36,9 +36,9 @@
                             loop
                             muted
                             playsinline
-                            poster="{{ Vite::asset('resources/imgs/sec8/sec82.png')}}"
+                            poster="{{ Vite::asset('resources/imgs/sec8/sec82.jpg')}}"
                             class="object-cover rounded-xl w-72 h-66 border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)] brightness-75 group-hover:brightness-110 transition">
-                            <source src="{{ Vite::asset('resources/videos/sec8.webm')}}" type="video/webm">
+                            <source src="{{ asset('videos/sec8.webm')}}" type="video/webm">
                             Seu navegador não suporta vídeos.
                         </video>
                         

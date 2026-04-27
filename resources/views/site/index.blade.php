@@ -1,12 +1,9 @@
 <x-guest-layout>
 
-    <!-- @include('site.partials.start-gratis') -->
+    @include('site.partials.start-gratis')
     @include('site.partials.ecosystem-strategy') 
     @include('site.partials.explica-site')
 
-    
-
-    
     @include('site.partials.branding-social-presence')
     @include('site.partials.audiovisual')
 

@@ -82,14 +82,14 @@
                             playsinline
                             poster="{{ Vite::asset('resources/imgs/sec5.png')}}"
                             class="w-full h-auto object-cover rounded-xl shadow-lg">
-                            <source src="{{ Vite::asset('resources/videos/sec5.webm')}}" type="video/webm">
+                            <source src="{{ asset('videos/sec5.webm')}}" type="video/webm">
                             Seu navegador não suporta vídeos.
                         </video>
                         <div class="absolute inset-0 bg-purple-900/20 group-hover:bg-transparent transition-colors"></div>
                     </div>
 
                     <div class="absolute top-10 right-0 w-[35%] h-48 rounded-2xl overflow-hidden shadow-xl border-4 border-white z-10 animate-puzzle-2 transform skew-y-3 group">
-                        <img src="{{ Vite::asset('resources/imgs/sec52.jpg')}}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Fotografia Profissional">
+                        <img src="{{ Vite::asset('resources/imgs/sec52.JPG')}}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Fotografia Profissional">
                     </div>
 
                     <div class="absolute bottom-10 left-10 w-[85%] h-56 rounded-2xl overflow-hidden shadow-2xl border-4 border-white z-30 animate-puzzle-3 transform -skew-x-12 group">

@@ -61,10 +61,25 @@
                 </ul>
 
                 <div class="relative group">
-                    <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
-                    <button class="relative bg-black text-white px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all">
-                        Acessar Portal
-                    </button>
+
+                    @auth
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
+                    <a href="{{ route('dashboard') }}" class="relative bg-black text-white px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span class="italic">{{ Auth::user()->name }}</span>
+                    </a>
+                    @else
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
+                    <a href="{{ route('login') }}" class="relative bg-black text-white px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span>Login</span>
+                    </a>
+                    @endauth
+
                 </div>
             </nav>
         </header>
@@ -235,7 +250,7 @@
                             window.dispatchEvent(new Event('resize'));
                         });
                     }
-                }, 1100);
+                }, 50);
 
             }
         }
