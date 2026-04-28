@@ -11,21 +11,22 @@ Route::get('/', function () {
 
 // 2. Página de Assinatura e Processo de Checkout
 Route::middleware(['auth', 'verified'])->group(function () {
-    
+
     // Página com o botão "Assinar Agora"
-    Route::get('/subscribe', function () {
-        return view('subscribe');
-    })->name('subscribe');
+    Route::get('/subscribeWebM', function () {
+        // O Laravel converte os pontos em barras de diretório automaticamente
+        return view('site.pagamentos.inscricaoWebSiteManu');
+    })->name('subscribeWebM');
 
     // Rota que de fato cria a sessão de pagamento no Stripe
     Route::get('/checkout-assinatura', function (Request $request) {
         // 'default' é o nome da assinatura
         // 'price_...' é o ID que você pegou no painel do Stripe
         return $request->user()
-            ->newSubscription('default', 'price_SEU_ID_DO_STRIPE_AQUI')
+            ->newSubscription('default', env('STRIPE_PRICE_ID'))
             ->checkout([
                 'success_url' => route('dashboard') . '?success=true',
-                'cancel_url' => route('subscribe') . '?error=cancel',
+                'cancel_url' => route('subscribeWebM') . '?error=cancel',
             ]);
     })->name('checkout');
 
@@ -37,11 +38,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // 3. Painel do Cliente (Totalmente protegido)
 Route::middleware(['auth', 'verified'])->get('/dashboard', function (Request $request) {
-    // Passamos a assinatura para a view para poder checar o status
+
+    // Verificação "Raiz": Se o usuário NÃO tem a assinatura 'default' ativa
+    if (! $request->user()->subscribed('default')) {
+        // Mandamos ele para a sua tela Cyberpunk de inscrição
+        return redirect()->route('subscribeWebM');
+    }
+
     return view('dashboard', [
         'subscription' => $request->user()->subscription('default')
     ]);
 })->name('dashboard');
 
+
+// Rotas de Perfil do Breeze (Restauradas)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 // As rotas do Breeze (Login, Registro, etc.)
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
