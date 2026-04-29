@@ -30,4 +30,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // app/Models/User.php
+
+    public function project()
+    {
+        return $this->hasOne(Project::class); // Um usuário tem um projeto
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class); // Um usuário pode enviar várias mensagens
+    }
 }

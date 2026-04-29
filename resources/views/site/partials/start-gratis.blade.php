@@ -250,7 +250,7 @@
                             window.dispatchEvent(new Event('resize'));
                         });
                     }
-                }, 50);
+                }, 1100);
 
             }
         }
