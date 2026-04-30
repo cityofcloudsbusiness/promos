@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class); // Um usuário pode enviar várias mensagens
     }
+
+    public function assignedProjects()
+    {
+        return $this->belongsToMany(Project::class, 'project_user');
+    }
 }

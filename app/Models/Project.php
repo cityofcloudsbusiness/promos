@@ -14,16 +14,24 @@ class Project extends Model
         'steps' => 'array', // Mantém o JSON como array no PHP
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
     // ADICIONE ESTA RELAÇÃO AQUI:
-    public function employee() {
+    public function employee()
+    {
         return $this->belongsTo(User::class, 'employee_id');
     }
 
-    public function messages() {
+    public function developers()
+    {
+        return $this->belongsToMany(User::class, 'project_user');
+    }
+
+    public function messages()
+    {
         return $this->hasMany(Message::class);
     }
 

@@ -116,9 +116,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Listagem de Projetos (Visão filtrada se for Employee)
     Route::get('/projects', function () {
+        // No bloco de rotas admin
         $projects = auth()->user()->role === 'admin'
-            ? Project::with('user', 'employee')->get()
-            : Project::where('employee_id', auth()->id())->with('user')->get();
+            ? Project::with(['user', 'employee', 'developers'])->get()
+            : Project::where('employee_id', auth()->id())
+            ->orWhereHas('developers', function ($q) {
+                $q->where('user_id', auth()->id());
+            })
+            ->with('user')
+            ->get();
 
         $employees = User::where('role', 'employee')->get();
 
@@ -155,3 +161,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+
