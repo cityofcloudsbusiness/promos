@@ -18,6 +18,11 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
+    // ADICIONE ESTA RELAÇÃO AQUI:
+    public function employee() {
+        return $this->belongsTo(User::class, 'employee_id');
+    }
+
     public function messages() {
         return $this->hasMany(Message::class);
     }

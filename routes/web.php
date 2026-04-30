@@ -12,6 +12,7 @@ use App\Models\User;
 | 1. ÁREA PÚBLICA
 |--------------------------------------------------------------------------
 */
+
 Route::get('/', function () {
     return view('site.index');
 })->name('home');
@@ -19,18 +20,35 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| 2. FLUXO DE PAGAMENTO (STRIPE) - Mantido Original
+| 2. FLUXO DE PAGAMENTO (STRIPE) - Mantido Original com Correção de Redirecionamento
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified'])->group(function () {
-    
-    // Página de seleção de plano
+
+    // 1. Página de seleção de plano
     Route::get('/subscribeWebM', function () {
+        $user = auth()->user();
+
+        // Proteção: Admins e funcionários não assinam planos
+        if ($user->role === 'admin' || $user->role === 'employee') {
+            return redirect()->route('admin.projects.index');
+        }
+
+        // CORREÇÃO: Se o usuário já tem uma assinatura ativa, redireciona para o Dashboard
+        // Isso impede que ele fique preso nesta tela após o pagamento.
+        if ($user->subscribed('default')) {
+            return redirect()->route('dashboard');
+        }
+
         return view('site.pagamentos.inscricaoWebSiteManu');
     })->name('subscribeWebM');
 
-    // Checkout Stripe (Gera o link de pagamento)
+    // 2. Checkout Stripe (Gera o link de pagamento)
     Route::get('/checkout-assinatura', function (Request $request) {
+        if ($request->user()->role === 'admin' || $request->user()->role === 'employee') {
+            return redirect()->route('admin.projects.index');
+        }
+
         return $request->user()
             ->newSubscription('default', env('STRIPE_PRICE_ID'))
             ->checkout([
@@ -39,8 +57,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ]);
     })->name('checkout');
 
-    // Portal de Gerenciamento do Cartão
+    // 3. Portal de Gerenciamento do Cartão
     Route::get('/billing-portal', function (Request $request) {
+        if ($request->user()->role === 'admin' || $request->user()->role === 'employee') {
+            return redirect()->route('admin.projects.index');
+        }
+
         return $request->user()->redirectToBillingPortal(route('dashboard'));
     })->name('billing');
 });
@@ -52,24 +74,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified'])->group(function () {
-    
+
     Route::get('/dashboard', function (Request $request) {
-        // SEGURANÇA: Se não tiver assinatura ativa, manda pagar
-        if (!$request->user()->subscribed('default')) {
+        $user = $request->user();
+
+        // 1. SEGURANÇA: Se for Admin ou Colaborador, manda para gestão
+        if ($user->role === 'admin' || $user->role === 'employee') {
+            return redirect()->route('admin.projects.index');
+        }
+
+        // 2. SEGURANÇA CLIENTE: Se não tiver assinatura ativa, manda pagar
+        if (!$user->subscribed('default')) {
             return redirect()->route('subscribeWebM');
         }
 
-        $project = auth()->user()->project;
-        
-        // Busca mensagens se o projeto existir
-        $messages = $project 
-            ? $project->messages()->with('user')->latest()->get() 
+        // 3. FLUXO CLIENTE ASSINANTE
+        $project = $user->project;
+
+        $messages = $project
+            ? $project->messages()->with('user')->latest()->get()
             : collect();
-        
+
         return view('dashboard', [
             'project' => $project,
             'messages' => $messages,
-            'subscription' => $request->user()->subscription('default')
+            'subscription' => $user->subscription('default')
         ]);
     })->name('dashboard');
 
@@ -80,34 +109,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| 4. ÁREA ADMINISTRATIVA (NOVO: ADMIN & EMPLOYEES)
+| 4. ÁREA ADMINISTRATIVA (ADMIN & EMPLOYEES)
 |--------------------------------------------------------------------------
 */
-// Atenção: Use o middleware 'admin' que você criou/configurou
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    
+
     // Listagem de Projetos (Visão filtrada se for Employee)
     Route::get('/projects', function () {
-        $projects = auth()->user()->role === 'admin' 
+        $projects = auth()->user()->role === 'admin'
             ? Project::with('user', 'employee')->get()
             : Project::where('employee_id', auth()->id())->with('user')->get();
-            
+
         $employees = User::where('role', 'employee')->get();
-        
+
         return view('admin.projects.index', compact('projects', 'employees'));
     })->name('projects.index');
 
-    // Atualização de Progresso, Status e Colaborador Atribuído
+    // Atualização de Projetos (Progresso, Status e Colaborador)
     Route::post('/projects/{project}/update', function (Request $request, Project $project) {
         $data = $request->only(['status', 'preview_url', 'employee_id']);
-        
-        // Mantém a lógica de Progresso Dinâmico via Steps (JSON)
+
         if ($request->has('steps')) {
             $project->steps = $request->steps;
             $data['steps'] = $request->steps;
-            $data['progress'] = $project->dynamic_progress; 
+            $data['progress'] = $project->dynamic_progress;
         } else {
-            // Se não enviar steps, aceita o progresso manual (0-100)
             $data['progress'] = $request->progress;
         }
 
