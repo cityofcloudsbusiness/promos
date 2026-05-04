@@ -2,42 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Message;
+use App\Models\Project;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class MessageController extends Controller
 {
-    /**
-     * Armazena uma nova mensagem (Transmissão) no chat.
-     * Funciona para Clientes, Admins e Colaboradores.
-     */
     public function store(Request $request)
     {
-        // 1. Validação rigorosa
         $request->validate([
-            'project_id' => 'required|exists:projects,id', // Garante que o projeto existe
-            'content'    => 'required|string|max:5000',
-            'attachment' => 'nullable|image|mimes:jpg,png,jpeg|max:2048', // Limite de 2MB
+            'project_id' => 'required|exists:projects,id',
+            'content'    => 'required_without:attachment|nullable|string',
+            'attachment' => 'nullable|image|max:5120', // Limite de 5MB
         ]);
 
         $path = null;
-
-        // 2. Gerenciamento de Anexo (se houver)
         if ($request->hasFile('attachment')) {
-            // Salva na pasta 'attachments' dentro de storage/app/public
+            // Salva na pasta public/attachments para fácil acesso
             $path = $request->file('attachment')->store('attachments', 'public');
         }
 
-        // 3. Criação da Mensagem
         Message::create([
             'project_id' => $request->project_id,
-            'user_id'    => auth()->id(), // Quem está logado enviando
+            'user_id'    => auth()->id(),
             'content'    => $request->content,
             'attachment' => $path,
         ]);
 
-        // 4. Retorno com feedback visual
-        return back()->with('success', 'Transmissão enviada com sucesso!');
+        return back()->with('success', 'Mensagem transmitida com sucesso!');
     }
 }
