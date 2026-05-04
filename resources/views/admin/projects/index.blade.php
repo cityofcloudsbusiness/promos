@@ -1,9 +1,19 @@
 <x-app-layout>
+    <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-extrabold text-white tracking-tight">
+        Painel <span class="text-purple-500 uppercase">Master</span>
+    </h1>
+    <div class="flex gap-4">
+        <a href="{{ route('admin.projects.index') }}" class="text-xs font-bold text-purple-500 border-b-2 border-purple-500 pb-1">PROJETOS</a>
+        <a href="{{ route('admin.users.index') }}" class="text-xs font-bold text-gray-500 hover:text-purple-400 transition">GERENCIAR EQUIPE</a>
+    </div>
+</div>
     <div class="py-12 bg-gray-900 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-extrabold text-white tracking-tight">
                     Painel de Controle <span class="text-purple-500">Admin</span>
+                    <a href="{{ route('admin.users.index') }}" class="text-purple-500 font-bold underline">GERENCIAR EQUIPE (CRIAR PROGRAMADORES)</a>
                 </h1>
                 <div class="text-gray-400 text-sm">
                     Gestão Centralizada de Projetos e Colaboradores

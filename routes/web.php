@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Project;
 use App\Models\User;
 
@@ -114,14 +115,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
 */
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
-    // Listagem de Projetos (Visão filtrada se for Employee)
+    // Listagem de Projetos (Visão filtrada por Role)
+
+    // Deletar Usuário
+    Route::delete('/users/{user}', function (User $user) {
+        // Impede que você delete a si mesmo
+        if ($user->id === auth()->id()) {
+            return back()->with('error', 'Você não pode auto-eliminar seu acesso!');
+        }
+        $user->delete();
+        return back()->with('success', 'Usuário removido do banco de dados.');
+    })->name('users.destroy');
+    
     Route::get('/projects', function () {
-        // No bloco de rotas admin
-        $projects = auth()->user()->role === 'admin'
+        $user = auth()->user();
+
+        $projects = $user->role === 'admin'
             ? Project::with(['user', 'employee', 'developers'])->get()
-            : Project::where('employee_id', auth()->id())
-            ->orWhereHas('developers', function ($q) {
-                $q->where('user_id', auth()->id());
+            : Project::where('employee_id', $user->id)
+            ->orWhereHas('developers', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
             })
             ->with('user')
             ->get();
@@ -131,23 +144,52 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         return view('admin.projects.index', compact('projects', 'employees'));
     })->name('projects.index');
 
-    // Atualização de Projetos (Progresso, Status e Colaborador)
+    // Atualização de Projetos
     Route::post('/projects/{project}/update', function (Request $request, Project $project) {
         $data = $request->only(['status', 'preview_url', 'employee_id']);
 
+        // Lógica de progresso dinâmico vs manual
         if ($request->has('steps')) {
             $project->steps = $request->steps;
             $data['steps'] = $request->steps;
-            $data['progress'] = $project->dynamic_progress;
+            $data['progress'] = $project->dynamic_progress; // Usa o Accessor do Model
         } else {
             $data['progress'] = $request->progress;
         }
 
         $project->update($data);
-        return back()->with('success', 'Projeto atualizado com sucesso!');
+        return back()->with('success', 'Protocolo atualizado com sucesso!');
     })->name('projects.update');
-});
 
+    // Gestão de Equipe (Apenas para Super Admin acessar se desejar, ou ambos)
+    Route::get('/users', function () {
+        // Segurança extra: talvez só o 'admin' real deva criar usuários
+        if (auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $users = User::whereIn('role', ['employee', 'client'])->get();
+        return view('admin.users.index', compact('users'));
+    })->name('users.index');
+
+    Route::post('/users/store', function (Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|min:8',
+            'role' => 'required|in:employee,client', // Valida se é um dos dois
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role, // Aqui ele salvará 'employee' ou 'client'
+        ]);
+
+        return back()->with('success', 'Agente registrado no sistema!');
+    })->name('users.store');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -161,6 +203,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-
-
-

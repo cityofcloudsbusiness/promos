@@ -4,32 +4,42 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-// app/Models/Project.php
-
 class Project extends Model
 {
-    protected $fillable = ['user_id', 'name', 'progress', 'status', 'steps', 'preview_url'];
-
-    protected $casts = [
-        'steps' => 'array', // Mantém o JSON como array no PHP
+    // Adicionado 'employee_id' para que o Super Admin possa salvar o responsável
+    protected $fillable = [
+        'user_id', 
+        'name', 
+        'progress', 
+        'status', 
+        'steps', 
+        'preview_url', 
+        'employee_id'
     ];
 
+    protected $casts = [
+        'steps' => 'array', // Mantém seu sistema de tarefas JSON funcionando
+    ];
+
+    // Relacionamento com o Dono do Site (Cliente)
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // ADICIONE ESTA RELAÇÃO AQUI:
+    // Relacionamento com o Programador Responsável
     public function employee()
     {
         return $this->belongsTo(User::class, 'employee_id');
     }
 
+    // Para o caso de múltiplos desenvolvedores (Muitos para Muitos)
     public function developers()
     {
         return $this->belongsToMany(User::class, 'project_user');
     }
 
+    // Sistema de Mensagens (Chat)
     public function messages()
     {
         return $this->hasMany(Message::class);
@@ -37,11 +47,10 @@ class Project extends Model
 
     /**
      * ATRIBUTO DINÂMICO DE PROGRESSO
-     * Calcula a porcentagem com base nos steps: [{"task": "...", "completed": true}]
+     * Mantive exatamente sua lógica original para não quebrar o dashboard do cliente
      */
     public function getDynamicProgressAttribute()
     {
-        // Se não houver steps definidos, retorna o valor manual da coluna 'progress'
         if (empty($this->steps) || !is_array($this->steps)) {
             return $this->progress ?? 0;
         }
