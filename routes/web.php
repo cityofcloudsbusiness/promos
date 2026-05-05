@@ -118,15 +118,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Listagem de Projetos (Visão filtrada por Role)
 
     // Deletar Usuário
-    Route::delete('/users/{user}', function (User $user) {
-        // Impede que você delete a si mesmo
-        if ($user->id === auth()->id()) {
-            return back()->with('error', 'Você não pode auto-eliminar seu acesso!');
-        }
-        $user->delete();
-        return back()->with('success', 'Usuário removido do banco de dados.');
-    })->name('users.destroy');
-    
+
     Route::get('/projects', function () {
         $user = auth()->user();
 
@@ -162,14 +154,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     })->name('projects.update');
 
     // Gestão de Equipe (Apenas para Super Admin acessar se desejar, ou ambos)
+    // GESTÃO DE USUÁRIOS
     Route::get('/users', function () {
-        // Segurança extra: talvez só o 'admin' real deva criar usuários
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
-        }
-
-        $users = User::whereIn('role', ['employee', 'client'])->get();
-        return view('admin.users.index', compact('users'));
+        if (auth()->user()->role !== 'admin') abort(403);
+        
+        $users = User::with('assignedProjects')->whereIn('role', ['employee', 'client'])->get();
+        $projects = Project::all(); // Necessário para o select de associação
+        return view('admin.users.index', compact('users', 'projects'));
     })->name('users.index');
 
     Route::post('/users/store', function (Request $request) {
@@ -177,18 +168,51 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|min:8',
-            'role' => 'required|in:employee,client', // Valida se é um dos dois
+            'role' => 'required|in:employee,client',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role, // Aqui ele salvará 'employee' ou 'client'
+            'role' => $request->role,
         ]);
 
-        return back()->with('success', 'Agente registrado no sistema!');
+        return back()->with('success', 'Agente registrado com sucesso!');
     })->name('users.store');
+
+    // NOVA ROTA: UPDATE COMPLETO (Incluso associação de projetos)
+    Route::put('/users/{user}', function (Request $request, User $user) {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'role' => 'required|in:employee,client',
+            'projects' => 'nullable|array',
+            'projects.*' => 'exists:projects,id',
+            'password' => 'nullable|min:8'
+        ]);
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->role = $data['role'];
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+
+        // Sincroniza os projetos na tabela pivot project_user
+        if ($user->role === 'employee') {
+            $user->assignedProjects()->sync($request->projects ?? []);
+        }
+
+        return back()->with('success', 'Perfil do Agente atualizado!');
+    })->name('users.update');
+
+    Route::delete('/users/{user}', function (User $user) {
+        $user->delete();
+        return back()->with('success', 'Usuário removido do sistema.');
+    })->name('users.destroy');
+
 });
 
 /*
