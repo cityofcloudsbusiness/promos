@@ -74,6 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 | 3. ÁREA DO CLIENTE (DASHBOARD & CHAT)
 |--------------------------------------------------------------------------
 */
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', function (Request $request) {
@@ -89,6 +90,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect()->route('subscribeWebM');
         }
 
+        // --- LÓGICA ADITIVA: CRIAÇÃO AUTOMÁTICA DE PROJETO ---
+        // Se o usuário acabou de assinar e ainda não tem projeto, criamos um agora
+        if (!$user->project) {
+            Project::create([
+                'user_id' => $user->id,
+                'name' => 'Project_' . strtoupper(substr(md5($user->id . time()), 0, 6)),
+                'status' => 'Initializing',
+                'progress' => 0,
+                'steps' => [
+                    ['title' => 'Project Analysis', 'completed' => false],
+                    ['title' => 'Architecture Design', 'completed' => false],
+                    ['title' => 'Development Phase', 'completed' => false],
+                    ['title' => 'Quality Assurance', 'completed' => false],
+                    ['title' => 'Final Delivery', 'completed' => false],
+                ]
+            ]); 
+            // Recarrega o usuário para garantir que o relacionamento 'project' seja preenchido
+            $user->load('project');
+        }
+        // -------------------------------------------------------
+
         // 3. FLUXO CLIENTE ASSINANTE
         $project = $user->project;
 
@@ -103,7 +125,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('dashboard');
 
-    // Salvar mensagens do chat
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 });
 

@@ -16,11 +16,11 @@
             <div class="p-6 bg-gray-900/50 border border-pink-500/20 rounded-2xl mb-8">
                 <div class="flex justify-between mb-4 text-pink-400 text-xs tracking-widest uppercase">
                     <span>Sincronização de Progresso</span>
-                    <span>{{ $project->dynamic_progress ?? 0 }}%</span>
+                    <span>{{ $project->progress ?? 0 }}%</span>
                 </div>
                 <div class="w-full bg-gray-800 rounded-full h-4 p-1">
                     <div class="bg-gradient-to-r from-pink-500 to-purple-600 h-2 rounded-full shadow-[0_0_10px_#ec4899] transition-all duration-1000" 
-                         style="width: {{ $project->dynamic_progress ?? 5 }}%"></div>
+                         style="width: {{ $project->progress ?? 5 }}%"></div>
                 </div>
 
                 @if($project && $project->steps)
@@ -35,7 +35,7 @@
                             @endif
                         </div>
                         <span class="text-sm {{ $step['completed'] ? 'text-gray-400 line-through' : 'text-gray-200' }}">
-                            {{ $step['task'] }}
+                           {{ $step['task'] ?? $step['title'] ?? 'Sem título' }}
                         </span>
                     </div>
                     @endforeach
