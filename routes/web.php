@@ -77,51 +77,48 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+
+
     Route::get('/dashboard', function (Request $request) {
         $user = $request->user();
 
-        // 1. SEGURANÇA: Se for Admin ou Colaborador, manda para gestão
         if ($user->role === 'admin' || $user->role === 'employee') {
             return redirect()->route('admin.projects.index');
         }
 
-        // 2. SEGURANÇA CLIENTE: Se não tiver assinatura ativa, manda pagar
         if (!$user->subscribed('default')) {
             return redirect()->route('subscribeWebM');
         }
 
-        // --- LÓGICA ADITIVA: CRIAÇÃO AUTOMÁTICA DE PROJETO ---
-        // Se o usuário acabou de assinar e ainda não tem projeto, criamos um agora
         if (!$user->project) {
             Project::create([
-                'user_id' => $user->id,
-                'name' => 'Project_' . strtoupper(substr(md5($user->id . time()), 0, 6)),
-                'status' => 'Initializing',
+                'user_id'  => $user->id,
+                'name'     => 'Project_' . strtoupper(substr(md5($user->id . time()), 0, 6)),
+                'status'   => 'Initializing',
                 'progress' => 0,
-                'steps' => [
-                    ['title' => 'Project Analysis', 'completed' => false],
+                'steps'    => [
+                    ['title' => 'Project Analysis',   'completed' => false],
                     ['title' => 'Architecture Design', 'completed' => false],
-                    ['title' => 'Development Phase', 'completed' => false],
-                    ['title' => 'Quality Assurance', 'completed' => false],
-                    ['title' => 'Final Delivery', 'completed' => false],
-                ]
-            ]); 
-            // Recarrega o usuário para garantir que o relacionamento 'project' seja preenchido
+                    ['title' => 'Development Phase',   'completed' => false],
+                    ['title' => 'Quality Assurance',   'completed' => false],
+                    ['title' => 'Final Delivery',      'completed' => false],
+                ],
+            ]);
             $user->load('project');
         }
-        // -------------------------------------------------------
 
-        // 3. FLUXO CLIENTE ASSINANTE
         $project = $user->project;
 
+        // CORREÇÃO: oldest() em vez de latest()
+        // Mensagens em ordem cronológica: antigas no topo, novas embaixo.
         $messages = $project
-            ? $project->messages()->with('user')->latest()->get()
+            ? $project->messages()->with('user')->oldest()->get()
             : collect();
 
         return view('dashboard', [
-            'project' => $project,
-            'messages' => $messages,
-            'subscription' => $user->subscription('default')
+            'project'      => $project,
+            'messages'     => $messages,
+            'subscription' => $user->subscription('default'),
         ]);
     })->name('dashboard');
 
@@ -178,7 +175,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // GESTÃO DE USUÁRIOS
     Route::get('/users', function () {
         if (auth()->user()->role !== 'admin') abort(403);
-        
+
         $users = User::with('assignedProjects')->whereIn('role', ['employee', 'client'])->get();
         $projects = Project::all(); // Necessário para o select de associação
         return view('admin.users.index', compact('users', 'projects'));
@@ -206,7 +203,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('/users/{user}', function (Request $request, User $user) {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|in:employee,client',
             'projects' => 'nullable|array',
             'projects.*' => 'exists:projects,id',
@@ -233,7 +230,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         $user->delete();
         return back()->with('success', 'Usuário removido do sistema.');
     })->name('users.destroy');
-
 });
 
 /*
