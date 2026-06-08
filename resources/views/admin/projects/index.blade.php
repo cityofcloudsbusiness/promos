@@ -168,8 +168,13 @@
                                 </div>
                                 <p class="text-sm text-gray-200 leading-relaxed">{!! nl2br(e($msg->content)) !!}</p>
                                 @if($msg->attachment)
+                                    @php $ext = strtolower(pathinfo($msg->attachment, PATHINFO_EXTENSION)); @endphp
                                     <div class="mt-4 border border-white/5 rounded overflow-hidden">
-                                        <img src="{{ asset('storage/'.$msg->attachment) }}" class="max-h-[500px] w-full object-contain bg-black/50">
+                                        @if(in_array($ext, ['mp4', 'webm', 'mov', 'ogg']))
+                                            <video src="{{ asset('uploads/'.$msg->attachment) }}" controls class="max-h-[300px] w-full bg-black/50"></video>
+                                        @else
+                                            <img src="{{ asset('uploads/'.$msg->attachment) }}" class="max-h-[500px] w-full object-contain bg-black/50">
+                                        @endif
                                     </div>
                                 @endif
                             </div>
@@ -203,7 +208,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
-                                    <input type="file" name="attachment" class="hidden" accept="image/*">
+                                    <input type="file" name="attachment" class="hidden" accept="image/*,video/*">
                                 </label>
                                                                 <button type="button" onclick="checkAsyncWorking()" class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded-lg text-xs mr-2">
                                     Test JS
@@ -312,6 +317,7 @@
                                 fetch(messageForm.action, {
                                     method: 'POST',
                                     headers: {
+                                        'Accept': 'application/json',
                                         'X-Requested-With': 'XMLHttpRequest',
                                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                                     },
@@ -349,10 +355,12 @@
                                                         <span class="text-[9px] text-gray-600">${data.message.created_at}</span>
                                                     </div>
                                                     <p class="text-sm text-gray-200 leading-relaxed">${data.message.content ? data.message.content.replace(/\n/g, '<br>') : ''}</p>
-                                                    ${data.message.attachment ? 
+                                                    ${data.message.attachment ?
                                                         `<div class="mt-4 border border-white/5 rounded overflow-hidden">
-                                                            <img src="${data.message.attachment}" class="max-h-[500px] w-full object-contain bg-black/50">
-                                                        </div>` : 
+                                                            ${data.message.attachment_type === 'video'
+                                                                ? `<video src="${data.message.attachment}" controls class="max-h-[300px] w-full bg-black/50"></video>`
+                                                                : `<img src="${data.message.attachment}" class="max-h-[500px] w-full object-contain bg-black/50">`}
+                                                        </div>` :
                                                         ''}
                                                 </div>
                                             `;

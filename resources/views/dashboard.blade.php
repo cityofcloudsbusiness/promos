@@ -154,8 +154,15 @@
                                 <p class="text-[10px] uppercase text-gray-500 mb-1">{{ $message->user->name }}:</p>
                                 <p class="text-sm">{{ $message->content }}</p>
                                 @if($message->attachment)
-                                    <img src="{{ asset('storage/' . $message->attachment) }}"
-                                         class="mt-2 rounded border border-gray-700 max-w-xs">
+                                    @php $ext = strtolower(pathinfo($message->attachment, PATHINFO_EXTENSION)); @endphp
+                                    @if(in_array($ext, ['mp4', 'webm', 'mov', 'ogg']))
+                                        <video src="{{ asset('uploads/' . $message->attachment) }}"
+                                               controls
+                                               class="mt-2 rounded border border-gray-700 max-w-xs max-h-48"></video>
+                                    @else
+                                        <img src="{{ asset('uploads/' . $message->attachment) }}"
+                                             class="mt-2 rounded border border-gray-700 max-w-xs">
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -293,12 +300,16 @@
                 : 'bg-purple-900/20 border-purple-500/30'
         }`;
 
+        const mediaHtml = msg.attachment
+            ? (msg.attachment_type === 'video'
+                ? `<video src="${msg.attachment}" controls class="mt-2 rounded border border-gray-700 max-w-xs max-h-48"></video>`
+                : `<img src="${msg.attachment}" class="mt-2 rounded border border-gray-700 max-w-xs">`)
+            : '';
+
         bubble.innerHTML = `
             <p class="text-[10px] uppercase text-gray-500 mb-1">${escapeHtml(msg.user_name)}:</p>
             <p class="text-sm">${escapeHtml(msg.content ?? '')}</p>
-            ${msg.attachment
-                ? `<img src="${msg.attachment}" class="mt-2 rounded border border-gray-700 max-w-xs">`
-                : ''}
+            ${mediaHtml}
         `;
 
         wrapper.appendChild(bubble);

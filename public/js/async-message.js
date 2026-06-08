@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/messages', {
                 method: 'POST',
                 headers: {
+                    'Accept': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 },
@@ -182,6 +183,14 @@ document.addEventListener('DOMContentLoaded', () => {
         messageEl.style.transform = 'translateY(20px)';
         messageEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
         
+        const mediaHtml = message.attachment
+            ? `<div class="mt-4 border border-white/5 rounded overflow-hidden">
+                ${message.attachment_type === 'video'
+                    ? `<video src="${message.attachment}" controls class="max-h-[300px] w-full bg-black/50"></video>`
+                    : `<img src="${message.attachment}" class="max-h-[500px] w-full object-contain bg-black/50">`}
+               </div>`
+            : '';
+
         const messageContent = `
             <div class="max-w-[70%] ${isMyMessage ? 'bg-purple-600/10 border-r-4 border-purple-500' : 'bg-gray-800/30 border-l-4 border-cyan-500'} p-6 rounded-lg shadow-2xl backdrop-blur-sm">
                 <div class="flex items-center justify-between mb-2 space-x-12">
@@ -191,11 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="text-[9px] text-gray-600">${messageTime}</span>
                 </div>
                 <p class="text-sm text-gray-200 leading-relaxed">${message.content ? message.content.replace(/\n/g, '<br>') : ''}</p>
-                ${message.attachment ? 
-                    `<div class="mt-4 border border-white/5 rounded overflow-hidden">
-                        <img src="${message.attachment}" class="max-h-[500px] w-full object-contain bg-black/50">
-                    </div>` : 
-                    ''}
+                ${mediaHtml}
             </div>
         `;
         

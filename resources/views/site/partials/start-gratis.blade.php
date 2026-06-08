@@ -1,4 +1,4 @@
-<div x-data="kineticStory()" class="bg-black">
+<div x-data="kineticStory()" x-cloak class="bg-black">
 
     <template x-if="!finished">
         <section class="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden">
@@ -147,6 +147,10 @@
 </div>
 
 <style>
+    [x-cloak] {
+        display: none !important;
+    }
+
     .animate-gradient-x {
         background-size: 200% 200%;
         animation: gradient-move 5s linear infinite;
@@ -181,9 +185,12 @@
 
 <script>
     function kineticStory() {
+        const storageKey = 'cityagency_start_gratis_seen';
+        const alreadySeen = typeof localStorage !== 'undefined' && localStorage.getItem(storageKey) === 'true';
+
         return {
             currentStep: 0,
-            finished: false,
+            finished: alreadySeen,
             steps: [{
                     text: 'Atenção',
                     class: 'text-5xl md:text-7xl'
@@ -226,31 +233,49 @@
                 }
             ],
             init() {
+                if (alreadySeen) {
+                    this.$nextTick(() => {
+                        if (typeof AOS !== 'undefined') {
+                            AOS.init({
+                                duration: 1000,
+                                once: true,
+                                offset: 50
+                            });
+                            AOS.refreshHard();
+                        }
+
+                        window.scrollTo(window.scrollX, window.scrollY + 1);
+                        window.dispatchEvent(new Event('resize'));
+                    });
+
+                    return;
+                }
+
                 let interval = setInterval(() => {
                     if (this.currentStep < this.steps.length - 1) {
                         this.currentStep++;
                     } else {
                         this.finished = true;
                         clearInterval(interval);
+                        if (typeof localStorage !== 'undefined') {
+                            localStorage.setItem(storageKey, 'true');
+                        }
 
                         this.$nextTick(() => {
                             if (typeof AOS !== 'undefined') {
-                                // O SEGREDO: refreshHard força o AOS a mapear as sessões novas
                                 AOS.init({
                                     duration: 1000,
                                     once: true,
-                                    offset: 50 // Um valor pequeno para disparar logo na entrada
+                                    offset: 50
                                 });
-                                // RefreshHard é mais potente que o refresh comum
                                 AOS.refreshHard();
                             }
 
-                            // Simula um scroll para "acordar" os observadores das sessões de baixo
                             window.scrollTo(window.scrollX, window.scrollY + 1);
                             window.dispatchEvent(new Event('resize'));
                         });
                     }
-                }, 1100);
+                }, 800);
 
             }
         }

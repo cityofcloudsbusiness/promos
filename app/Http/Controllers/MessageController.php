@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-
 class MessageController extends Controller
 {
     /**
@@ -18,7 +16,7 @@ class MessageController extends Controller
         $request->validate([
             'project_id' => 'required|exists:projects,id',
             'content'    => 'required_without:attachment|nullable|string|max:5000',
-            'attachment' => 'nullable|image|max:5120', // Limite de 5MB
+            'attachment' => 'nullable|file|mimetypes:image/jpeg,image/png,image/gif,image/webp,image/jpg,video/mp4,video/webm,video/quicktime,video/ogg|max:51200',
         ]);
 
         // Segurança: garante que o projeto pertence ao usuário autenticado
@@ -38,8 +36,11 @@ class MessageController extends Controller
         }
 
         $path = null;
+        $attachmentType = null;
         if ($request->hasFile('attachment')) {
-            $path = $request->file('attachment')->store('attachments', 'public');
+            $file = $request->file('attachment');
+            $path = $file->store('attachments', 'uploads');
+            $attachmentType = str_starts_with($file->getMimeType(), 'video/') ? 'video' : 'image';
         }
 
         $message = Message::create([
@@ -49,22 +50,21 @@ class MessageController extends Controller
             'attachment' => $path,
         ]);
 
-        // Carrega o relacionamento para retornar dados completos no JSON
         $message->load('user');
 
-        // --- Resposta AJAX (Fetch API) ---
         if ($request->expectsJson()) {
             return response()->json([
-                'success'    => true,
-                'message'    => [
-                    'id'         => $message->id,
-                    'content'    => $message->content,
-                    'user_id'    => $message->user_id,
-                    'user_name'  => $message->user->name,
-                    'attachment' => $message->attachment
-                        ? asset('storage/' . $message->attachment)
+                'success' => true,
+                'message' => [
+                    'id'              => $message->id,
+                    'content'         => $message->content,
+                    'user_id'         => $message->user_id,
+                    'user_name'       => $message->user->name,
+                    'attachment'      => $message->attachment
+                        ? asset('uploads/' . $message->attachment)
                         : null,
-                    'created_at' => $message->created_at->format('H:i'),
+                    'attachment_type' => $attachmentType,
+                    'created_at'      => $message->created_at->format('H:i'),
                 ],
             ]);
         }
