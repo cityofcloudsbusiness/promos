@@ -21,6 +21,17 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function settings(Request $request): View
+    {
+        $user = $request->user();
+
+        return view('profile.settings', [
+            'user' => $user,
+            'subscription_type' => $user->plan_label,
+            'annual_days_left' => $user->annual_days_remaining,
+        ]);
+    }
+
     /**
      * Update the user's profile information.
      */

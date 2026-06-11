@@ -1,45 +1,88 @@
 <x-app-layout>
-    <div class="py-12 min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 z-0 opacity-30">
-            <div class="absolute top-0 -left-4 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-            <div class="absolute top-0 -right-4 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+    <div class="py-12 min-h-screen bg-[#0a0a0e] flex items-center justify-center relative overflow-hidden antialiased selection:bg-pink-500 selection:text-white">
+        
+        <div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+            <div class="absolute top-1/4 left-10 w-[500px] h-[500px] bg-purple-900/30 rounded-full filter blur-[120px] animate-blob"></div>
+            <div class="absolute bottom-1/4 right-10 w-[500px] h-[500px] bg-cyan-900/20 rounded-full filter blur-[120px] animate-blob animation-delay-4000"></div>
         </div>
 
-        <div class="max-w-xl mx-auto sm:px-6 lg:px-8 z-10 relative w-full">
-            <div class="bg-black/60 backdrop-blur-2xl border border-white/10 overflow-hidden shadow-[0_0_50px_rgba(219,39,119,0.2)] rounded-3xl p-10 text-center">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 z-10 relative w-full">
+            <div class="relative bg-[#12131a]/70 backdrop-blur-3xl border border-white/5 overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.8)] rounded-[32px] p-8 sm:p-14 text-center">
                 
-                <div class="mb-8">
-                    <div class="inline-block px-4 py-1 rounded-full border border-pink-500/50 text-pink-500 font-mono text-xs tracking-[0.2em] uppercase mb-4 shadow-[0_0_10px_rgba(219,39,119,0.3)]">
-                        Inscrição Prioritária
+                <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" 
+                     style="background-size: 40px 40px; background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); mask-image: radial-gradient(ellipse at center, black, transparent 80%); -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 80%);">
+                </div>
+
+                <div class="relative z-10">
+                    <div class="mb-6">
+                        <div class="inline-block px-5 py-1.5 rounded-xl border border-purple-500/30 text-purple-300 font-mono text-[11px] tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(168,85,247,0.15)] bg-purple-950/30">
+                            Inscrição Prioritária
+                        </div>
                     </div>
-                    <h2 class="text-5xl font-black text-white tracking-tighter italic">
-                        FULL <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">ACCESS</span>
+
+                    <h2 class="text-5xl sm:text-6xl font-black text-white tracking-wider uppercase mb-3">
+                        ACESSO <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 drop-shadow-[0_0_30px_rgba(236,72,153,0.3)]">TOTAL</span>
                     </h2>
-                    <p class="text-gray-400 mt-4 font-light tracking-wide">Desbloqueie a infraestrutura completa e as ferramentas neurais.</p>
-                </div>
+                    
+                    <p class="text-gray-400 font-normal tracking-wide text-sm sm:text-base max-w-xl mx-auto mb-10">
+                        Desbloqueie a infraestrutura completa e as ferramentas neurais.
+                    </p>
 
-                <div class="py-8 border-y border-white/5 my-8">
-                    <div class="flex items-center justify-center gap-1">
-                        <span class="text-gray-500 text-xl font-light">R$</span>
-                        <span class="text-6xl font-black text-white tracking-tighter">197</span>
-                        <span class="text-pink-500 text-xl font-mono">/mês</span>
-                    </div>
-                </div>
+                    <div class="grid gap-8 md:grid-cols-2 text-left">
+                        
+                        <div class="flex flex-col justify-between rounded-[24px] border border-white/5 bg-[#161722]/80 p-8 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:border-pink-500/20 transition-all duration-500 relative group/card">
+                            <div>
+                                <div class="inline-block text-[11px] font-medium tracking-wide text-pink-400 bg-pink-500/10 px-3 py-1 rounded-full mb-6">
+                                    Assinatura Recorrente
+                                </div>
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-5xl font-bold text-white tracking-tight">197</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 bg-pink-500/10 border border-pink-500/20 rounded-full px-2.5 py-1 text-pink-400 text-xs font-semibold">
+                                        <span class="w-3 h-3 rounded-full bg-pink-500 flex items-center justify-center text-[8px] text-black font-black">€</span>
+                                        /mês
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-gray-400 text-sm leading-relaxed">
+                                    Desbloqueie a infraestrutura completa e as ferramentas neurais com manutenção completa e atualizações.
+                                </p>
+                            </div>
+                            
+                            <a href="{{ route('checkout') }}" 
+                               class="group/btn relative mt-8 inline-flex w-full items-center justify-center overflow-hidden rounded-xl bg-[#ff3399] px-5 py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_0_30px_rgba(255,51,153,0.3)] transition-transform duration-300 hover:scale-[1.01] active:scale-95">
+                                <span class="relative z-10">Assinar Agora</span>
+                                <div class="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:animate-mirror-shine pointer-events-none"></div>
+                            </a>
+                        </div>
 
-                <a href="{{ route('checkout') }}" 
-                   class="group relative inline-flex w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-pink-600 to-purple-700 p-4 font-bold text-white shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-95">
-                    <span class="relative uppercase tracking-widest">Iniciar Assinatura</span>
-                    <div class="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
-                        <div class="relative h-full w-8 bg-white/20"></div>
+                        <div class="flex flex-col justify-between rounded-[24px] border border-white/5 bg-[#161722]/80 p-8 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:border-cyan-500/20 transition-all duration-500 relative group/card">
+                            <div>
+                                <div class="inline-block text-[11px] font-medium tracking-wide text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full mb-6">
+                                    Assinatura Anual
+                                </div>
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-5xl font-bold text-white tracking-tight">2.138,29</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-2.5 py-1 text-cyan-400 text-xs font-semibold">
+                                        <span class="w-3 h-3 rounded-full bg-cyan-400 flex items-center justify-center text-[8px] text-black font-black">€</span>
+                                        /ano
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-gray-400 text-sm leading-relaxed">
+                                    Desbloqueie a infraestrutura completa e as ferramentas neurais com manutenção completa e atualizações.
+                                </p>
+                            </div>
+                            
+                            <a href="{{ route('checkout', ['plan' => 'annual']) }}" 
+                               class="group/btn relative mt-8 inline-flex w-full items-center justify-center overflow-hidden rounded-xl bg-[#33ccff] px-5 py-4 text-sm font-bold uppercase tracking-widest text-black shadow-[0_0_30px_rgba(51,204,255,0.25)] transition-transform duration-300 hover:scale-[1.01] active:scale-95">
+                                <span class="relative z-10">Assinar Agora</span>
+                                <div class="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover/btn:animate-mirror-shine pointer-events-none"></div>
+                            </a>
+                        </div>
                     </div>
-                </a>
 
-                <div class="mt-8 flex flex-col gap-2">
-                    <div class="flex items-center justify-center gap-2 text-xs text-gray-500 uppercase tracking-widest font-mono">
-                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        Criptografia de Ponta a Ponta via Stripe
-                    </div>
                 </div>
             </div>
         </div>
@@ -49,11 +92,22 @@
         @keyframes blob {
             0% { transform: translate(0px, 0px) scale(1); }
             33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
             100% { transform: translate(0px, 0px) scale(1); }
         }
-        .animate-blob { animation: blob 7s infinite; }
-        .animation-delay-2000 { animation-delay: 2s; }
+        
+        /* Nova animação corrigida para o efeito de espelho passando na luz */
+        @keyframes mirrorShine {
+            0% { transform: translateX(-100%) skewX(-15deg); }
+            100% { transform: translateX(100%) skewX(-15deg); }
+        }
+
+        .animate-blob { animation: blob 12s infinite ease-in-out; }
         .animation-delay-4000 { animation-delay: 4s; }
+        
+        /* Classe utilitária que roda a animação apenas 1 vez por gatilho de hover */
+        .animate-mirror-shine {
+            animation: mirrorShine 0.75s ease-in-out forwards;
+        }
     </style>
 </x-app-layout>

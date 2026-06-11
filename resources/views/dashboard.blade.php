@@ -243,13 +243,40 @@
                         GERENCIAR FATURAS
                     </a>
 
-                    @if($project && $project->preview_url)
-                    <a href="{{ $project->preview_url }}" target="_blank"
-                       class="block w-full text-center py-2 mt-2 bg-blue-600/20 border border-blue-500/40 rounded
-                              text-[10px] font-bold text-blue-400 hover:bg-blue-500/30 transition uppercase">
-                        VER SITE PREVIEW
+                    <a href="{{ route('profile.settings') }}"
+                       class="block w-full text-center py-2 mt-2 bg-fuchsia-500/20 border border-fuchsia-400/30 rounded
+                              text-[10px] font-bold text-fuchsia-300 hover:bg-fuchsia-500/30 transition uppercase">
+                        PERFIL & CONFIGURAÇÕES
                     </a>
-                    @endif
+                </div>
+
+                <div class="p-4 bg-gray-900/50 border border-white/10 rounded-xl">
+                    <h3 class="text-white text-[10px] mb-4 tracking-widest uppercase text-center">Plano Atual</h3>
+                    <div class="rounded-2xl bg-black/40 p-4 border border-white/10 shadow-[0_0_30px_rgba(168,85,247,0.18)]">
+                        <p class="text-sm uppercase tracking-[0.25em] text-pink-400">{{ auth()->user()->plan_label }}</p>
+                        <p class="mt-3 text-3xl font-black text-white">{{ auth()->user()->plan_label === 'Anual' ? 'Anual' : 'Mensal' }}</p>
+                        @if(auth()->user()->subscription_type === 'annual')
+                            <p class="mt-4 text-xs uppercase tracking-[0.25em] text-cyan-300">Tempo Restante</p>
+                            <p class="text-2xl font-bold text-white">{{ auth()->user()->annual_days_remaining ?? 0 }} dias</p>
+                        @else
+                            <p class="mt-4 text-sm text-gray-400">Sua assinatura mensal está ativa.</p>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="p-4 bg-gray-900/50 border border-blue-500/20 rounded-xl">
+                    <h3 class="text-blue-400 text-[10px] mb-4 tracking-widest uppercase text-center">Ações do Sistema</h3>
+                    <a href="{{ route('billing') }}"
+                       class="block w-full text-center py-2 border border-blue-500/40 rounded
+                              text-[10px] font-bold text-blue-400 hover:bg-blue-500/10 transition uppercase">
+                        GERENCIAR FATURAS
+                    </a>
+
+                    <a href="{{ route('profile.settings') }}"
+                       class="block w-full text-center py-2 mt-2 bg-fuchsia-500/20 border border-fuchsia-400/30 rounded
+                              text-[10px] font-bold text-fuchsia-300 hover:bg-fuchsia-500/30 transition uppercase">
+                        PERFIL & CONFIGURAÇÕES
+                    </a>
                 </div>
 
                 <div class="p-4 border border-white/5 rounded-xl text-[10px] text-gray-500 leading-relaxed text-center italic">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,10 @@ Route::get('/marketing', function () {
 Route::get('/ia', function () {
     return view('site.page4.principal');
 })->name('ia');
+
+Route::get('sobre', function () {
+    return view('site.page5.principal');
+})->name('sobre');
 /*
 |--------------------------------------------------------------------------
 | 2. FLUXO DE PAGAMENTO (STRIPE) - Mantido Original com Correção de Redirecionamento
@@ -45,9 +50,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect()->route('admin.projects.index');
         }
 
-        // CORREÇÃO: Se o usuário já tem uma assinatura ativa, redireciona para o Dashboard
+        // CORREÇÃO: Se o usuário já tem uma assinatura ativa ou anual válida, redireciona para o Dashboard
         // Isso impede que ele fique preso nesta tela após o pagamento.
-        if ($user->subscribed('default')) {
+        if ($user->subscribed('default') || ($user->subscription_type === 'annual' && $user->subscription_expires_at && $user->subscription_expires_at->isFuture())) {
             return redirect()->route('dashboard');
         }
 
@@ -55,15 +60,34 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('subscribeWebM');
 
     // 2. Checkout Stripe (Gera o link de pagamento)
-    Route::get('/checkout-assinatura', function (Request $request) {
+    Route::get('/checkout-assinatura/{plan?}', function (Request $request, $plan = 'monthly') {
         if ($request->user()->role === 'admin' || $request->user()->role === 'employee') {
             return redirect()->route('admin.projects.index');
         }
 
+        if ($plan === 'annual') {
+            $priceId = env('STRIPE_PRICE_ID2');
+
+            if (!$priceId) {
+                abort(500, 'Stripe annual price ID not configured.');
+            }
+
+            return $request->user()->checkout($priceId, [
+                'success_url' => route('payment.success', ['plan' => 'annual']) . '?success=true&session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('subscribeWebM') . '?error=cancel',
+            ]);
+        }
+
+        $priceId = env('STRIPE_PRICE_ID');
+
+        if (!$priceId) {
+            abort(500, 'Stripe subscription price ID not configured.');
+        }
+
         return $request->user()
-            ->newSubscription('default', env('STRIPE_PRICE_ID'))
+            ->newSubscription('default', $priceId)
             ->checkout([
-                'success_url' => route('dashboard') . '?success=true',
+                'success_url' => route('payment.success', ['plan' => 'monthly']) . '?success=true&session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('subscribeWebM') . '?error=cancel',
             ]);
     })->name('checkout');
@@ -76,6 +100,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         return $request->user()->redirectToBillingPortal(route('dashboard'));
     })->name('billing');
+
+    Route::get('/payment-success/{plan?}', [PaymentController::class, 'success'])
+        ->name('payment.success');
 });
 
 
@@ -96,7 +123,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect()->route('admin.projects.index');
         }
 
-        if (!$user->subscribed('default')) {
+        $hasAnnualPlan = $user->subscription_type === 'annual' && $user->subscription_expires_at && $user->subscription_expires_at->isFuture();
+
+        if (! $user->subscribed('default') && ! $hasAnnualPlan) {
             return redirect()->route('subscribeWebM');
         }
 
@@ -128,7 +157,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard', [
             'project'      => $project,
             'messages'     => $messages,
-            'subscription' => $user->subscription('default'),
+            'subscription' => $user->subscribed('default') ? $user->subscription('default') : null,
         ]);
     })->name('dashboard');
 
@@ -249,6 +278,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 */
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

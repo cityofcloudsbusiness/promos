@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable; // <--- 1. Importe a Trait do Cashier
 
-#[Fillable(['name', 'email', 'password', 'role'])]
+#[Fillable(['name', 'email', 'password', 'role', 'subscription_type', 'subscription_started_at', 'subscription_expires_at'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -28,7 +28,33 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'subscription_started_at' => 'datetime',
+            'subscription_expires_at' => 'datetime',
         ];
+    }
+
+    public function getPlanLabelAttribute(): string
+    {
+        if ($this->subscription_type === 'annual') {
+            return 'Anual';
+        }
+
+        if ($this->subscribed('default')) {
+            return 'Mensal';
+        }
+
+        return 'Sem Plano';
+    }
+
+    public function getAnnualDaysRemainingAttribute(): ?int
+    {
+        if ($this->subscription_type !== 'annual' || ! $this->subscription_expires_at) {
+            return null;
+        }
+
+        $days = now()->diffInDays($this->subscription_expires_at, false);
+
+        return $days >= 0 ? $days : 0;
     }
 
     // app/Models/User.php

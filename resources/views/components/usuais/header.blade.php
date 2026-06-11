@@ -38,7 +38,7 @@
                         <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-blue-500 transition-all group-hover:w-full"></span>
                     </li>
                     <li class="hover:text-blue-500 transition-colors cursor-pointer relative group">
-                        <a href="#ia">Sobre</a>
+                        <a href="{{route('sobre')}}">Sobre</a>
                         <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-blue-500 transition-all group-hover:w-full"></span>
                     </li>
                 </ul>
