@@ -67,19 +67,31 @@
 
                 <div id="hex-grid" class="relative w-[400px] h-[400px] z-10" style="clip-path: polygon(22% 6%, 78% 6%, 100% 50%, 78% 94%, 22% 94%, 0% 50%);" @mouseenter="expandHex()" @mouseleave="retractHex()">
                     <div class="quad absolute top-0 left-0 w-1/2 h-1/2 overflow-hidden opacity-0 scale-90 transition-all duration-1000">
-                        <img src="{{ Vite::asset('resources/imgs/sec9/sec91.jpg') }}" class="w-full h-full object-cover grayscale brightness-50 transition-all duration-700">
+                        <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec9/sec91.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec9/sec91.jpg') }}" alt="Ilustração de inteligência artificial em rede" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale brightness-50 transition-all duration-700">
+                    </picture>
                         <div class="absolute inset-0 bg-gradient-to-br from-purple-600/40 to-transparent"></div>
                     </div>
                     <div class="quad absolute top-0 right-0 w-1/2 h-1/2 overflow-hidden opacity-0 scale-90 transition-all duration-1000">
-                        <img src="{{ Vite::asset('resources/imgs/sec9/sec94.png') }}" class="w-full h-full object-cover grayscale brightness-50 transition-all duration-700">
+                        <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec9/sec94.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec9/sec94.png') }}" alt="Imagem abstrata de tecnologia e inovação" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale brightness-50 transition-all duration-700">
+                    </picture>
                         <div class="absolute inset-0 bg-gradient-to-bl from-blue-600/40 to-transparent"></div>
                     </div>
                     <div class="quad absolute bottom-0 left-0 w-1/2 h-1/2 overflow-hidden opacity-0 scale-90 transition-all duration-1000">
-                        <img src="{{ Vite::asset('resources/imgs/sec9/sec93.png') }}" class="w-full h-full object-cover grayscale brightness-50 transition-all duration-700">
+                        <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec9/sec93.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec9/sec93.png') }}" alt="Visual de nuvem digital e gráficos" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale brightness-50 transition-all duration-700">
+                    </picture>
                         <div class="absolute inset-0 bg-gradient-to-tr from-purple-600/40 to-transparent"></div>
                     </div>
                     <div class="quad absolute bottom-0 right-0 w-1/2 h-1/2 overflow-hidden opacity-0 scale-90 transition-all duration-1000">
-                        <img src="{{ Vite::asset('resources/imgs/sec9/sec92.jpg') }}" class="w-full h-full object-cover grayscale brightness-50 transition-all duration-700">
+                        <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec9/sec92.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec9/sec92.jpg') }}" alt="Painel digital de análise e dados" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale brightness-50 transition-all duration-700">
+                    </picture>
                         <div class="absolute inset-0 bg-gradient-to-tl from-indigo-600/40 to-transparent"></div>
                     </div>
                 </div>

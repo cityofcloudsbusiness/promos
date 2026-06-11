@@ -11,7 +11,10 @@
                     <div class="absolute -inset-4 border border-purple-500/30 rounded-full animate-[spin_15s_linear_infinite_reverse] border-dotted"></div>
                     
                     <div class="relative bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(59,130,246,0.2)]">
-                        <img src="{{ Vite::asset('resources/imgs/logo_otimizada.png') }}" alt="City Of CloudS" class="w-56 h-auto">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/logo_otimizada.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/logo_otimizada.png') }}" alt="City Of CloudS" loading="lazy" decoding="async" class="w-56 h-auto">
+                        </picture>
                     </div>
                 </div>
                 

@@ -173,7 +173,7 @@
                                         @if(in_array($ext, ['mp4', 'webm', 'mov', 'ogg']))
                                             <video src="{{ asset('uploads/'.$msg->attachment) }}" controls class="max-h-[300px] w-full bg-black/50"></video>
                                         @else
-                                            <img src="{{ asset('uploads/'.$msg->attachment) }}" class="max-h-[500px] w-full object-contain bg-black/50">
+                                            <img src="{{ asset('uploads/'.$msg->attachment) }}" alt="Anexo do projeto" loading="lazy" decoding="async" class="max-h-[500px] w-full object-contain bg-black/50">
                                         @endif
                                     </div>
                                 @endif
@@ -359,7 +359,7 @@
                                                         `<div class="mt-4 border border-white/5 rounded overflow-hidden">
                                                             ${data.message.attachment_type === 'video'
                                                                 ? `<video src="${data.message.attachment}" controls class="max-h-[300px] w-full bg-black/50"></video>`
-                                                                : `<img src="${data.message.attachment}" class="max-h-[500px] w-full object-contain bg-black/50">`}
+                                                                : `<img src="${data.message.attachment}" alt="Anexo do projeto" loading="lazy" decoding="async" class="max-h-[500px] w-full object-contain bg-black/50">`}
                                                         </div>` :
                                                         ''}
                                                 </div>

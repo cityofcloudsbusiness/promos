@@ -6,16 +6,28 @@
             
             <div class="w-full lg:w-1/2 grid grid-cols-12 gap-3 h-[600px] relative" id="mosaico-marketing">
                 <div class="col-span-8 h-64 rounded-2xl overflow-hidden shadow-xl transform transition-all duration-700 hover:scale-105 hover:z-20 cursor-none" data-aos="fade-right">
-                    <img src="{{ Vite::asset('resources/imgs/sec4/sec41.jpg') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec4/sec41.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec4/sec41.jpg') }}" alt="Design de branding digital" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    </picture>
                 </div>
                 <div class="col-span-4 h-64 rounded-2xl overflow-hidden shadow-xl mt-12 transform transition-all duration-700 hover:scale-105 hover:z-20 cursor-none" data-aos="fade-down" data-aos-delay="200">
-                    <img src="{{ Vite::asset('resources/imgs/sec4/sec42.jpg') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec4/sec42.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec4/sec42.jpg') }}" alt="Postagem em redes sociais" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    </picture>
                 </div>
                 <div class="col-span-5 h-72 -mt-10 rounded-2xl overflow-hidden shadow-xl transform transition-all duration-700 hover:scale-105 hover:z-20 cursor-none" data-aos="fade-up" data-aos-delay="400">
-                    <img src="{{ Vite::asset('resources/imgs/sec4/sec43.jpg') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec4/sec43.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec4/sec43.jpg') }}" alt="Influência de marca com conteúdo" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    </picture>
                 </div>
                 <div class="col-span-7 h-72 -mt-4 rounded-2xl overflow-hidden shadow-xl transform transition-all duration-700 hover:scale-105 hover:z-20 cursor-none" data-aos="fade-left" data-aos-delay="600">
-                    <img src="{{ Vite::asset('resources/imgs/sec4/sec44.png') }}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec4/sec44.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec4/sec44.png') }}" alt="Mockup de identidade visual" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all">
+                    </picture>
                 </div>
             </div>
 

@@ -17,14 +17,20 @@
                 <div class="absolute transform -skew-x-12 -translate-x-16 -translate-y-20 z-10 animate-float-slow" data-aos="zoom-in-right">
                     <div class="relative group">
                         <div class="absolute -inset-1 bg-blue-500/30 blur opacity-40 group-hover:opacity-100 transition"></div>
-                        <img src="{{ Vite::asset('resources/imgs/sec8/sec82.jpg') }}" class="w-64 h-80 object-cover rounded-lg border border-white/10 shadow-2xl grayscale group-hover:grayscale-0 transition duration-700">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/sec8/sec82.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/sec8/sec82.jpg') }}" alt="Data center futurista em nuvem" loading="lazy" decoding="async" class="w-64 h-80 object-cover rounded-lg border border-white/10 shadow-2xl grayscale group-hover:grayscale-0 transition duration-700">
+                        </picture>
                     </div>
                 </div>
 
                 <div class="absolute transform -skew-x-12 z-30 animate-float-medium" data-aos="zoom-in" data-aos-delay="200">
                     <div class="relative group">
                         <div class="absolute -inset-2 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-70 transition"></div>
-                        <img src="{{ Vite::asset('resources/imgs/sec8/sec81.jpg') }}" class="w-72 h-96 rounded-xl object-contain border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/sec8/sec81.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/sec8/sec81.jpg') }}" alt="Dispositivo digital com interface de usuário" loading="lazy" decoding="async" class="w-72 h-96 rounded-xl object-contain border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                        </picture>
                         <div class="absolute inset-0 bg-blue-500/10 group-hover:bg-transparent transition"></div>
                     </div>
                 </div>
@@ -36,7 +42,7 @@
                             loop
                             muted
                             playsinline
-                            poster="{{ Vite::asset('resources/imgs/sec8/sec82.jpg')}}"
+                            poster="{{ Vite::asset('resources/imgs/sec8/sec82.webp')}}"
                             class="object-cover rounded-xl w-72 h-66 border-2 border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)] brightness-75 group-hover:brightness-110 transition">
                             <source src="{{ asset('videos/sec8.webm')}}" type="video/webm">
                             Seu navegador não suporta vídeos.

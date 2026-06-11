@@ -61,7 +61,10 @@
             <div id="central-core-iso" class="relative z-30 group my-8 lg:my-0" data-aos="fade-up">
                 <div class="absolute -inset-6 bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl blur-3xl opacity-20 group-hover:opacity-60 transition duration-1000"></div>
                 <div class="relative bg-slate-900 p-1.5 rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(139,92,246,0.3)]">
-                    <img src="{{ Vite::asset('resources/imgs/sec3.jpg') }}" class="w-[260px] lg:w-[400px] rounded-xl shadow-2xl">
+                    <picture>
+                        <source srcset="{{ Vite::asset('resources/imgs/sec3.webp') }}" type="image/webp">
+                        <img src="{{ Vite::asset('resources/imgs/sec3.jpg') }}" alt="Visual de site moderno com destaque para design e tecnologia" loading="lazy" decoding="async" class="w-[260px] lg:w-[400px] rounded-xl shadow-2xl">
+                    </picture>
                 </div>
             </div>
 
@@ -155,20 +158,51 @@
                 const container = document.querySelector('#neural-offer');
                 const cards = container.querySelectorAll('.neural-card-iso');
 
-                const handleScroll = () => {
-                    const triggerPoint = window.innerHeight * 0.9;
-                    cards.forEach((card, index) => {
-                        if (card.getBoundingClientRect().top < triggerPoint) {
-                            setTimeout(() => card.classList.add('revealed'), index * 30);
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const card = entry.target;
+                            setTimeout(() => card.classList.add('revealed'), Number(card.dataset.revealDelay || 0));
+                            observer.unobserve(card);
                         }
                     });
-                };
+                }, { threshold: 0.2 });
 
-                window.addEventListener('scroll', handleScroll);
-                window.addEventListener('revelar-site', () => setTimeout(handleScroll, 300));
+                cards.forEach((card, index) => {
+                    card.dataset.revealDelay = index * 30;
+                    revealObserver.observe(card);
+                });
+
+                const sectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.sectionVisible = true;
+                            this.startCanvas();
+                        } else {
+                            this.sectionVisible = false;
+                            this.stopCanvas();
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                sectionObserver.observe(container);
+                window.addEventListener('revelar-site', () => setTimeout(() => cards.forEach(card => {
+                    if (card.getBoundingClientRect().top < window.innerHeight * 0.9) {
+                        card.classList.add('revealed');
+                    }
+                }), 300));
 
                 this.initNeuralWeb(container);
-                handleScroll();
+            },
+            startCanvas() {
+                if (this.animationFrame) return;
+                this.animate();
+            },
+            stopCanvas() {
+                if (this.animationFrame) {
+                    cancelAnimationFrame(this.animationFrame);
+                    this.animationFrame = null;
+                }
             },
             initNeuralWeb(parent) {
                 const canvas = parent.querySelector('#neural-canvas-isolated');
@@ -184,6 +218,10 @@
                 resize();
 
                 const animate = () => {
+                    if (!this.sectionVisible) {
+                        this.animationFrame = null;
+                        return;
+                    }
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     const parentRect = parent.getBoundingClientRect();
                     const coreRect = core.getBoundingClientRect();
@@ -234,9 +272,9 @@
                             ctx.stroke();
                         }
                     });
-                    requestAnimationFrame(animate);
+                    this.animationFrame = requestAnimationFrame(this.animate);
                 };
-                animate();
+                this.animate();
             }
         }
     }

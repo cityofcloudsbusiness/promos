@@ -11,27 +11,39 @@
                 <div class="col-span-7" data-aos="fade-down" data-aos-delay="100">
                     <div class="relative group animate-float-slow">
                         <div class="absolute -inset-1 bg-blue-500/20 rounded-xl blur opacity-75"></div>
-                        <img src="{{ Vite::asset('resources/imgs/sec6/sec63.jpg') }}" alt="Shark Tank 1" class="relative rounded-xl border border-white/10 w-full object-cover h-64 shadow-2xl transition duration-500 group-hover:scale-105">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/sec6/sec63.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/sec6/sec63.jpg') }}" alt="Shark Tank 1" loading="lazy" decoding="async" class="relative rounded-xl border border-white/10 w-full object-cover h-64 shadow-2xl transition duration-500 group-hover:scale-105">
+                        </picture>
                     </div>
                 </div>
 
                 <div class="col-span-5" data-aos="fade-left" data-aos-delay="300">
                     <div class="relative group animate-float-medium">
-                        <img src="{{ Vite::asset('resources/imgs/sec6/sec62.jpg') }}" alt="Shark Tank 2" class="relative rounded-xl border border-white/10 w-full object-cover h-40 shadow-2xl transition duration-500 group-hover:scale-105 font-bold text-center">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/sec6/sec62.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/sec6/sec62.jpg') }}" alt="Shark Tank 2" loading="lazy" decoding="async" class="relative rounded-xl border border-white/10 w-full object-cover h-40 shadow-2xl transition duration-500 group-hover:scale-105 font-bold text-center">
+                        </picture>
                         <div class="absolute inset-0 bg-blue-600/10 rounded-xl"></div>
                     </div>
                 </div>
 
                 <div class="col-span-5 mt-[-40px]" data-aos="fade-up" data-aos-delay="500">
                     <div class="relative group animate-float-reverse">
-                        <img src="{{ Vite::asset('resources/imgs/sec6/sec61.jpg') }}" alt="Shark Tank 3" class="relative rounded-xl border border-white/10 w-full object-cover h-48 shadow-2xl transition duration-500 group-hover:scale-105">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/sec6/sec61.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/sec6/sec61.jpg') }}" alt="Shark Tank 3" loading="lazy" decoding="async" class="relative rounded-xl border border-white/10 w-full object-cover h-48 shadow-2xl transition duration-500 group-hover:scale-105">
+                        </picture>
                     </div>
                 </div>
 
                 <div class="col-span-7 mt-[-100px]" data-aos="zoom-in" data-aos-delay="700">
                     <div class="relative group animate-float-slow">
                         <div class="absolute -inset-1 bg-gradient-to-tr from-blue-600/30 to-purple-600/30 rounded-xl blur opacity-50 group-hover:opacity-100 transition"></div>
-                        <img src="{{ Vite::asset('resources/imgs/sec6/sec64.jpg') }}" alt="Shark Tank 4" class="relative rounded-xl border border-white/20 w-full object-cover h-72 shadow-2xl transition duration-500 group-hover:scale-105">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/sec6/sec64.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/sec6/sec64.jpg') }}" alt="Shark Tank 4" loading="lazy" decoding="async" class="relative rounded-xl border border-white/20 w-full object-cover h-72 shadow-2xl transition duration-500 group-hover:scale-105">
+                        </picture>
                         <div class="absolute bottom-4 left-4 bg-blue-600 px-3 py-1 rounded text-xs font-bold text-white uppercase tracking-tighter">Sócio de Tecnologia</div>
                     </div>
                 </div>
@@ -109,7 +121,7 @@
             <h3 class="text-2xl font-bold text-white uppercase italic">como funciona na prática a estratégia shark</h3>
         </div>
 
-        <div class="relative group cursor-pointer overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
+        <div class="relative group cursor-pointer overflow-hidden rounded-3xl border border-white/10 shadow-2xl" id="shark-tank-video-trigger" role="button" aria-label="Abrir vídeo Shark Tank">
             <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition"></div>
             
             <div class="relative aspect-video bg-gray-900 flex items-center justify-center">
@@ -117,13 +129,60 @@
                 
                 <div class="relative z-20">
                     <div class="absolute -inset-4 bg-blue-500 rounded-full blur-xl opacity-40 animate-pulse"></div>
-                    <button class="bg-blue-600 text-white w-24 h-24 rounded-full flex items-center justify-center shadow-2xl transform transition group-hover:scale-110 active:scale-95">
+                    <button type="button" class="bg-blue-600 text-white w-24 h-24 rounded-full flex items-center justify-center shadow-2xl transform transition group-hover:scale-110 active:scale-95">
                         <svg class="w-10 h-10 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="shark-tank-video-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4">
+        <div class="relative w-full max-w-5xl">
+            <button id="shark-tank-video-close" type="button" class="absolute top-4 right-4 z-20 text-white bg-black/50 rounded-full p-3 hover:bg-black/70 transition">
+                <span class="sr-only">Fechar vídeo</span>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <video id="shark-tank-video-player" class="w-full h-full rounded-3xl shadow-2xl bg-black" controls playsinline preload="metadata">
+                <source src="{{ asset('videos/Projeto Shark.mp4') }}" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const trigger = document.getElementById('shark-tank-video-trigger');
+            const modal = document.getElementById('shark-tank-video-modal');
+            const video = document.getElementById('shark-tank-video-player');
+            const closeButton = document.getElementById('shark-tank-video-close');
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                video.currentTime = 0;
+                video.play().catch(() => {});
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                video.pause();
+                video.currentTime = 0;
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+
+            trigger.addEventListener('click', openModal);
+            closeButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            video.addEventListener('ended', closeModal);
+        });
+    </script>
 
 <style>
     /* Linha de Varredura (Scan Line) */

@@ -12,7 +12,10 @@
                          id="target-image-wrapper"
                          style="opacity: 0; transform: scale(1.3) translateZ(-150px); filter: brightness(0.2) blur(5px);">
                         
-                        <img src="{{ Vite::asset('resources/imgs/sec2.jpg') }}" class="w-full h-full">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/sec2.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/sec2.jpg') }}" alt="Mosaico de telas e programação" loading="lazy" decoding="async" class="w-full h-full object-cover">
+                        </picture>
                         
                         <div class="absolute inset-0 bg-cyan-500/20 mix-blend-overlay opacity-0" id="image-glitch"></div>
                     </div>

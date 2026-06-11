@@ -198,7 +198,7 @@
                                 </div>
                                 @if($message->attachment)
                                     <div class="mt-4 border border-white/10 p-1 rounded bg-black/40">
-                                        <img src="{{ asset('storage/' . $message->attachment) }}" class="max-w-full rounded transition-all hover:scale-[1.02] cursor-pointer">
+                                        <img src="{{ asset('storage/' . $message->attachment) }}" alt="Anexo do usuário" loading="lazy" decoding="async" class="max-w-full rounded transition-all hover:scale-[1.02] cursor-pointer">
                                     </div>
                                 @endif
                             </div>

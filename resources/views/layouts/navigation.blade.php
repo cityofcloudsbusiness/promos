@@ -78,7 +78,10 @@
             <div class="flex items-center">
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ Vite::asset('resources/imgs/icon_logo.png') }}" class="h-12 w-auto logo-cyber" alt="Logo">
+                        <picture>
+                            <source srcset="{{ Vite::asset('resources/imgs/icon_logo.webp') }}" type="image/webp">
+                            <img src="{{ Vite::asset('resources/imgs/icon_logo.png') }}" class="h-12 w-auto logo-cyber" alt="Logo">
+                        </picture>
                     </a>
                 </div>
 

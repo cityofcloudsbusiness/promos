@@ -161,6 +161,9 @@
                                                class="mt-2 rounded border border-gray-700 max-w-xs max-h-48"></video>
                                     @else
                                         <img src="{{ asset('uploads/' . $message->attachment) }}"
+                                             alt="Anexo do chat"
+                                             loading="lazy"
+                                             decoding="async"
                                              class="mt-2 rounded border border-gray-700 max-w-xs">
                                     @endif
                                 @endif
@@ -303,7 +306,7 @@
         const mediaHtml = msg.attachment
             ? (msg.attachment_type === 'video'
                 ? `<video src="${msg.attachment}" controls class="mt-2 rounded border border-gray-700 max-w-xs max-h-48"></video>`
-                : `<img src="${msg.attachment}" class="mt-2 rounded border border-gray-700 max-w-xs">`)
+                : `<img src="${msg.attachment}" alt="Anexo do chat" loading="lazy" decoding="async" class="mt-2 rounded border border-gray-700 max-w-xs">`)
             : '';
 
         bubble.innerHTML = `
