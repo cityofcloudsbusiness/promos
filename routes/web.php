@@ -25,6 +25,10 @@ Route::get('/manutencao', function () {
 Route::get('/marketing', function () {
     return view('site.page3.principal');
 })->name('marketing');
+
+Route::get('/ia', function () {
+    return view('site.page4.principal');
+})->name('ia');
 /*
 |--------------------------------------------------------------------------
 | 2. FLUXO DE PAGAMENTO (STRIPE) - Mantido Original com Correção de Redirecionamento

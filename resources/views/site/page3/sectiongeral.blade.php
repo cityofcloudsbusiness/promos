@@ -48,6 +48,161 @@
 
 <!-- 2. TRÁFEGO PAGO (Ziguezague - Imagem Esq / Texto Dir) -->
 <section class="relative py-24 bg-[#050508] border-t border-white/5 overflow-hidden">
+<!-- 2. INSTAGRAM MAPS LOCALIZADOR (NOVO SERVIÇO) -->
+<section class="relative py-32 bg-[#020205] border-t border-white/5 overflow-hidden">
+    <!-- Efeitos de Fundo Específicos Instagram -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="absolute top-1/2 left-0 w-[600px] h-[600px] bg-gradient-to-r from-orange-600/10 via-pink-600/10 to-purple-600/10 rounded-full blur-[150px]"></div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10 max-w-7xl">
+        
+        <!-- Dobra Principal (A Agitação / Problema) -->
+        <div class="flex flex-col lg:flex-row items-center gap-16 mb-24">
+            <div class="w-full lg:w-1/2" data-aos="fade-right">
+                <span class="inline-block px-4 py-1 rounded-full text-[10px] font-black tracking-[0.3em] uppercase bg-pink-500/10 text-pink-400 border border-pink-500/30 mb-6 flex items-center w-fit gap-2">
+                    <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping absolute"></span>
+                    <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                    Alerta de Geolocalização
+                </span>
+                <h2 class="text-4xl md:text-5xl font-black italic uppercase text-white tracking-tighter leading-tight mb-6">
+                    Sua empresa está <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500">Invisível</span> no novo mapa do Instagram?
+                </h2>
+                <p class="text-slate-300 text-lg leading-relaxed mb-6 font-medium border-l-4 border-pink-500 pl-4 bg-white/5 p-4 rounded-r-xl">
+                    Quem está na sua rua agora está comprando do seu concorrente. O Instagram mudou a forma como as pessoas encontram negócios locais. Nós configuramos sua geolocalização e mantemos sua empresa ativa no topo do mapa 24h por dia para atrair clientes de forma imediata.
+                </p>
+                <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                    O Google Maps serve para quando o cliente já sabe o que quer. <strong class="text-white">O Instagram Maps serve para o cliente que quer descobrir o que fazer AGORA.</strong> Se o seu negócio não posta conteúdo com localização hoje, o pino da sua empresa simplesmente "some" do mapa para os usuários ao redor.
+                </p>
+                <a href="#planos-mkt" class="inline-block bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 text-white font-black uppercase italic px-8 py-4 rounded-xl hover:scale-105 shadow-[0_0_30px_rgba(236,72,153,0.4)] transition-all tracking-widest text-sm">
+                    Quero Dominar o Mapa da Minha Região
+                </a>
+            </div>
+
+            <!-- Animação do Mapa Cyberpunk -->
+            <div class="w-full lg:w-1/2 relative h-[400px]" data-aos="zoom-in">
+                <div class="absolute inset-0 bg-[#050508] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                    <!-- Fundo do Mapa (Grade) -->
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                    
+                    <!-- Efeito de Radar -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-pink-500/20 opacity-50"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-pink-500/40 opacity-50"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full border border-pink-500/60 opacity-50 bg-gradient-to-tr from-transparent via-pink-500/10 to-transparent animate-[spin_4s_linear_infinite]"></div>
+
+                    <!-- Pinos Concorrentes (Mortos/Cinzas) -->
+                    <div class="absolute top-1/4 left-1/4 flex flex-col items-center opacity-30 grayscale filter">
+                        <svg class="w-8 h-8 text-gray-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+                    </div>
+                    <div class="absolute bottom-1/4 right-1/4 flex flex-col items-center opacity-30 grayscale filter">
+                        <svg class="w-8 h-8 text-gray-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+                    </div>
+                    <div class="absolute top-[60%] left-[20%] flex flex-col items-center opacity-30 grayscale filter">
+                        <svg class="w-8 h-8 text-gray-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+                    </div>
+
+                    <!-- O Seu Negócio (Pino Brilhante/Vivo) -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[80%] flex flex-col items-center animate-bounce z-20">
+                        <div class="bg-[#050508]/80 backdrop-blur-md border border-pink-500 px-3 py-1 rounded-full mb-2 shadow-[0_0_15px_rgba(236,72,153,0.5)]">
+                            <span class="text-[10px] font-black uppercase text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">Sua Empresa</span>
+                        </div>
+                        <svg class="w-14 h-14 text-pink-500 drop-shadow-[0_0_20px_rgba(236,72,153,1)]" viewBox="0 0 24 24" fill="url(#insta-grad)">
+                            <defs>
+                                <linearGradient id="insta-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#f97316" /> <!-- orange-500 -->
+                                    <stop offset="50%" stop-color="#ec4899" /> <!-- pink-500 -->
+                                    <stop offset="100%" stop-color="#a855f7" /> <!-- purple-500 -->
+                                </linearGradient>
+                            </defs>
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/>
+                        </svg>
+                        <div class="w-8 h-2 bg-pink-500/50 blur-sm rounded-full mt-1 animate-pulse"></div>
+                    </div>
+
+                    <!-- Clientes Animados (Pontos de Luz se aproximando) -->
+                    <div class="absolute top-1/3 left-1/2 flex items-center justify-center">
+                        <div class="w-3 h-3 bg-white rounded-full shadow-[0_0_20px_#fff] animate-[ping_2s_ease-in-out_infinite]"></div>
+                        <div class="absolute w-2 h-2 bg-cyan-400 rounded-full"></div>
+                    </div>
+                    <div class="absolute top-1/2 right-[30%] flex items-center justify-center">
+                        <div class="w-3 h-3 bg-white rounded-full shadow-[0_0_20px_#fff] animate-[ping_2.5s_ease-in-out_infinite]"></div>
+                        <div class="absolute w-2 h-2 bg-purple-400 rounded-full"></div>
+                    </div>
+                    <div class="absolute bottom-[40%] left-[40%] flex items-center justify-center">
+                        <div class="w-3 h-3 bg-white rounded-full shadow-[0_0_20px_#fff] animate-[ping_3s_ease-in-out_infinite]"></div>
+                        <div class="absolute w-2 h-2 bg-orange-400 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Os 3 Pilares da Solução -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
+            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-pink-500/50 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-12 h-12 bg-orange-500/20 text-orange-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-black italic uppercase text-white mb-3">Setup e Engenharia Local</h3>
+                <p class="text-sm text-slate-400">Criação técnica do pino oficial no ecossistema Meta, correção de endereço, categorias precisas e indexação biográfica para buscas locais imediatas.</p>
+            </div>
+            
+            <div class="bg-gradient-to-b from-pink-500/10 to-transparent border border-pink-500/30 p-8 rounded-3xl hover:border-pink-400 transition-all duration-300 group shadow-[0_0_30px_rgba(236,72,153,0.1)] relative" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute top-4 right-4 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span></div>
+                <div class="w-12 h-12 bg-pink-500/20 text-pink-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-black italic uppercase text-white mb-3">Presença em Tempo Real</h3>
+                <p class="text-sm text-slate-400">Alimentação estratégica de Stories, Reels e Notas com tags geolocalizadas. Garantimos que sua empresa permaneça "acesa" nas últimas 24 horas.</p>
+            </div>
+            
+            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-purple-500/50 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-12 h-12 bg-purple-500/20 text-purple-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                </div>
+                <h3 class="text-xl font-black italic uppercase text-white mb-3">Campanhas de Ímã Local</h3>
+                <p class="text-sm text-slate-400">Estruturação de displays de balcão e QR Codes que incentivam os próprios clientes a fazerem check-in, gerando publicidade viral e gratuita na região.</p>
+            </div>
+        </div>
+
+        <!-- Segmentação (Para quem é?) -->
+        <div class="mb-16">
+            <h3 class="text-center text-xl font-black uppercase text-slate-500 tracking-widest mb-10" data-aos="fade-up">Os Nichos que Mais Lucram com o Mapa</h3>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10" data-aos="zoom-in" data-aos-delay="100">
+                    <span class="text-2xl">🍔</span>
+                    <span class="text-white font-bold text-sm uppercase">Gastronomia</span>
+                </div>
+                <div class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10" data-aos="zoom-in" data-aos-delay="200">
+                    <span class="text-2xl">💇</span>
+                    <span class="text-white font-bold text-sm uppercase">Beleza & Estética</span>
+                </div>
+                <div class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10" data-aos="zoom-in" data-aos-delay="300">
+                    <span class="text-2xl">🛍️</span>
+                    <span class="text-white font-bold text-sm uppercase">Varejo e Lojas</span>
+                </div>
+                <div class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10" data-aos="zoom-in" data-aos-delay="400">
+                    <span class="text-2xl">🏋️</span>
+                    <span class="text-white font-bold text-sm uppercase">Saúde e Lazer</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call To Action Final ROI -->
+        <div class="bg-gradient-to-r from-orange-900/40 via-pink-900/40 to-purple-900/40 border border-pink-500/50 p-8 md:p-12 rounded-3xl text-center relative overflow-hidden" data-aos="fade-up">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+            <h3 class="text-2xl md:text-3xl font-black italic uppercase text-white mb-4 relative z-10">Qual é o custo de perder clientes todo dia?</h3>
+            <p class="text-slate-300 max-w-3xl mx-auto mb-8 relative z-10 text-sm md:text-base">
+                O custo mensal de manter sua empresa "viva" no mapa do Instagram é absurdamente menor do que o valor que você joga no lixo ao perder dezenas de clientes diários que passam na porta do seu estabelecimento e acabam indo para o concorrente iluminado.
+            </p>
+            <a href="#contato" class="relative z-10 inline-block bg-white text-black font-black uppercase italic px-10 py-4 rounded-xl hover:bg-pink-400 hover:text-white shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(236,72,153,0.8)] transition-all tracking-widest">
+                Ativar Meu Negócio no Mapa
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 3. TRÁFEGO PAGO (Ziguezague - Imagem Esq / Texto Dir) -->
+<section class="relative py-24 bg-[#050508] border-t border-white/10 overflow-hidden">
     <div class="container mx-auto px-6 max-w-7xl">
         <div class="flex flex-col md:flex-row items-center gap-16">
             <!-- Ilustração Cyber -->
@@ -90,6 +245,7 @@
 </section>
 
 <!-- 3. SOCIAL MEDIA (Ziguezague - Texto Esq / Imagem Dir) -->
+<!-- 4. SOCIAL MEDIA (Ziguezague - Texto Esq / Imagem Dir) -->
 <section class="relative py-24 bg-[#020205] border-t border-white/5 overflow-hidden">
     <div class="container mx-auto px-6 max-w-7xl">
         <div class="flex flex-col-reverse md:flex-row items-center gap-16">
@@ -132,6 +288,7 @@
 </section>
 
 <!-- 4. SEO E COPYWRITING -->
+<!-- 5. SEO E COPYWRITING -->
 <section class="relative py-24 bg-[#050508] border-t border-white/5 overflow-hidden">
     <div class="container mx-auto px-6 max-w-7xl">
         <div class="flex flex-col md:flex-row items-center gap-16">
@@ -168,6 +325,7 @@
 </section>
 
 <!-- 5. ANÁLISE DE DADOS (TRACKING) -->
+<!-- 6. ANÁLISE DE DADOS (TRACKING) -->
 <section class="relative py-24 bg-[#020205] border-t border-white/5 overflow-hidden">
     <div class="container mx-auto px-6 max-w-7xl">
         <div class="flex flex-col-reverse md:flex-row items-center gap-16">
@@ -215,6 +373,7 @@
 </section>
 
 <!-- 6. PACOTES / PRICING MKT DIGITAL -->
+<!-- 7. PACOTES / PRICING MKT DIGITAL -->
 <section id="planos-mkt" class="relative py-32 border-t border-white/5 bg-gradient-to-b from-[#050508] to-[#020205] overflow-hidden">
     <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-fuchsia-900/10 rounded-full blur-[150px] pointer-events-none"></div>
     
