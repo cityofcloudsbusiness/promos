@@ -17,7 +17,7 @@
         Isso garante que os modais de chat sejam renderizados no nível do body,
         sem herdar restrições de tamanho do card pai.
     --}}
-    <div class="py-20 bg-[#050505] min-h-screen text-gray-200 font-mono" x-data="{ openChat: null }">
+    <div class="py-20 bg-[#050505] min-h-screen text-gray-200 font-mono" x-data="{ openChat: null, openConfig: null }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             {{-- Header --}}
@@ -46,9 +46,20 @@
 
                             {{-- Info do Projeto --}}
                             <div class="flex-1">
-                                <div class="flex items-center space-x-3 mb-2">
+                                <div class="flex items-center space-x-3 mb-2 flex-wrap gap-y-1">
                                     <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded border border-purple-500/30 uppercase font-black">ID: {{ 1000 + $project->id }}</span>
                                     <h2 class="text-xl font-bold text-white uppercase tracking-tight">{{ $project->name }}</h2>
+                                    @php
+                                        $pSlug = $project->clientSubscription?->plan_slug ?? '';
+                                        $pConf = config('plans.' . $pSlug, []);
+                                        $pCat  = $pConf['subtitle'] ?? null;
+                                    @endphp
+                                    @if($pCat)
+                                    <span class="text-[9px] px-2 py-0.5 rounded border uppercase font-bold
+                                        {{ str_starts_with($pSlug,'marketing-') ? 'bg-fuchsia-500/15 text-fuchsia-400 border-fuchsia-500/30' : (in_array($pSlug,['ia-starter','ia-autonoma']) ? 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30' : 'bg-pink-500/15 text-pink-400 border-pink-500/30') }}">
+                                        {{ $pCat }}
+                                    </span>
+                                    @endif
                                 </div>
                                 <p class="text-xs text-gray-500 mb-4 uppercase tracking-widest">Client: <span class="text-gray-300">{{ $project->user->name }}</span></p>
 
@@ -104,6 +115,13 @@
                                     <button type="button" @click="openChat = {{ $project->id }}" class="px-6 bg-purple-600 hover:bg-purple-500 text-white text-[10px] font-black uppercase py-2 transition shadow-lg shadow-purple-900/20">
                                         Communication_Terminal
                                     </button>
+                                    @if(str_starts_with($project->clientSubscription?->plan_slug ?? '', 'marketing-') || in_array($project->clientSubscription?->plan_slug ?? '', ['ia-starter','ia-autonoma']))
+                                    <button type="button" @click="openConfig = {{ $project->id }}"
+                                        class="px-4 text-[10px] font-black uppercase py-2 transition border
+                                        {{ str_starts_with($project->clientSubscription->plan_slug,'marketing-') ? 'border-fuchsia-500/50 text-fuchsia-400 hover:bg-fuchsia-500 hover:text-white' : 'border-cyan-500/50 text-cyan-400 hover:bg-cyan-500 hover:text-white' }}">
+                                        Config_Plano
+                                    </button>
+                                    @endif
                                 </div>
                             </form>
                         </div>
@@ -224,6 +242,245 @@
             </div>
         </div>
         @endforeach
+
+        {{-- ================================================================
+             MODAIS DE CONFIGURAÇÃO DE PLANO (Marketing / IA)
+             Mesmo padrão dos chat modais — fora do loop principal
+             ================================================================ --}}
+        @foreach($projects as $project)
+        @php
+            $cfgSlug = $project->clientSubscription?->plan_slug ?? '';
+            $cfgConf = config('plans.' . $cfgSlug, []);
+            $cfgMeta = $project->meta ?? [];
+            $isMkt   = str_starts_with($cfgSlug, 'marketing-');
+            $isIAp   = in_array($cfgSlug, ['ia-starter','ia-autonoma']);
+            $isDom   = $cfgSlug === 'marketing-dominancia';
+            $isAut   = $cfgSlug === 'ia-autonoma';
+        @endphp
+        @if($isMkt || $isIAp)
+        <div
+            x-show="openConfig === {{ $project->id }}"
+            x-cloak
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+            class="fixed inset-0 z-[600] bg-black/95 flex flex-col items-center justify-center p-4 md:p-8"
+        >
+            <div class="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#080808]
+                border {{ $isMkt ? 'border-fuchsia-500/30 shadow-[0_0_120px_rgba(217,70,239,0.12)]' : 'border-cyan-500/30 shadow-[0_0_120px_rgba(34,211,238,0.12)]' }}
+                flex flex-col rounded-xl">
+
+                {{-- Header --}}
+                <div class="h-16 border-b {{ $isMkt ? 'border-fuchsia-500/30' : 'border-cyan-500/30' }} bg-gray-900/50
+                    flex items-center justify-between px-8 flex-shrink-0 sticky top-0 z-10 rounded-t-xl">
+                    <div class="flex items-center gap-4">
+                        <span class="w-2 h-2 rounded-full {{ $isMkt ? 'bg-fuchsia-500' : 'bg-cyan-500' }} animate-pulse shadow-[0_0_10px_currentColor]"></span>
+                        <div>
+                            <h4 class="{{ $isMkt ? 'text-fuchsia-400' : 'text-cyan-400' }} font-black uppercase tracking-[0.3em] text-sm">
+                                Config_Plano // {{ $project->name }}
+                            </h4>
+                            <p class="text-[9px] text-gray-500 font-mono tracking-widest">
+                                {{ $cfgConf['label'] ?? $cfgSlug }} · {{ $cfgConf['subtitle'] ?? '' }} · Client: {{ $project->user->name }}
+                            </p>
+                        </div>
+                    </div>
+                    <button @click="openConfig = null"
+                        class="text-gray-500 hover:text-white transition flex items-center gap-2 uppercase font-black text-xs border border-white/10 px-6 py-2 rounded-lg hover:bg-white/5">
+                        Fechar <span class="text-xl">×</span>
+                    </button>
+                </div>
+
+                {{-- Form de configuração --}}
+                <form action="{{ route('admin.projects.config', $project) }}" method="POST" class="p-8 space-y-10">
+                    @csrf
+
+                    {{-- ====================================================
+                         MARKETING — ROI, REUNIÕES, CANAIS
+                         ==================================================== --}}
+                    @if($isMkt)
+
+                    {{-- ROI METRICS --}}
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-1 h-5 bg-fuchsia-500 rounded-full"></div>
+                            <h3 class="text-fuchsia-400 text-[11px] font-black uppercase tracking-widest">Métricas de ROI</h3>
+                            <span class="text-[9px] text-gray-600 uppercase tracking-widest">— exibidas no painel do cliente em tempo real</span>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">ROAS</label>
+                                <input type="text" name="meta[roi_roas]" value="{{ $cfgMeta['roi_roas'] ?? '' }}" placeholder="3.2x"
+                                    class="w-full bg-black border border-fuchsia-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-fuchsia-500 focus:border-fuchsia-500 transition">
+                                <p class="text-[9px] text-gray-600 mt-1">Retorno por investimento</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Leads</label>
+                                <input type="number" name="meta[roi_leads]" value="{{ $cfgMeta['roi_leads'] ?? '' }}" placeholder="0" min="0"
+                                    class="w-full bg-black border border-fuchsia-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-fuchsia-500 focus:border-fuchsia-500 transition">
+                                <p class="text-[9px] text-gray-600 mt-1">Leads do período</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Conversões</label>
+                                <input type="number" name="meta[roi_conversions]" value="{{ $cfgMeta['roi_conversions'] ?? '' }}" placeholder="0" min="0"
+                                    class="w-full bg-black border border-fuchsia-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-fuchsia-500 focus:border-fuchsia-500 transition">
+                                <p class="text-[9px] text-gray-600 mt-1">Vendas convertidas</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Receita (R$)</label>
+                                <input type="text" name="meta[roi_revenue]" value="{{ $cfgMeta['roi_revenue'] ?? '' }}" placeholder="0,00"
+                                    class="w-full bg-black border border-fuchsia-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-fuchsia-500 focus:border-fuchsia-500 transition">
+                                <p class="text-[9px] text-gray-600 mt-1">Receita atribuída</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- MEETINGS --}}
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-1 h-5 bg-purple-500 rounded-full"></div>
+                            <h3 class="text-purple-400 text-[11px] font-black uppercase tracking-widest">Próxima Reunião</h3>
+                            <span class="text-[9px] text-gray-600 uppercase tracking-widest">— {{ $isDom ? 'semanal' : '2x por mês' }}</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Título</label>
+                                <input type="text" name="meta[meeting_title]" value="{{ $cfgMeta['meeting_title'] ?? '' }}" placeholder="Reunião de Alinhamento"
+                                    class="w-full bg-black border border-purple-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition">
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Data e Hora</label>
+                                <input type="datetime-local" name="meta[meeting_date]" value="{{ $cfgMeta['meeting_date'] ?? '' }}"
+                                    class="w-full bg-black border border-purple-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition">
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Link</label>
+                                <input type="url" name="meta[meeting_link]" value="{{ $cfgMeta['meeting_link'] ?? '' }}" placeholder="https://meet.google.com/..."
+                                    class="w-full bg-black border border-purple-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Notas / Pauta</label>
+                            <textarea name="meta[meeting_notes]" rows="2" placeholder="Pauta, objetivos, observações para o cliente..."
+                                class="w-full bg-black border border-purple-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition resize-none">{{ $cfgMeta['meeting_notes'] ?? '' }}</textarea>
+                        </div>
+                    </div>
+
+                    @if($isDom)
+                    {{-- CANAIS — Dominância Total only --}}
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-1 h-5 bg-pink-500 rounded-full"></div>
+                            <h3 class="text-pink-400 text-[11px] font-black uppercase tracking-widest">Canais Ativos</h3>
+                            <span class="text-[9px] text-gray-600 uppercase tracking-widest">— controla quais canais aparecem no painel</span>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                            @php $channelMap = ['channels_meta' => 'Meta Ads', 'channels_google' => 'Google Ads', 'channels_tiktok' => 'TikTok Ads', 'channels_seo' => 'SEO', 'channels_social' => 'Social Media']; @endphp
+                            @foreach($channelMap as $ck => $cl)
+                            <label class="flex flex-col items-center gap-2.5 p-4 rounded-xl border cursor-pointer transition-all
+                                {{ !empty($cfgMeta[$ck]) ? 'border-fuchsia-500/60 bg-fuchsia-500/10 shadow-[0_0_15px_rgba(217,70,239,0.1)]' : 'border-white/5 bg-black/30 hover:border-white/20' }}">
+                                <input type="checkbox" name="meta[{{ $ck }}]" value="1" {{ !empty($cfgMeta[$ck]) ? 'checked' : '' }} class="accent-fuchsia-500 w-4 h-4">
+                                <span class="text-[9px] text-gray-300 uppercase font-bold text-center leading-tight">{{ $cl }}</span>
+                                <span class="text-[8px] {{ !empty($cfgMeta[$ck]) ? 'text-fuchsia-400' : 'text-gray-600' }} uppercase font-bold">
+                                    {{ !empty($cfgMeta[$ck]) ? 'Ativo' : 'Inativo' }}
+                                </span>
+                            </label>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+                    @endif
+
+                    {{-- ====================================================
+                         IA — STATUS AGENTE, MÓDULOS AVANÇADOS
+                         ==================================================== --}}
+                    @if($isIAp)
+
+                    {{-- AGENT STATUS --}}
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-1 h-5 bg-cyan-500 rounded-full"></div>
+                            <h3 class="text-cyan-400 text-[11px] font-black uppercase tracking-widest">Agente WhatsApp</h3>
+                            <span class="text-[9px] text-gray-600 uppercase tracking-widest">— exibido no painel do cliente</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Status do Agente</label>
+                                <select name="meta[agent_status]" class="w-full bg-black border border-cyan-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                                    <option value="online"   {{ ($cfgMeta['agent_status'] ?? 'online') === 'online'   ? 'selected' : '' }}>● Online — Respondendo</option>
+                                    <option value="training" {{ ($cfgMeta['agent_status'] ?? '') === 'training' ? 'selected' : '' }}>⟳ Em Treinamento</option>
+                                    <option value="offline"  {{ ($cfgMeta['agent_status'] ?? '') === 'offline'  ? 'selected' : '' }}>○ Offline</option>
+                                </select>
+                                <p class="text-[9px] text-gray-600 mt-1">Afeta o indicador de status no painel do cliente</p>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-gray-500 uppercase mb-1.5 block font-bold">Número WhatsApp do Agente</label>
+                                <input type="text" name="meta[agent_phone]" value="{{ $cfgMeta['agent_phone'] ?? '' }}" placeholder="+55 34 9 9999-9999"
+                                    class="w-full bg-black border border-cyan-500/20 text-white rounded-lg text-xs p-2.5 focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                                <p class="text-[9px] text-gray-600 mt-1">Aparece como link de acesso direto no painel</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if($isAut)
+                    {{-- ADVANCED MODULES — ia-autonoma only --}}
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-1 h-5 bg-blue-500 rounded-full"></div>
+                            <h3 class="text-blue-400 text-[11px] font-black uppercase tracking-widest">Módulos Avançados</h3>
+                            <span class="text-[9px] text-gray-600 uppercase tracking-widest">— ativa funcionalidades no painel do cliente</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            @php
+                            $moduleMap = [
+                                'module_predictive' => ['Análise Preditiva',        'Previsão de comportamento e tendências', 'border-blue-500/50 bg-blue-500/10'],
+                                'module_erp'        => ['ERP & Automação',           'Integração com processos e contratos',   'border-violet-500/50 bg-violet-500/10'],
+                                'module_campaigns'  => ['Campanhas Inteligentes',    'Tráfego automatizado por IA',            'border-cyan-500/50 bg-cyan-500/10'],
+                            ];
+                            @endphp
+                            @foreach($moduleMap as $mk => [$ml, $mdesc, $mcolor])
+                            <label class="flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-all
+                                {{ !empty($cfgMeta[$mk]) ? $mcolor . ' shadow-sm' : 'border-white/5 bg-black/30 hover:border-white/15' }}">
+                                <input type="checkbox" name="meta[{{ $mk }}]" value="1" {{ !empty($cfgMeta[$mk]) ? 'checked' : '' }} class="accent-cyan-500 w-4 h-4 mt-0.5 shrink-0">
+                                <div>
+                                    <p class="text-[10px] font-black uppercase text-white">{{ $ml }}</p>
+                                    <p class="text-[9px] text-gray-500 mt-0.5">{{ $mdesc }}</p>
+                                    <p class="text-[9px] mt-1.5 font-bold uppercase {{ !empty($cfgMeta[$mk]) ? 'text-cyan-400' : 'text-gray-600' }}">
+                                        {{ !empty($cfgMeta[$mk]) ? '● Ativo' : '○ Desativado' }}
+                                    </p>
+                                </div>
+                            </label>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+                    @endif
+
+                    {{-- Footer --}}
+                    <div class="flex justify-between items-center pt-6 border-t border-white/5">
+                        <p class="text-[9px] text-gray-600 uppercase tracking-widest">
+                            Última atualização: {{ $project->updated_at->format('d/m/Y H:i') }}
+                        </p>
+                        <div class="flex gap-3">
+                            <button type="button" @click="openConfig = null"
+                                class="px-6 py-2.5 border border-white/10 text-gray-400 hover:text-white text-[10px] font-black uppercase transition rounded-lg hover:bg-white/5">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="px-8 py-2.5 text-white text-[10px] font-black uppercase transition rounded-lg
+                                {{ $isMkt ? 'bg-fuchsia-600 hover:bg-fuchsia-500 shadow-[0_0_20px_rgba(217,70,239,0.3)]' : 'bg-cyan-600 hover:bg-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.3)]' }}">
+                                Salvar_Configurações
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @endif
+        @endforeach
+        {{-- /config modais --}}
 
     </div>
 

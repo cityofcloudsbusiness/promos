@@ -46,6 +46,12 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        $intendedPlan = session()->pull('intended_plan');
+
+        if ($intendedPlan && array_key_exists($intendedPlan, config('plans', []))) {
+            return redirect()->route('assinar', ['plan' => $intendedPlan]);
+        }
+
         return redirect()->route('subscribeWebM');
     }
 }

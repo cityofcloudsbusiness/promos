@@ -240,7 +240,7 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#planos-ia" class="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold uppercase text-sm rounded-xl shadow-[0_0_30px_rgba(8,145,178,0.3)] transition-all text-center">
+                    <a href="{{ route('contact', 'agente-comercial') }}" class="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold uppercase text-sm rounded-xl shadow-[0_0_30px_rgba(8,145,178,0.3)] transition-all text-center">
                         Contratar Meu Agente Comercial
                     </a>
                 </div>
@@ -348,7 +348,7 @@
                     <li class="flex items-center gap-3">✓ Respostas Treinadas do seu Negócio</li>
                     <li class="flex items-center gap-3 opacity-30 line-through">x Automações de Backoffice e BI</li>
                 </ul>
-                <a href="#" class="block w-full text-center bg-transparent border-2 border-cyan-500/30 text-white font-bold uppercase py-4 rounded-xl hover:bg-cyan-500 transition-all">
+                <a href="{{ route('assinar', ['plan' => 'ia-starter']) }}" class="block w-full text-center bg-transparent border-2 border-cyan-500/30 text-white font-bold uppercase py-4 rounded-xl hover:bg-cyan-500 transition-all">
                     Solicitar Agente
                 </a>
             </div>
@@ -370,7 +370,7 @@
                     <div>✓ Automação de ERP & Contratos</div>
                     <div>✓ Campanhas Inteligentes de Tráfego</div>
                 </div>
-                <a href="#" class="block w-full text-center bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold uppercase py-5 rounded-xl shadow-[0_0_30px_rgba(8,145,178,0.4)] transition-all text-lg">
+                <a href="{{ route('assinar', ['plan' => 'ia-autonoma']) }}" class="block w-full text-center bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold uppercase py-5 rounded-xl shadow-[0_0_30px_rgba(8,145,178,0.4)] transition-all text-lg">
                     Automatizar Minha Empresa
                 </a>
             </div>

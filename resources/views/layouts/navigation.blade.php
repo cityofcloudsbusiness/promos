@@ -86,9 +86,25 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href="{{ route('dashboard') }}" class="nav-link-cyber group">
-                        <span class="relative z-10 font-black text-xs">{{ __('Dashboard') }}</span>
-                        
+                    @php
+                        $navUser      = Auth::user();
+                        $navDashUrl   = route('dashboard');
+                        $navDashLabel = 'Dashboard';
+                        if (!in_array($navUser->role ?? '', ['admin', 'employee'])) {
+                            $navSub = $navUser->activeClientSubscriptions()->latest()->first();
+                            if ($navSub) {
+                                $navDashUrl  = route('dashboard.plan', ['id' => $navSub->id]);
+                                $navPlanConf = $navSub->planConfig();
+                                $navDashLabel = match($navPlanConf['dashboard'] ?? 'dashboard') {
+                                    'dashboard.marketing' => 'Marketing',
+                                    'dashboard.ia'        => 'Agente IA',
+                                    default               => 'Dashboard',
+                                };
+                            }
+                        }
+                    @endphp
+                    <a href="{{ $navDashUrl }}" class="nav-link-cyber group">
+                        <span class="relative z-10 font-black text-xs">{{ $navDashLabel }}</span>
                         <div class="bot-builder"></div>
                         <div class="circuit-track"></div>
                     </a>

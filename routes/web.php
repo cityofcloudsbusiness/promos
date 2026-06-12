@@ -6,6 +6,7 @@ use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\ClientSubscription;
 use App\Models\Project;
 use App\Models\User;
 
@@ -34,75 +35,150 @@ Route::get('/ia', function () {
 Route::get('sobre', function () {
     return view('site.page5.principal');
 })->name('sobre');
+
+Route::get('/contato/{context?}', function (Request $request, ?string $context = null) {
+    $contexts = [
+        'shark' => [
+            'pageTitle' => 'Ativar Parceria Shark',
+            'subject' => 'Parceria Shark',
+            'message' => 'Tenho interesse em ativar uma parceria Shark e gostaria de receber os próximos passos.',
+        ],
+        'agente-comercial' => [
+            'pageTitle' => 'Contratar Meu Agente Comercial',
+            'subject' => 'Contratar Agente Comercial',
+            'message' => 'Quero contratar um agente comercial para meu projeto e receber um contato urgente.',
+        ],
+    ];
+
+    $contextData = $contexts[$context] ?? [
+        'pageTitle' => 'Fale Conosco',
+        'subject' => 'Contato Geral',
+        'message' => 'Olá, gostaria de receber mais informações sobre os serviços da City of Clouds.',
+    ];
+
+    return view('site.contact', compact('contextData'));
+})->name('contact');
+
+Route::post('/contato', function (Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'subject' => 'required|string|max:255',
+        'message' => 'required|string|max:5000',
+    ]);
+
+    logger()->info('Contact form submitted', $request->only(['name', 'email', 'subject', 'message']));
+
+    return back()->with('success', 'Sua mensagem foi registrada com sucesso. Em breve retornaremos ao seu e-mail.');
+})->name('contact.send');
+
 /*
 |--------------------------------------------------------------------------
-| 2. FLUXO DE PAGAMENTO (STRIPE) - Mantido Original com Correção de Redirecionamento
+| 2. FLUXO DE PAGAMENTO (STRIPE)
 |--------------------------------------------------------------------------
 */
+
+// Rota pública de plano — não redireciona usuários já assinantes (podem adicionar mais planos)
+Route::get('/assinar/{plan}', function (Request $request, string $plan) {
+    $plans = config('plans');
+
+    if (!isset($plans[$plan])) {
+        abort(404);
+    }
+
+    if (!auth()->check()) {
+        session(['intended_plan' => $plan]);
+        return redirect()->route('register');
+    }
+
+    $user = auth()->user();
+
+    if ($user->role === 'admin' || $user->role === 'employee') {
+        return redirect()->route('admin.projects.index');
+    }
+
+    return view('site.pagamentos.plano', [
+        'planSlug' => $plan,
+        'plan'     => $plans[$plan],
+    ]);
+})->where('plan', '[a-z0-9-]+')->name('assinar');
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // 1. Página de seleção de plano
+    // Seleção de planos — acessível mesmo para usuários já assinantes (adicionar mais planos)
     Route::get('/subscribeWebM', function () {
         $user = auth()->user();
-
-        // Proteção: Admins e funcionários não assinam planos
         if ($user->role === 'admin' || $user->role === 'employee') {
             return redirect()->route('admin.projects.index');
         }
-
-        // CORREÇÃO: Se o usuário já tem uma assinatura ativa ou anual válida, redireciona para o Dashboard
-        // Isso impede que ele fique preso nesta tela após o pagamento.
-        if ($user->subscribed('default') || ($user->subscription_type === 'annual' && $user->subscription_expires_at && $user->subscription_expires_at->isFuture())) {
-            return redirect()->route('dashboard');
-        }
-
         return view('site.pagamentos.inscricaoWebSiteManu');
     })->name('subscribeWebM');
 
-    // 2. Checkout Stripe (Gera o link de pagamento)
-    Route::get('/checkout-assinatura/{plan?}', function (Request $request, $plan = 'monthly') {
+    // Compat: redireciona links antigos
+    Route::get('/subscribeWebM/plano/{plan}', function (string $plan) {
+        $map = ['monthly' => 'site-mensal', 'annual' => 'site-anual', 'ia' => 'site-ia'];
+        return redirect()->route('assinar', ['plan' => $map[$plan] ?? 'site-mensal']);
+    })->where('plan', 'monthly|annual|ia')->name('subscribeWebM.plan');
+
+    // Checkout Stripe — cria ClientSubscription pendente antes de redirecionar ao Stripe
+    Route::get('/checkout-assinatura/{plan?}', function (Request $request, string $plan = 'site-mensal') {
         if ($request->user()->role === 'admin' || $request->user()->role === 'employee') {
             return redirect()->route('admin.projects.index');
         }
 
-        if ($plan === 'annual') {
-            $priceId = env('STRIPE_PRICE_ID2');
+        $legacyMap = ['monthly' => 'site-mensal', 'annual' => 'site-anual', 'ia' => 'site-ia'];
+        if (isset($legacyMap[$plan])) $plan = $legacyMap[$plan];
 
-            if (!$priceId) {
-                abort(500, 'Stripe annual price ID not configured.');
-            }
+        $plans = config('plans');
+        if (!isset($plans[$plan])) abort(404, 'Plano não encontrado.');
 
-            return $request->user()->checkout($priceId, [
-                'success_url' => route('payment.success', ['plan' => 'annual']) . '?success=true&session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => route('subscribeWebM') . '?error=cancel',
-            ]);
-        }
-
-        $priceId = env('STRIPE_PRICE_ID');
+        $priceId      = $plans[$plan]['stripe_price_id'] ?? null;
+        $checkoutMode = $plans[$plan]['checkout_mode']   ?? 'subscription';
 
         if (!$priceId) {
-            abort(500, 'Stripe subscription price ID not configured.');
+            return redirect()->route('assinar', ['plan' => $plan])
+                ->with('info', 'Este plano está sendo configurado. Entre em contato com nossa equipe.');
+        }
+
+        // Cria registro pendente da assinatura
+        $clientSub = ClientSubscription::create([
+            'user_id'   => $request->user()->id,
+            'plan_slug' => $plan,
+            'plan_type' => $plans[$plan]['type'],
+            'status'    => 'pending',
+        ]);
+
+        $subscriptionName = 'plan_' . $clientSub->id;
+        $clientSub->update(['cashier_subscription_name' => $subscriptionName]);
+
+        $successUrl = route('payment.success') . '?success=true&session_id={CHECKOUT_SESSION_ID}&cs_id=' . $clientSub->id;
+        $cancelUrl  = route('assinar', ['plan' => $plan]) . '?error=cancel';
+
+        if ($checkoutMode === 'payment') {
+            return $request->user()->checkout([$priceId => 1], [
+                'success_url' => $successUrl,
+                'cancel_url'  => $cancelUrl,
+            ]);
         }
 
         return $request->user()
-            ->newSubscription('default', $priceId)
+            ->newSubscription($subscriptionName, $priceId)
             ->checkout([
-                'success_url' => route('payment.success', ['plan' => 'monthly']) . '?success=true&session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => route('subscribeWebM') . '?error=cancel',
+                'success_url' => $successUrl,
+                'cancel_url'  => $cancelUrl,
             ]);
     })->name('checkout');
 
-    // 3. Portal de Gerenciamento do Cartão
     Route::get('/billing-portal', function (Request $request) {
         if ($request->user()->role === 'admin' || $request->user()->role === 'employee') {
             return redirect()->route('admin.projects.index');
         }
-
         return $request->user()->redirectToBillingPortal(route('dashboard'));
     })->name('billing');
 
-    Route::get('/payment-success/{plan?}', [PaymentController::class, 'success'])
-        ->name('payment.success');
+    Route::get('/payment-success', [PaymentController::class, 'success'])->name('payment.success');
+    // Compat legado com plan param
+    Route::get('/payment-success/{plan}', [PaymentController::class, 'success']);
 });
 
 
@@ -114,8 +190,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-
-
+    // ── Visão geral: redireciona para o plano único ou mostra overview se vários ──
     Route::get('/dashboard', function (Request $request) {
         $user = $request->user();
 
@@ -123,43 +198,100 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect()->route('admin.projects.index');
         }
 
-        $hasAnnualPlan = $user->subscription_type === 'annual' && $user->subscription_expires_at && $user->subscription_expires_at->isFuture();
+        $activeSubs = $user->activeClientSubscriptions()
+            ->where(function ($q) {
+                $q->whereNull('subscription_expires_at')
+                  ->orWhere('subscription_expires_at', '>', now());
+            })
+            ->latest()
+            ->get();
 
-        if (! $user->subscribed('default') && ! $hasAnnualPlan) {
+        if ($activeSubs->isEmpty()) {
             return redirect()->route('subscribeWebM');
         }
 
-        if (!$user->project) {
-            Project::create([
-                'user_id'  => $user->id,
-                'name'     => 'Project_' . strtoupper(substr(md5($user->id . time()), 0, 6)),
-                'status'   => 'Initializing',
-                'progress' => 0,
-                'steps'    => [
-                    ['title' => 'Project Analysis',   'completed' => false],
+        if ($activeSubs->count() === 1) {
+            return redirect()->route('dashboard.plan', ['id' => $activeSubs->first()->id]);
+        }
+
+        return view('dashboard.overview', ['allSubs' => $activeSubs]);
+    })->name('dashboard');
+
+    // ── Dashboard específico por ID de assinatura ──
+    Route::get('/dashboard/{id}', function (Request $request, int $id) {
+        $user = $request->user();
+
+        if ($user->role === 'admin' || $user->role === 'employee') {
+            return redirect()->route('admin.projects.index');
+        }
+
+        $clientSub = $user->activeClientSubscriptions()
+            ->where('id', $id)
+            ->where(function ($q) {
+                $q->whereNull('subscription_expires_at')
+                  ->orWhere('subscription_expires_at', '>', now());
+            })
+            ->first();
+
+        if (!$clientSub) {
+            return redirect()->route('dashboard');
+        }
+
+        $allSubs  = $user->activeClientSubscriptions()->latest()->get();
+        $planConf = config('plans.' . $clientSub->plan_slug);
+
+        // Garante que o projeto existe
+        if (!$clientSub->project) {
+            $prefix = match(true) {
+                str_starts_with($clientSub->plan_slug, 'marketing-') => 'MKT_',
+                str_starts_with($clientSub->plan_slug, 'ia-')        => 'IA_',
+                default                                               => 'Project_',
+            };
+            $steps = match($planConf['dashboard'] ?? 'dashboard') {
+                'dashboard.marketing' => [
+                    ['title' => 'Diagnóstico Inicial',       'completed' => false],
+                    ['title' => 'Criação dos Criativos',     'completed' => false],
+                    ['title' => 'Configuração de Campanhas', 'completed' => false],
+                    ['title' => 'Lançamento',                'completed' => false],
+                    ['title' => 'Otimização Contínua',       'completed' => false],
+                ],
+                'dashboard.ia' => [
+                    ['title' => 'Treinamento do Agente',  'completed' => false],
+                    ['title' => 'Integração WhatsApp',    'completed' => false],
+                    ['title' => 'Fase de Testes',         'completed' => false],
+                    ['title' => 'Go Live',                'completed' => false],
+                    ['title' => 'Otimização Contínua',    'completed' => false],
+                ],
+                default => [
+                    ['title' => 'Project Analysis',    'completed' => false],
                     ['title' => 'Architecture Design', 'completed' => false],
                     ['title' => 'Development Phase',   'completed' => false],
                     ['title' => 'Quality Assurance',   'completed' => false],
                     ['title' => 'Final Delivery',      'completed' => false],
                 ],
+            };
+            $project = Project::create([
+                'user_id'                => $user->id,
+                'client_subscription_id' => $clientSub->id,
+                'name'                   => $prefix . strtoupper(substr(md5($user->id . $clientSub->id), 0, 6)),
+                'status'                 => 'Initializing',
+                'progress'               => 0,
+                'steps'                  => $steps,
             ]);
-            $user->load('project');
+            $clientSub->refresh();
         }
 
-        $project = $user->project;
+        $project  = $clientSub->project;
+        $messages = $project ? $project->messages()->with('user')->oldest()->get() : collect();
 
-        // CORREÇÃO: oldest() em vez de latest()
-        // Mensagens em ordem cronológica: antigas no topo, novas embaixo.
-        $messages = $project
-            ? $project->messages()->with('user')->oldest()->get()
-            : collect();
+        $viewName = match($planConf['dashboard'] ?? 'dashboard') {
+            'dashboard.marketing' => 'dashboard.marketing',
+            'dashboard.ia'        => 'dashboard.ia',
+            default               => 'dashboard',
+        };
 
-        return view('dashboard', [
-            'project'      => $project,
-            'messages'     => $messages,
-            'subscription' => $user->subscribed('default') ? $user->subscription('default') : null,
-        ]);
-    })->name('dashboard');
+        return view($viewName, compact('project', 'messages', 'planConf', 'clientSub', 'allSubs'));
+    })->name('dashboard.plan');
 
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 });
@@ -180,18 +312,38 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         $user = auth()->user();
 
         $projects = $user->role === 'admin'
-            ? Project::with(['user', 'employee', 'developers'])->get()
+            ? Project::with(['user', 'employee', 'developers', 'clientSubscription'])->get()
             : Project::where('employee_id', $user->id)
             ->orWhereHas('developers', function ($q) use ($user) {
                 $q->where('user_id', $user->id);
             })
-            ->with('user')
+            ->with(['user', 'clientSubscription'])
             ->get();
 
         $employees = User::where('role', 'employee')->get();
 
         return view('admin.projects.index', compact('projects', 'employees'));
     })->name('projects.index');
+
+    // Configurações de plano (meta JSON) — marketing, IA, etc.
+    Route::post('/projects/{project}/config', function (Request $request, Project $project) {
+        $meta = $request->input('meta', []);
+
+        // Normaliza checkboxes (não enviados = false)
+        $boolKeys = [
+            'channels_meta','channels_google','channels_tiktok','channels_seo','channels_social',
+            'module_predictive','module_erp','module_campaigns',
+        ];
+        foreach ($boolKeys as $k) {
+            $meta[$k] = isset($meta[$k]) && $meta[$k] == '1';
+        }
+
+        // Mescla com meta existente para não sobrescrever chaves de outros tipos
+        $existing = $project->meta ?? [];
+        $project->update(['meta' => array_merge($existing, $meta)]);
+
+        return back()->with('success', 'Configurações do plano salvas!');
+    })->name('projects.config');
 
     // Atualização de Projetos
     Route::post('/projects/{project}/update', function (Request $request, Project $project) {

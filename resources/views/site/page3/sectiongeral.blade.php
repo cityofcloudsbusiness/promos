@@ -409,7 +409,7 @@
                     <li class="flex items-center gap-3 opacity-30 line-through"><svg class="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> Otimização de SEO Avançada</li>
                 </ul>
 
-                <a href="#contato" class="block w-full text-center bg-transparent border-2 border-fuchsia-500/30 text-white font-black uppercase italic py-4 rounded-xl hover:bg-fuchsia-500 hover:text-white transition-all">
+                <a href="{{ route('assinar', ['plan' => 'marketing-aceleracao']) }}" class="block w-full text-center bg-transparent border-2 border-fuchsia-500/30 text-white font-black uppercase italic py-4 rounded-xl hover:bg-fuchsia-500 hover:text-white transition-all">
                     Solicitar Análise
                 </a>
             </div>
@@ -441,7 +441,7 @@
                     <div class="flex items-start gap-3"><svg class="w-5 h-5 text-fuchsia-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Reunião Estratégica Semanal</div>
                 </div>
 
-                <a href="#contato" class="block w-full text-center bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white font-black uppercase italic py-5 rounded-xl hover:from-fuchsia-500 hover:to-purple-500 shadow-[0_0_30px_rgba(217,70,239,0.4)] transition-all text-lg transform hover:-translate-y-1">
+                <a href="{{ route('assinar', ['plan' => 'marketing-dominancia']) }}" class="block w-full text-center bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white font-black uppercase italic py-5 rounded-xl hover:from-fuchsia-500 hover:to-purple-500 shadow-[0_0_30px_rgba(217,70,239,0.4)] transition-all text-lg transform hover:-translate-y-1">
                     Quero Dominar Meu Mercado
                 </a>
             </div>

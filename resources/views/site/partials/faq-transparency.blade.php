@@ -50,7 +50,7 @@
     </div>
 
     <template x-if="successOverlay">
-        <div class="fixed inset-0 z-[200] bg-black flex items-center justify-center overflow-hidden">
+        <div class="fixed inset-0 z-[200] bg-black flex items-center justify-center overflow-hidden" style="contain: layout style paint; isolation: isolate;">
             <div class="absolute inset-0 bg-cyan-500/10 animate-pulse"></div>
             
             <div class="relative z-10 flex flex-wrap justify-center max-w-4xl px-10">
@@ -85,6 +85,7 @@
         height: 100%;
         animation: orb-pulse 4s infinite linear;
         opacity: 0.3;
+        will-change: transform;
     }
     .layer-2 { width: 80%; height: 80%; animation-delay: -1s; border-color: #8b5cf6; }
     .layer-3 { width: 60%; height: 60%; animation-delay: -2s; border-color: #ec4899; }
@@ -108,22 +109,24 @@
     /* ANIMAÇÃO DOS FEIXES DE LUZ (SUCESSO) */
     .word-beam {
         opacity: 0;
-        transform: scale(3) translateY(100px);
+        transform: scale(3) translateY(100px) translateZ(0);
         filter: blur(20px);
         animation: light-beam-in 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
         text-shadow: 0 0 30px rgba(34, 211, 238, 0.8);
+        will-change: transform, opacity, filter;
+        backface-visibility: hidden;
     }
 
     @keyframes light-beam-in {
-        0% { opacity: 0; transform: scale(5) translateY(200px); filter: blur(50px) brightness(5); }
-        100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0) brightness(1); }
+        0%   { opacity: 0; transform: scale(3)   translateY(100px) translateZ(0); filter: blur(20px) brightness(3); }
+        100% { opacity: 1; transform: scale(1)   translateY(0)     translateZ(0); filter: blur(0)    brightness(1); }
     }
 
     /* Vindo de cantos diferentes (Randomização Visual) */
     .word-beam:nth-child(even) { animation-name: light-beam-alt; }
     @keyframes light-beam-alt {
-        0% { opacity: 0; transform: scale(0) translateX(-300px); filter: blur(30px); }
-        100% { opacity: 1; transform: scale(1) translateX(0); filter: blur(0); }
+        0%   { opacity: 0; transform: scale(0.5) translateX(-200px) translateZ(0); filter: blur(15px); }
+        100% { opacity: 1; transform: scale(1)   translateX(0)      translateZ(0); filter: blur(0);    }
     }
 </style>
 

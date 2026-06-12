@@ -127,6 +127,39 @@
         </div>
 
         {{-- ============================================================
+             BARRA DE NAVEGAÇÃO DE PLANOS — sempre visível acima do grid
+             ============================================================ --}}
+        <div class="flex flex-wrap items-center justify-between gap-3 p-4 mb-6 bg-gray-900/40 border border-purple-500/20 rounded-2xl">
+            <div class="flex items-center gap-3 flex-wrap">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                @if(isset($allSubs) && $allSubs->count() > 1)
+                    @foreach($allSubs as $sub)
+                    @php $sc = $sub->planConfig(); @endphp
+                    <a href="{{ route('dashboard.plan', ['id' => $sub->id]) }}"
+                       class="px-3 py-1.5 rounded-lg border text-[10px] font-bold uppercase tracking-widest transition
+                              {{ (isset($clientSub) && $clientSub->id === $sub->id)
+                                 ? 'border-purple-500/60 bg-purple-500/20 text-purple-300'
+                                 : 'border-white/10 text-gray-500 hover:border-white/30 hover:text-gray-200' }}">
+                        {{ $sc['label'] ?? $sub->plan_slug }}
+                    </a>
+                    @endforeach
+                @else
+                    <span class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">1 serviço ativo</span>
+                @endif
+            </div>
+            <a href="{{ route('subscribeWebM') }}"
+               class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-white
+                      bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500
+                      rounded-xl transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)]
+                      hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] shrink-0">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/>
+                </svg>
+                + Adicionar Plano
+            </a>
+        </div>
+
+        {{-- ============================================================
              GRID: CHAT + SIDEBAR
              ============================================================ --}}
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -235,35 +268,120 @@
 
             {{-- ---- SIDEBAR ---- --}}
             <div class="space-y-4">
-                <div class="p-4 bg-gray-900/50 border border-blue-500/20 rounded-xl">
-                    <h3 class="text-blue-400 text-[10px] mb-4 tracking-widest uppercase text-center">Ações do Sistema</h3>
-                    <a href="{{ route('billing') }}"
-                       class="block w-full text-center py-2 border border-blue-500/40 rounded
-                              text-[10px] font-bold text-blue-400 hover:bg-blue-500/10 transition uppercase">
-                        GERENCIAR FATURAS
-                    </a>
 
-                    <a href="{{ route('profile.settings') }}"
-                       class="block w-full text-center py-2 mt-2 bg-fuchsia-500/20 border border-fuchsia-400/30 rounded
-                              text-[10px] font-bold text-fuchsia-300 hover:bg-fuchsia-500/30 transition uppercase">
-                        PERFIL & CONFIGURAÇÕES
+                {{-- ADICIONAR PLANO — primeiro bloco, sempre visível --}}
+                @if(isset($allSubs) && $allSubs->count() > 1)
+                <div class="p-4 bg-gray-900/50 border border-purple-500/20 rounded-xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-purple-400 text-[10px] tracking-widest uppercase font-bold">Meus Planos</h3>
+                        <a href="{{ route('dashboard') }}" class="text-[9px] text-gray-600 hover:text-gray-400 uppercase tracking-widest transition">Ver todos</a>
+                    </div>
+                    <div class="space-y-2">
+                        @foreach($allSubs as $sub)
+                        @php
+                            $sc = $sub->planConfig();
+                            $isCurrentSub = isset($clientSub) && $clientSub->id === $sub->id;
+                            $dotColors = ['pink' => 'bg-pink-500', 'cyan' => 'bg-cyan-500', 'violet' => 'bg-violet-500', 'fuchsia' => 'bg-fuchsia-500'];
+                            $dotC = $dotColors[$sc['color'] ?? 'pink'] ?? 'bg-pink-500';
+                        @endphp
+                        <a href="{{ route('dashboard.plan', ['id' => $sub->id]) }}"
+                           class="flex items-center gap-2.5 p-2.5 rounded-lg border transition
+                                  {{ $isCurrentSub ? 'border-purple-500/30 bg-purple-500/10' : 'border-white/5 bg-black/20 hover:border-white/15' }}">
+                            <span class="w-1.5 h-1.5 rounded-full {{ $dotC }} shrink-0"></span>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-[10px] font-bold text-white truncate">{{ $sc['label'] }}</p>
+                                <p class="text-[9px] text-gray-600 truncate">{{ $sub->project?->name ?? '—' }}</p>
+                            </div>
+                            @if($isCurrentSub)
+                            <span class="text-[8px] text-purple-400 uppercase font-bold shrink-0">atual</span>
+                            @endif
+                        </a>
+                        @endforeach
+                    </div>
+                    <a href="{{ route('subscribeWebM') }}"
+                       class="flex items-center justify-center gap-2 mt-3 w-full py-2.5 rounded-xl font-black
+                              uppercase text-[10px] tracking-widest text-white transition-all
+                              bg-gradient-to-r from-pink-600 to-purple-600
+                              hover:from-pink-500 hover:to-purple-500
+                              shadow-[0_0_15px_rgba(168,85,247,0.25)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        + Adicionar Plano
                     </a>
                 </div>
+                @else
+                <a href="{{ route('subscribeWebM') }}"
+                   class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-black uppercase
+                          text-xs tracking-widest text-white transition-all
+                          bg-gradient-to-r from-pink-600 to-purple-600
+                          hover:from-pink-500 hover:to-purple-500
+                          shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.55)]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    + Adicionar Plano
+                </a>
+                @endif
 
+                {{-- PLANO ATUAL --}}
                 <div class="p-4 bg-gray-900/50 border border-white/10 rounded-xl">
                     <h3 class="text-white text-[10px] mb-4 tracking-widest uppercase text-center">Plano Atual</h3>
-                    <div class="rounded-2xl bg-black/40 p-4 border border-white/10 shadow-[0_0_30px_rgba(168,85,247,0.18)]">
-                        <p class="text-sm uppercase tracking-[0.25em] text-pink-400">{{ auth()->user()->plan_label }}</p>
-                        <p class="mt-3 text-3xl font-black text-white">{{ auth()->user()->plan_label === 'Anual' ? 'Anual' : 'Mensal' }}</p>
-                        @if(auth()->user()->subscription_type === 'annual')
-                            <p class="mt-4 text-xs uppercase tracking-[0.25em] text-cyan-300">Tempo Restante</p>
-                            <p class="text-2xl font-bold text-white">{{ auth()->user()->annual_days_remaining ?? 0 }} dias</p>
+                    @php
+                        $u         = auth()->user();
+                        $activePlan = $clientSub ?? null;
+                        $activeConf = $activePlan ? $activePlan->planConfig() : null;
+
+                        if (!$activeConf) {
+                            $pType = $u->subscription_type;
+                            foreach (config('plans', []) as $pc) {
+                                if ($pc['type'] === $pType) { $activeConf = $pc; break; }
+                            }
+                        }
+
+                        $sideColorMap = [
+                            'cyan'    => ['text' => 'text-cyan-400',    'border' => 'border-cyan-500/20',    'glow' => 'shadow-[0_0_30px_rgba(34,211,238,0.12)]',  'dot' => 'bg-cyan-500'],
+                            'violet'  => ['text' => 'text-violet-400',  'border' => 'border-violet-500/20',  'glow' => 'shadow-[0_0_30px_rgba(139,92,246,0.12)]',  'dot' => 'bg-violet-500'],
+                            'fuchsia' => ['text' => 'text-fuchsia-400', 'border' => 'border-fuchsia-500/20', 'glow' => 'shadow-[0_0_30px_rgba(217,70,239,0.12)]',  'dot' => 'bg-fuchsia-500'],
+                            'pink'    => ['text' => 'text-pink-400',    'border' => 'border-pink-500/20',    'glow' => 'shadow-[0_0_30px_rgba(236,72,153,0.12)]',  'dot' => 'bg-pink-500'],
+                        ];
+                        $planColor   = $activeConf['color'] ?? 'pink';
+                        $cm          = $sideColorMap[$planColor] ?? $sideColorMap['pink'];
+                        $planLabel   = $activeConf['label'] ?? $u->plan_label;
+                        $isAnnual    = $activeConf['is_annual'] ?? false;
+                        $billingNote = $activeConf['billing_note'] ?? 'Renovação automática';
+                        $startedAt   = $activePlan?->subscription_started_at ?? $u->subscription_started_at;
+                        $expiresAt   = $activePlan?->subscription_expires_at ?? $u->subscription_expires_at;
+                    @endphp
+                    <div class="rounded-2xl bg-black/40 p-4 {{ $cm['border'] }} {{ $cm['glow'] }} border">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="w-1.5 h-1.5 rounded-full animate-pulse {{ $cm['dot'] }}"></span>
+                            <p class="text-[10px] uppercase tracking-[0.25em] {{ $cm['text'] }}">{{ $planLabel }}</p>
+                        </div>
+
+                        @if($isAnnual && $expiresAt)
+                            <p class="mt-2 text-2xl font-black text-white">
+                                {{ max(0, now()->diffInDays($expiresAt, false)) }}<span class="text-sm font-normal text-gray-400 ml-1">dias restantes</span>
+                            </p>
+                            <p class="mt-1 text-[10px] text-gray-500 uppercase tracking-widest">
+                                Renova em {{ $expiresAt->format('d/m/Y') }}
+                            </p>
                         @else
-                            <p class="mt-4 text-sm text-gray-400">Sua assinatura mensal está ativa.</p>
+                            <p class="mt-2 text-xl font-black text-white">Ativo</p>
+                            <p class="mt-1 text-[10px] text-gray-500 uppercase tracking-widest">{{ $billingNote }}</p>
+                        @endif
+
+                        @if($startedAt)
+                        <div class="mt-3 pt-3 border-t border-white/5">
+                            <p class="text-[9px] text-gray-700 uppercase tracking-widest">
+                                Ativo desde {{ $startedAt->format('d/m/Y') }}
+                            </p>
+                        </div>
                         @endif
                     </div>
                 </div>
 
+                {{-- AÇÕES DO SISTEMA --}}
                 <div class="p-4 bg-gray-900/50 border border-blue-500/20 rounded-xl">
                     <h3 class="text-blue-400 text-[10px] mb-4 tracking-widest uppercase text-center">Ações do Sistema</h3>
                     <a href="{{ route('billing') }}"
@@ -271,7 +389,6 @@
                               text-[10px] font-bold text-blue-400 hover:bg-blue-500/10 transition uppercase">
                         GERENCIAR FATURAS
                     </a>
-
                     <a href="{{ route('profile.settings') }}"
                        class="block w-full text-center py-2 mt-2 bg-fuchsia-500/20 border border-fuchsia-400/30 rounded
                               text-[10px] font-bold text-fuchsia-300 hover:bg-fuchsia-500/30 transition uppercase">

@@ -33,17 +33,40 @@ class User extends Authenticatable
         ];
     }
 
+    public function clientSubscriptions()
+    {
+        return $this->hasMany(ClientSubscription::class);
+    }
+
+    public function activeClientSubscriptions()
+    {
+        return $this->clientSubscriptions()->where('status', 'active');
+    }
+
+    public function hasActivePlan(): bool
+    {
+        return $this->activeClientSubscriptions()
+            ->where(function ($q) {
+                $q->whereNull('subscription_expires_at')
+                  ->orWhere('subscription_expires_at', '>', now());
+            })
+            ->exists();
+    }
+
     public function getPlanLabelAttribute(): string
     {
-        if ($this->subscription_type === 'annual') {
-            return 'Anual';
+        $first = $this->activeClientSubscriptions()->first();
+        if ($first) {
+            return $first->planConfig()['label'] ?? 'Plano Ativo';
         }
-
-        if ($this->subscribed('default')) {
-            return 'Mensal';
+        if ($this->subscription_type) {
+            foreach (config('plans', []) as $planConfig) {
+                if ($planConfig['type'] === $this->subscription_type) {
+                    return $planConfig['label'];
+                }
+            }
         }
-
-        return 'Sem Plano';
+        return $this->subscribed('default') ? 'Plano Mensal' : 'Sem Plano';
     }
 
     public function getAnnualDaysRemainingAttribute(): ?int

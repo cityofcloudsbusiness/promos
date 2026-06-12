@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="mt-10" data-aos="fade-up" data-aos-delay="600">
-                    <a href="#contato" class="group relative inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-black px-12 py-5 rounded-full transition-all hover:scale-110 shadow-[0_0_30px_rgba(37,99,235,0.4)] uppercase italic tracking-widest">
+                    <a href="{{ route('contact', 'shark') }}" class="group relative inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-black px-12 py-5 rounded-full transition-all hover:scale-110 shadow-[0_0_30px_rgba(37,99,235,0.4)] uppercase italic tracking-widest">
                         <span class="mr-3">Ativar Parceria Shark</span>
                         <svg class="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                     </a>

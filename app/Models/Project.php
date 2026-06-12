@@ -8,23 +8,30 @@ class Project extends Model
 {
     // Adicionado 'employee_id' para que o Super Admin possa salvar o responsável
     protected $fillable = [
-        'user_id', 
-        'name', 
-        'progress', 
-        'status', 
-        'steps', 
-        'preview_url', 
-        'employee_id'
+        'user_id',
+        'client_subscription_id',
+        'name',
+        'progress',
+        'status',
+        'steps',
+        'preview_url',
+        'employee_id',
+        'meta',
     ];
 
     protected $casts = [
-        'steps' => 'array', // Mantém seu sistema de tarefas JSON funcionando
+        'steps' => 'array',
+        'meta'  => 'array',
     ];
 
-    // Relacionamento com o Dono do Site (Cliente)
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function clientSubscription()
+    {
+        return $this->belongsTo(ClientSubscription::class);
     }
 
     // Relacionamento com o Programador Responsável

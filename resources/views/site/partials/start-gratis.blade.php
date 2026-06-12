@@ -70,10 +70,10 @@
                 </p>
 
                 <div class="mt-12 flex flex-col md:flex-row items-center justify-center gap-6" data-aos="fade-up" data-aos-delay="600">
-                    <a href="#neural-offer" class="bg-white text-black font-black px-12 py-4 rounded-tl-3xl rounded-br-3xl hover:bg-pink-600 hover:text-white transition-all transform hover:-translate-y-1 uppercase italic text-sm tracking-widest">
+                    <a href="{{ route('assinar', ['plan' => 'site-mensal']) }}" class="bg-white text-black font-black px-12 py-4 rounded-tl-3xl rounded-br-3xl hover:bg-pink-600 hover:text-white transition-all transform hover:-translate-y-1 uppercase italic text-sm tracking-widest">
                         Começar agora
                     </a>
-                    <button class="flex items-center gap-3 group">
+                    <button id="entenda-melhor-button" type="button" class="flex items-center gap-3 group">
                         <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-pink-500 transition-all">
                             <div class="w-0 h-0 border-y-[6px] border-y-transparent border-l-[10px] border-l-white ml-1 group-hover:border-l-pink-500"></div>
                         </div>

@@ -174,6 +174,11 @@
             };
 
             trigger.addEventListener('click', openModal);
+            const entendaButton = document.getElementById('entenda-melhor-button');
+            if (entendaButton) {
+                entendaButton.addEventListener('click', openModal);
+            }
+
             closeButton.addEventListener('click', closeModal);
             modal.addEventListener('click', function (event) {
                 if (event.target === modal) {

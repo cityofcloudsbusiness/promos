@@ -62,9 +62,9 @@
                 </div>
 
                 <div class="flex gap-4">
-                    <button class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg">
-                        Escalar meu Visual
-                    </button>
+                    <a href="https://cityofclouds.com.br/audiovisual" target="_blank" rel="noopener noreferrer" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg inline-flex items-center justify-center">
+                        Escolha meu Visual
+                    </a>
                 </div>
             </div>
 

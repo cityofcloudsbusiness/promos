@@ -37,7 +37,7 @@
                     <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Suporte Técnico Ativo</li>
                 </ul>
 
-                <a href="{{ route('subscribeWebM') }}" class="block w-full text-center bg-transparent border-2 border-white/20 text-white font-black uppercase italic py-4 rounded-xl hover:bg-white hover:text-black transition-all">
+                <a href="{{ route('assinar', ['plan' => 'site-mensal']) }}" class="block w-full text-center bg-transparent border-2 border-white/20 text-white font-black uppercase italic py-4 rounded-xl hover:bg-white hover:text-black transition-all">
                     Assinar Mensal
                 </a>
             </div>
@@ -78,7 +78,7 @@
                         <span class="text-red-600 text-[10px] font-black uppercase mb-1 tracking-widest bg-white px-2 rounded-full">Mais Vantajoso</span>
                         <svg class="w-6 h-6 text-red-600 drop-shadow-[0_0_5px_rgba(220,38,38,0.5)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </div>
-                    <a href="{{ route('subscribeWebM') }}" class="block w-full text-center bg-green-500 text-white font-black uppercase italic py-5 rounded-xl hover:bg-green-400 shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:shadow-[0_0_40px_rgba(34,197,94,0.8)] transition-all text-xl transform hover:-translate-y-1">
+                    <a href="{{ route('assinar', ['plan' => 'site-anual']) }}" class="block w-full text-center bg-green-500 text-white font-black uppercase italic py-5 rounded-xl hover:bg-green-400 shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:shadow-[0_0_40px_rgba(34,197,94,0.8)] transition-all text-xl transform hover:-translate-y-1">
                         Assinar Plano Anual
                     </a>
                 </div>
