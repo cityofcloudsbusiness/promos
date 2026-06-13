@@ -1,4 +1,9 @@
-<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500" x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
+<style>
+    @media (max-width: 1023px) { .nav-login-btn { display: none !important; } }
+    @media (min-width: 1024px) { .nav-hamburger { display: none !important; } }
+</style>
+
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500" x-data="{ scrolled: false, open: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
             <nav :class="scrolled ? 'bg-black/60 backdrop-blur-md py-3' : 'bg-transparent py-6'" class="container mx-auto px-6 flex justify-between items-center transition-all">
 
                 <div class="relative group cursor-pointer">
@@ -43,7 +48,22 @@
                     </li>
                 </ul>
 
-                <div class="relative group">
+                {{-- Hamburger button (mobile only) --}}
+                <button @click="open = !open"
+                        type="button"
+                        class="lg:hidden flex flex-col justify-center gap-1.5 p-2.5
+                               border border-purple-500/30 rounded-lg
+                               hover:border-purple-400/60 transition-all">
+                    <span class="w-5 h-0.5 bg-purple-400 block transition-all duration-300 origin-center"
+                          :class="open ? 'rotate-45 translate-y-2' : ''"></span>
+                    <span class="w-5 h-0.5 bg-purple-400 block transition-all duration-300"
+                          :class="open ? 'opacity-0 scale-x-0' : ''"></span>
+                    <span class="w-5 h-0.5 bg-purple-400 block transition-all duration-300 origin-center"
+                          :class="open ? '-rotate-45 -translate-y-2' : ''"></span>
+                </button>
+
+                {{-- Login/Auth button (desktop only) --}}
+                <div class="nav-login-btn relative group">
 
                     @auth
                     <div class="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
@@ -65,4 +85,60 @@
 
                 </div>
             </nav>
+
+            {{-- Mobile menu --}}
+            <div x-show="open"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-2"
+                 style="display: none;"
+                 class="lg:hidden bg-black/90 backdrop-blur-md border-t border-white/10">
+                <ul class="flex flex-col px-6 py-4 gap-1 text-[11px] font-black uppercase tracking-[0.3em] text-slate-300">
+                    <li class="border-b border-white/10 py-3">
+                        <a href="{{route('home')}}" @click="open = false" class="flex items-center gap-2 hover:text-pink-500 transition-colors">
+                            <span class="text-pink-500">//</span> HOME
+                        </a>
+                    </li>
+                    <li class="border-b border-white/10 py-3">
+                        <a href="{{route('manutencao')}}" @click="open = false" class="flex items-center gap-2 hover:text-purple-500 transition-colors">
+                            <span class="text-purple-500">›</span> Manutenção
+                        </a>
+                    </li>
+                    <li class="border-b border-white/10 py-3">
+                        <a href="{{route('marketing')}}" @click="open = false" class="flex items-center gap-2 hover:text-blue-500 transition-colors">
+                            <span class="text-blue-500">›</span> Marketing Digital
+                        </a>
+                    </li>
+                    <li class="border-b border-white/10 py-3">
+                        <a href="{{route('ia')}}" @click="open = false" class="flex items-center gap-2 hover:text-blue-500 transition-colors">
+                            <span class="text-blue-500">›</span> Agentes I.A
+                        </a>
+                    </li>
+                    <li class="border-b border-white/10 py-3">
+                        <a href="{{route('sobre')}}" @click="open = false" class="flex items-center gap-2 hover:text-blue-500 transition-colors">
+                            <span class="text-blue-500">›</span> Sobre
+                        </a>
+                    </li>
+                    <li class="pt-3 pb-1">
+                        @auth
+                        <a href="{{ route('dashboard') }}" @click="open = false" class="flex items-center gap-2 text-cyan-400 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span class="italic">{{ Auth::user()->name }}</span>
+                        </a>
+                        @else
+                        <a href="{{ route('login') }}" @click="open = false" class="flex items-center gap-2 text-pink-500 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            LOGIN
+                        </a>
+                        @endauth
+                    </li>
+                </ul>
+            </div>
         </header>

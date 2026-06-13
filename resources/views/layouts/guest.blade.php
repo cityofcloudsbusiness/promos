@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - Seu Título Otimizado para SEO com Palavras-Chave</title>
+    <title>{{ config('app.name', 'City Of Clouds') }}</title>
 
     <meta name="description" content="A descrição clara e concisa dos serviços, otimizada com palavras-chave principais para os rastreadores do Google.">
 

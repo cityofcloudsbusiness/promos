@@ -1,4 +1,5 @@
 <x-guest-layout>
+    @include('components.usuais.header')
     <section class="relative py-24 bg-[#020205] overflow-hidden" x-data="contactPage()">
         <div class="absolute inset-0 opacity-20 pointer-events-none">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#0ea5e966,transparent_70%)]"></div>

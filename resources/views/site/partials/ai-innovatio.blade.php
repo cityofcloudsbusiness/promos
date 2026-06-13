@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="mt-8 ai-card opacity-0 translate-y-10 transition-all duration-700" style="transition-delay: 500ms;">
-                    <a href="#contato" class="group relative inline-flex items-center justify-center bg-purple-600 hover:bg-purple-500 text-white font-black px-10 py-5 rounded-full transition-all hover:scale-110 shadow-[0_0_30px_rgba(168,85,247,0.5)] uppercase italic tracking-widest">
+                    <a href="{{ route('contact', 'arquiteto-ia') }}" class="group relative inline-flex items-center justify-center bg-purple-600 hover:bg-purple-500 text-white font-black px-10 py-5 rounded-full transition-all hover:scale-110 shadow-[0_0_30px_rgba(168,85,247,0.5)] uppercase italic tracking-widest">
                         <span>Falar com um Arquiteto de IA</span>
                         <svg class="w-6 h-6 ml-3 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                     </a>

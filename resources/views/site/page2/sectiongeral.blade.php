@@ -193,7 +193,7 @@
                     </p>
                 </div>
                 <div class="w-full md:w-1/3 flex justify-center md:justify-end">
-                    <a href="#contato" class="group relative inline-flex items-center justify-center bg-white text-black font-black px-8 py-4 rounded-full transition-all hover:scale-105 hover:bg-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.2)] hover:shadow-[0_0_40px_rgba(34,211,238,0.5)] uppercase italic tracking-widest text-[11px] w-full md:w-auto">
+                    <a href="{{ route('assinar', ['plan' => 'site-mensal']) }}" class="group relative inline-flex items-center justify-center bg-white text-black font-black px-8 py-4 rounded-full transition-all hover:scale-105 hover:bg-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.2)] hover:shadow-[0_0_40px_rgba(34,211,238,0.5)] uppercase italic tracking-widest text-[11px] w-full md:w-auto">
                         <span>Iniciar Projeto Agora</span>
                         <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                     </a>

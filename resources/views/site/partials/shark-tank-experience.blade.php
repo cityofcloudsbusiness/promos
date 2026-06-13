@@ -125,7 +125,7 @@
             <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition"></div>
             
             <div class="relative aspect-video bg-gray-900 flex items-center justify-center">
-                <img src="{{ asset('imgs/cidade.jpg') }}" alt="Explicação Modelo de Negócio" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition duration-700">
+                <img src="{{ Vite::asset('resources/imgs/sec6/video-sharks.png') }}" alt="Explicação Modelo de Negócio" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition duration-700">
                 
                 <div class="relative z-20">
                     <div class="absolute -inset-4 bg-blue-500 rounded-full blur-xl opacity-40 animate-pulse"></div>

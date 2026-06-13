@@ -74,7 +74,7 @@
                 <p class="text-slate-400 text-sm leading-relaxed mb-8">
                     O Google Maps serve para quando o cliente já sabe o que quer. <strong class="text-white">O Instagram Maps serve para o cliente que quer descobrir o que fazer AGORA.</strong> Se o seu negócio não posta conteúdo com localização hoje, o pino da sua empresa simplesmente "some" do mapa para os usuários ao redor.
                 </p>
-                <a href="#planos-mkt" class="inline-block bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 text-white font-black uppercase italic px-8 py-4 rounded-xl hover:scale-105 shadow-[0_0_30px_rgba(236,72,153,0.4)] transition-all tracking-widest text-sm">
+                <a href="{{ route('contact', 'mapainsta') }}" class="inline-block bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 text-white font-black uppercase italic px-8 py-4 rounded-xl hover:scale-105 shadow-[0_0_30px_rgba(236,72,153,0.4)] transition-all tracking-widest text-sm">
                     Quero Dominar o Mapa da Minha Região
                 </a>
             </div>
@@ -194,7 +194,7 @@
             <p class="text-slate-300 max-w-3xl mx-auto mb-8 relative z-10 text-sm md:text-base">
                 O custo mensal de manter sua empresa "viva" no mapa do Instagram é absurdamente menor do que o valor que você joga no lixo ao perder dezenas de clientes diários que passam na porta do seu estabelecimento e acabam indo para o concorrente iluminado.
             </p>
-            <a href="#contato" class="relative z-10 inline-block bg-white text-black font-black uppercase italic px-10 py-4 rounded-xl hover:bg-pink-400 hover:text-white shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(236,72,153,0.8)] transition-all tracking-widest">
+            <a href="{{ route('contact', 'mapainsta') }}" class="relative z-10 inline-block bg-white text-black font-black uppercase italic px-10 py-4 rounded-xl hover:bg-pink-400 hover:text-white shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(236,72,153,0.8)] transition-all tracking-widest">
                 Ativar Meu Negócio no Mapa
             </a>
         </div>
@@ -410,7 +410,7 @@
                 </ul>
 
                 <a href="{{ route('assinar', ['plan' => 'marketing-aceleracao']) }}" class="block w-full text-center bg-transparent border-2 border-fuchsia-500/30 text-white font-black uppercase italic py-4 rounded-xl hover:bg-fuchsia-500 hover:text-white transition-all">
-                    Solicitar Análise
+                    Assinar
                 </a>
             </div>
 

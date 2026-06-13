@@ -90,7 +90,7 @@
         </div>
 
         <div class="mt-8 text-center relative z-40" data-aos="zoom-in-up">
-            <a href="#contato" class="inline-block bg-white text-black font-black px-12 py-4 rounded-full hover:bg-pink-600 hover:text-white transition-all transform hover:scale-110 shadow-[0_0_40px_rgba(255,255,255,0.1)] uppercase italic tracking-widest text-xs">
+            <a href="{{ route('assinar', ['plan' => 'site-mensal']) }}" class="inline-block bg-white text-black font-black px-12 py-4 rounded-full hover:bg-pink-600 hover:text-white transition-all transform hover:scale-110 shadow-[0_0_40px_rgba(255,255,255,0.1)] uppercase italic tracking-widest text-xs">
                 Assinar e Ativar Site Grátis
             </a>
         </div>

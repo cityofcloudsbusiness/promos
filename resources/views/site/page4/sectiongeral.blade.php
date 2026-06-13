@@ -248,15 +248,15 @@
 
             <div class="w-full">
                 <div class="bg-slate-900/80 border border-white/10 rounded-3xl p-4 shadow-[0_0_50px_rgba(8,145,178,0.15)] backdrop-blur">
-                    <div class="relative aspect-video rounded-2xl overflow-hidden bg-black border border-white/5 group">
-                        
+                    <div id="ia-video-trigger" role="button" aria-label="Abrir vídeo IA em tempo real" class="relative aspect-video rounded-2xl overflow-hidden bg-black border border-white/5 group cursor-pointer">
+
                         <div class="absolute inset-0 bg-cover bg-center flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800');">
                             <div class="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-all"></div>
-                            
-                            <div class="relative z-10 w-20 h-20 bg-cyan-500 text-black rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.6)] group-hover:scale-110 transition-all cursor-pointer">
+
+                            <div class="relative z-10 w-20 h-20 bg-cyan-500 text-black rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.6)] group-hover:scale-110 transition-all">
                                 <svg class="w-8 h-8 fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                             </div>
-                            
+
                             <div class="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur px-4 py-2 rounded-xl border border-white/10 text-center">
                                 <p class="text-xs text-cyan-400 font-bold uppercase tracking-wider">▶ Veja a Inteligência Artificial agindo em Tempo Real</p>
                             </div>
@@ -268,6 +268,51 @@
 
         </div>
     </div>
+
+    <div id="ia-video-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4">
+        <div class="relative w-full max-w-5xl">
+            <button id="ia-video-close" type="button" class="absolute top-4 right-4 z-20 text-white bg-black/50 rounded-full p-3 hover:bg-black/70 transition">
+                <span class="sr-only">Fechar vídeo</span>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <video id="ia-video-player" class="w-full h-full rounded-3xl shadow-2xl bg-black" controls playsinline preload="metadata">
+                <source src="{{ asset('videos/Projeto Shark.mp4') }}" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const trigger = document.getElementById('ia-video-trigger');
+            const modal = document.getElementById('ia-video-modal');
+            const video = document.getElementById('ia-video-player');
+            const closeButton = document.getElementById('ia-video-close');
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                video.currentTime = 0;
+                video.play().catch(() => {});
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                video.pause();
+                video.currentTime = 0;
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+
+            trigger.addEventListener('click', openModal);
+            closeButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) closeModal();
+            });
+            video.addEventListener('ended', closeModal);
+        });
+    </script>
 </section>
 
 <section class="relative py-20 bg-[#020205] border-t border-white/5">

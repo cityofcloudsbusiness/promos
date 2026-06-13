@@ -197,7 +197,7 @@
         </h2>
         <p class="text-purple-100/70 mb-10 text-lg font-light">Nossa equipe está pronta para plugar sua empresa na nuvem e ligar as máquinas de venda.</p>
         
-        <a href="#contato" class="group relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-pink-600 px-10 py-5 text-sm font-bold uppercase tracking-widest text-white shadow-[0_0_40px_rgba(236,72,153,0.4)] transition-transform duration-300 hover:scale-[1.02] active:scale-95 border border-pink-400/50">
+        <a href="{{route('contact')}}" class="group relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-pink-600 px-10 py-5 text-sm font-bold uppercase tracking-widest text-white shadow-[0_0_40px_rgba(236,72,153,0.4)] transition-transform duration-300 hover:scale-[1.02] active:scale-95 border border-pink-400/50">
             <span class="relative z-10 flex items-center gap-3">
                 Falar com a Equipe
                 <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>

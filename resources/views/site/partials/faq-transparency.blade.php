@@ -14,19 +14,22 @@
                     <p class="text-slate-500 font-mono text-xs uppercase tracking-[0.3em] mt-2">Protocolo de Expansão Digital v1.0</p>
                 </header>
 
-                <form @submit.prevent="sendProtocol" class="space-y-4">
+                <form action="{{ route('contact.send') }}" method="POST" @submit.prevent="sendProtocol" x-ref="faqForm" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="subject" value="Contato via FAQ">
+
                     <div class="relative group">
-                        <input type="text" placeholder="SEU NOME" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm">
-                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-cyan-500 group-focus-within:w-full transition-all duration-500"></div>
-                    </div>
-                    
-                    <div class="relative group">
-                        <input type="email" placeholder="EMAIL DE CONTATO" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm">
+                        <input type="text" name="name" placeholder="SEU NOME" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm">
                         <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-cyan-500 group-focus-within:w-full transition-all duration-500"></div>
                     </div>
 
                     <div class="relative group">
-                        <textarea rows="4" placeholder="QUAL O SEU DESAFIO?" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm resize-none"></textarea>
+                        <input type="email" name="email" placeholder="EMAIL DE CONTATO" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm">
+                        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-cyan-500 group-focus-within:w-full transition-all duration-500"></div>
+                    </div>
+
+                    <div class="relative group">
+                        <textarea name="message" rows="4" placeholder="QUAL O SEU DESAFIO?" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white font-black placeholder:text-slate-700 focus:border-cyan-500 focus:bg-white/10 transition-all outline-none italic uppercase tracking-widest text-sm resize-none"></textarea>
                     </div>
 
                     <button type="submit" class="w-full bg-cyan-500 hover:bg-white text-black font-black py-5 rounded-xl transition-all transform hover:scale-[1.02] uppercase italic tracking-[0.2em] shadow-[0_0_30px_rgba(34,211,238,0.3)]">
@@ -136,11 +139,10 @@ function neuralContact() {
         successOverlay: false,
         finalPhrase: "AGORA VAMOS ALAVANCAR O SEU NEGÓCIO",
         sendProtocol() {
-            // Aqui você dispararia seu AJAX/Laravel Controller
             this.successOverlay = true;
-            
-            // Som futurista opcional (se quiser adicionar no futuro)
-            // playSynthSound();
+            setTimeout(() => {
+                this.$refs.faqForm.submit();
+            }, 2800);
         }
     }
 }

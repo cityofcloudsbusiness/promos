@@ -1,0 +1,396 @@
+[33mcommit 01342e74a814463a53211d4fbee9b74ea102a5a2[m[33m ([m[1;36mHEAD -> [m[1;32mpromo1[m[33m, [m[1;31morigin/promo1[m[33m)[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Fri Jun 12 17:35:34 2026 -0300
+
+    nova versão que ta funcionadno bacana
+
+[33mcommit f35d52697450cd6213c6edde50db1a84e04f54c4[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu Jun 11 19:46:25 2026 -0300
+
+    edição do nanobot
+
+[33mcommit 37d2b5756614b298bc9b9de80703a7663a3cf8e4[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu Jun 11 14:37:52 2026 -0300
+
+    ATUALIZAÇÃO DA PAGINA SOBRE IA
+
+[33mcommit 4e53ee2375de06115b3148e25caef864b5728d17[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu Jun 11 13:31:16 2026 -0300
+
+    formulando outras paginas marketing manutenção e etc
+
+[33mcommit c3e2caf1ad2df21c273a3662314b00e461759ad2[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Mon Jun 8 15:19:33 2026 -0300
+
+    [F] FUNCIONAL QUE NÃO BAIXEI DO SERVIDOR
+
+[33mcommit c7672d24a6af19f4b9e95d69395de1b53c9e5e50[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu May 7 19:17:20 2026 -0300
+
+    FUNCIONAL SEM ARQUIVOS MENSAGEM
+
+[33mcommit 35960e8f38ea2ec163f9a0ffc519d6936904cc15[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu May 7 19:15:59 2026 -0300
+
+    ARQUIVOS NECESSARIOS PARA FAZER PROCESSO DE MENSAGEM FUNCIONAR NO
+    HOSTINGER
+            new file:   HOSTINGER-DEPLOYMENT-GUIDE.md
+            new file:   como subir processo mensagem para hostinger
+            new file:   hostinger-cron-setup.md
+            new file:   hostinger-deploy.sh
+            new file:   hostinger-env-check.php
+            new file:   hostinger-queue-config.php
+            new file:   hostinger-queue-worker.php
+
+[33mcommit baba6c0619cb91a08be5165e6a55a52a827bb1c1[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu May 7 17:57:46 2026 -0300
+
+    FUNCIONAL
+
+[33mcommit 4708767bad79013682670254c75208e3ff7ba4a9[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Wed May 6 17:21:38 2026 -0300
+
+    Alteração funcional para barra de porcentagem -> mensagens funcional
+    não conferido upload de arquivos
+
+[33mcommit 1f941c8e1b0afdc0ed8d4efb483ce306e6e885be[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Mon May 4 21:04:12 2026 -0300
+
+    SÓ FALTOU REGULAR O CHAT DO INDEX DO PROJECT OU SEJA TA NO PRONPT DO
+    CHAT
+
+[33mcommit 573dfadcacec1839e4627e220c9f7baa113f587a[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Mon May 4 20:49:19 2026 -0300
+
+    [A] ATE AQUI TA TUDO FUNCIONADO O PROBLEMA AGORA É O CHAT QUE NÃO TA COM
+    AS CONFIGURAÇÕES IDEIAS
+
+[33mcommit ce2d33ca4f8eb27528377a3a3a52f20a9c2cec98[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Mon May 4 19:44:53 2026 -0300
+
+    [A] PARA O STRIP -> METODO DE PAGAMENTO FUNCIONAR TEM QUE TER ISSO AQUI
+    QUE VERIFICA NO SITE DO STRIPE E CONECTA NO SERVIDOR LOCAL
+    
+    .\stripe listen --forward-to localhost:8000/stripe/webhook
+    
+    proximo é :
+    
+    .\stripe listen --forward-to localhost:8000/stripe/webhook
+    
+    ou seja você executa 2 vezes pra ver se ta funcionaod ou se conectou
+    direto -> não defini ainda
+
+[33mcommit a1413dd436cbbe4b05782362dd63e65c095d7252[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu Apr 30 19:07:40 2026 -0300
+
+    CRIEI UMA TABELA MIGRATION
+    php artisan make:migration create_project_user_table
+    
+    No Mionar developers (plural) para a equipe.
+    
+    configurei uma parte no web que ta dando erro
+     $projects = auth()->user()->role === 'admin'
+                ? Project::with(['user', 'employee', 'developers'])->get()
+                : Project::where('employee_id', auth()->id())
+                ->orWhereHas('developers', function ($q) {
+                    $q->where('user_id', auth()->id());
+                })
+                ->with('user')
+                ->get();
+
+[33mcommit a25da0fc9f2bca9507328965e26eeef8fae616d0[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu Apr 30 18:12:23 2026 -0300
+
+    [F] AQUI FINALIZE FUNCIONANDO OS SISTEMA DE ASSINATURA DE DE TELA
+    ADMINISTRADORA PADRAO ASSIM COMO A TELA DASH DO CLIENTE AGORA VOU USAR O
+    GEMINI PARA FAZER ESSA SEQUENCIA AQUI:
+    4. Checklist de Implementação (O que faremos a seguir)
+    Middleware de Proteção: Criar um middleware específico para diferenciar admin de employee.
+    
+    Dashboard de Programador: Ajustar a rota /admin/projects para que, quando o usuário for employee, ele veja apenas os projetos onde seu ID consta como responsável.
+    
+    Interface de Gestão de Usuários: Criar uma tela para o Super Admin cadastrar novos usuários e definir se são Programadores ou Clientes.
+    
+    Integração de Chat: Adicionar o componente de chat dentro da view do projeto, tanto para o Cliente quanto para o Programador.
+
+[33mcommit 382be40908506075fe57f97f4cbcdf65be97a97d[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Wed Apr 29 18:03:26 2026 -0300
+
+    AQUI ESTOU INDO ALTERAR AS ROTAS PARA QUE O ADMINISTRADOR NÃO
+    primeira coisa que fiz criei uma migration : php artisan make:migration update_users_and_projects_table
+    ara garantir que um cliente não acesse a área administrativa, vamos criar um Middleware: php artisan make:middleware CheckAdmin
+    
+    No arquivo app/Http/Middleware/CheckAdmin.php:
+    
+    criei um seedrs admin pra gerar usuario adminsitrativo
+    php artisan make:seeder AdminUserSeeder
+
+[33mcommit cca183f56e20e52c5ed2579e38ee00f0fbbea88a[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Wed Apr 29 17:25:53 2026 -0300
+
+    Aqui estou criando o um faker pra testar as atribuições do canal de verificar se
+     o processo
+    php artisan make:seeder ProjectSeeder
+    
+    -> Aqui estou rodando a criação de um componente de teste para o site em andamen
+    to
+    php artisan db:seed --class=ProjectSeeder
+    -> configurei tbm a parte de progresso do cliente de forma parcial
+
+[33mcommit fa2c7d95038a5eab1a01dce0b51ef1e228fae5d5[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Wed Apr 29 14:09:00 2026 -0300
+
+    tentando conectar com stripe -> codigo fornecido pelo site:
+    npx skills add -y https://docs.stripe.com
+
+[33mcommit eeb5b269ac8643dbba49812daee841f9bbee961f[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Tue Apr 28 20:42:14 2026 -0300
+
+    [A] -> aqui eu terminei a parte de conectar com o sistema de pagamento
+    -> falta testar e ver se tudo ta funcionando certinho
+
+[33mcommit 19c4864622500fd72e2144f2b1e2547e1408a618[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Mon Apr 27 18:31:38 2026 -0300
+
+    [C] AINDA NÃO COMECEI OS PASSOS PARA CONFIGURAR O PAGAMENTO
+    MAS JÁ CONFIGUREI O LAUYOUT DE LOGIN E DE RECOVERY
+
+[33mcommit c8b2f29214add04360b5aa26536d0c26ecd1cc69[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Mon Apr 27 18:18:30 2026 -0300
+
+     [I] -> BREEZE INSTALAÇÃO
+                -> primiero comando que eu rodei para instalar o breeze:
+                        -composer require laravel/cashier => não deu certo por
+                        causa da versão do php
+    
+                        -composer require laravel/cashier --ignore-platform-reqs
+                        => esse aqui deu certo pois forçou o comando ignorando
+                        as requisições
+    
+                        Agora vou ter que importar as migrations pois o breeze
+                        mais recente não importa automatico:
+                        -php artisan vendor:publish --tag="cashier-migrations"
+    
+        Ao adicionar a trait Billable, o Laravel Cashier "injeta" métodos no seu usuário, como:
+    
+        $user->charge() (para cobranças únicas).
+    
+        $user->newSubscription() (para criar assinaturas).
+    
+        $user->subscribed() (para verificar se ele pagou).
+    
+        ARQUITETURA DO FLUXO (O Caminho do Usuário)
+        Landing Page: Botão "Assinar" leva para uma Rota de Checkout.
+    
+        Stripe: O usuário paga (Cartão, Pix, Boleto).
+    
+        Redirect de Sucesso: O Stripe envia o usuário para /register com um token de segurança.
+    
+        Registro: O usuário cria Nome/E-mail/Senha e o Laravel vincula a assinatura automaticamente.
+    
+        ETAPA 1: Configuração das Chaves e Webhook
+        No seu arquivo .env, coloque as chaves que você pegou no painel do Stripe:
+    
+        Snippet de código
+        STRIPE_KEY=pk_test_...
+        STRIPE_SECRET=sk_test_...
+        STRIPE_WEBHOOK_SECRET=whsec_...
+        CASHIER_CURRENCY=brl
+        ETAPA 2: Rota e Controller de Checkout (A "Porta de Entrada")
+        Como o usuário não está logado, criaremos um Controller para gerar a sessão de pagamento.
+    
+        Comando: php artisan make:controller StripeCheckoutController
+    
+        No app/Http/Controllers/StripeCheckoutController.php:
+    
+        PHP
+        public function checkout()
+        {
+            // ID do Preço que você criou no painel do Stripe
+            $priceId = 'price_12345...';
+    
+            return auth()->user()
+                ? auth()->user()->checkout([$priceId => 1], [
+                    'success_url' => route('register').'?session_id={CHECKOUT_SESSION_ID}',
+                    'cancel_url' => route('login'),
+                ])
+                : \Stripe\Checkout\Session::create([
+                    'payment_method_types' => ['card', 'pix'],
+                    'line_items' => [[
+                        'price' => $priceId,
+                        'quantity' => 1,
+                    ]],
+                    'mode' => 'subscription',
+                    'success_url' => route('register').'?session_id={CHECKOUT_SESSION_ID}',
+                    'cancel_url' => url('/'),
+                ]);
+        }
+        ETAPA 3: Protegendo a Tela de Registro (O Design Cyberpunk)
+        Agora, vamos garantir que a rota /register (que já estilizamos com o visual Cyber-Minimalist) só funcione se houver um session_id válido vindo do Stripe.
+    
+        No seu app/Http/Controllers/Auth/RegisteredUserController.php, no método create:
+    
+        PHP
+        public function create(Request $request)
+        {
+            $sessionId = $request->get('session_id');
+    
+            if (!$sessionId) {
+                return redirect('/')->with('error', 'Acesso negado. Realize a assinatura primeiro.');
+            }OA
+    
+            // Opcional: Validar no Stripe se a sessão está paga antes de mostrar a view
+            return view('auth.register', ['sessionId' => $sessionId]);
+        }
+        ETAPA 4: Vinculando o Pagamento ao Novo Usuário
+        Quando o usuário preencher o formulário de registro e clicar em "Finalizar", o Laravel precisa criar o usuário e dizer ao Cashier: "Este usuário aqui é o dono daquele pagamento do Stripe".
+    
+        No mesmo RegisteredUserController.php, no método store:
+    
+        PHP
+        public function store(Request $request)
+        {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
+    
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+    
+            // Vincula o ID do cliente Stripe ao novo usuário
+            $stripe = new \Stripe\StripeClient(config('cashier.secret'));
+            $session = $stripe->checkout->sessions->retrieve($request->session_id);
+    
+            $user->stripe_id = $session->customer;
+            $user->save();
+    
+            event(new Registered($user));
+            Auth::login($user);
+    
+            return redirect(route('dashboard', absolute: false));
+        }
+        ETAPA 5: O Webhook (O "Segurança" do Sistema)
+        O Webhook é essencial para o caso do Pix ou Boleto, onde o pagamento demora alguns minutos. Ele avisa o seu Laravel: "Ei, o pagamento foi aprovado!".
+    
+        Instale o Stripe CLI no seu computador para testar localmente.
+    
+        Rode o comando: stripe listen --forward-to localhost:8000/stripe/webhook
+    
+        No arquivo bootstrap/app.php, você DEVE desabilitar o CSRF para essa rota:
+    
+        PHP
+        ->withMiddleware(function (Middleware $middleware) {
+            $middleware->validateCsrfTokens(except: [
+                'stripe/*',
+            ]);
+        })
+        RESUMO PARA CONTINUAR DEPOIS:
+        Se esta conversa travar, inicie uma nova e diga:
+        "Gemini, estou seguindo o roteiro de Assinatura Stripe. Já configurei o .env e as migrations. Preciso de ajuda com a ETAPA [X]."
+    
+        Próximo passo imediato para você: Criar o StripeCheckoutController e a rota que aponta para ele no web.php:
+        Route::get('/assinar', [StripeCheckoutController::class, 'checkout'])->name('checkout.stripe');
+    (END)
+        PHP
+        public function store(Request $request)
+        {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
+    
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+    
+            // Vincula o ID do cliente Stripe ao novo usuário
+            $stripe = new \Stripe\StripeClient(config('cashier.secret'));
+            $session = $stripe->checkout->sessions->retrieve($request->session_id);
+    
+            $user->stripe_id = $session->customer;
+            $user->save();
+    
+            event(new Registered($user));
+            Auth::login($user);
+    
+            return redirect(route('dashboard', absolute: false));
+        }
+        ETAPA 5: O Webhook (O "Segurança" do Sistema)
+        O Webhook é essencial para o caso do Pix ou Boleto, onde o pagamento demora alguns minutos. Ele avisa o seu Laravel: "Ei, o pagamento foi aprovado!".
+    
+        Instale o Stripe CLI no seu computador para testar localmente.
+    
+        Rode o comando: stripe listen --forward-to localhost:8000/stripe/webhook
+    
+        No arquivo bootstrap/app.php, você DEVE desabilitar o CSRF para essa rota:
+    
+        PHP
+        ->withMiddleware(function (Middleware $middleware) {
+            $middleware->validateCsrfTokens(except: [
+                'stripe/*',
+            ]);
+        })
+        RESUMO PARA CONTINUAR DEPOIS:
+        Se esta conversa travar, inicie uma nova e diga:
+        "Gemini, estou seguindo o roteiro de Assinatura Stripe. Já configurei o .env e as migrations. Preciso de ajuda com a ETAPA [X]."
+    
+        Próximo passo imediato para você: Criar o StripeCheckoutController e a rota que aponta para ele no web.php:
+        Route::get('/assinar', [StripeCheckoutController::class, 'checkout'])->name('checkout.stripe');
+
+[33mcommit 0335346c37ccfbd53a4cab9592e47b9828b39bc0[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Fri Apr 24 16:14:25 2026 -0300
+
+    SÓ FALTA CONFIGURAR OS TEXTOS E O METODO DE PAGAMENTO
+
+[33mcommit 9e959e13eaef0fbf9cb8026874acd8c1bd2c2de2[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Fri Apr 24 13:37:01 2026 -0300
+
+    Ajuste final da penultima sessao -> falta adicionar subtopicos
+
+[33mcommit dc526f6a6b07313b9ee06652cae06e9d478602c3[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu Apr 23 19:28:46 2026 -0300
+
+    cuti cuti
+
+[33mcommit 48e205ab2f0352b40d383aa7f5f0379d5b35c8a4[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu Apr 23 18:05:39 2026 -0300
+
+    edção da parte das ultimas sessoes de informação shark agora tem que terminar o resto
+
+[33mcommit dbabb6ce583079a1f8fb9998714de4a9f8fa6411[m
+Author: vitor brenno <cityofcloudsbusiness@gmail.com>
+Date:   Thu Apr 23 16:08:32 2026 -0300
+
+    [A] -> Adicionei as ultimas paginas mas ainda não configurei o sistema
+    do shark !! tenho que montar as propagandas

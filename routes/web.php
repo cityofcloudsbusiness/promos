@@ -3,6 +3,8 @@
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
+use App\Mail\ContactMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -48,6 +50,15 @@ Route::get('/contato/{context?}', function (Request $request, ?string $context =
             'subject' => 'Contratar Agente Comercial',
             'message' => 'Quero contratar um agente comercial para meu projeto e receber um contato urgente.',
         ],
+         'arquiteto-ia' => [
+            'pageTitle' => 'Suporte Arquiteto de Agentes de IA',
+            'subject' => 'Suporte arquiteto de ia',
+            'message' => 'Quero entender mais sobre Agentes no meu negocio.',
+        ],'mapainsta' => [
+            'pageTitle' => 'Colocando Minha Empresa no Instagram Maps',
+            'subject' => 'Minha Empresa no Instagram Maps',
+            'message' => 'Quero colocar minha empresa no Instagram Maps e dominar minha região, gostaria de um contato e um orçamento para isso.',
+        ],
     ];
 
     $contextData = $contexts[$context] ?? [
@@ -61,15 +72,26 @@ Route::get('/contato/{context?}', function (Request $request, ?string $context =
 
 Route::post('/contato', function (Request $request) {
     $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
+        'name'    => 'required|string|max:255',
+        'email'   => 'required|email|max:255',
         'subject' => 'required|string|max:255',
         'message' => 'required|string|max:5000',
     ]);
 
-    logger()->info('Contact form submitted', $request->only(['name', 'email', 'subject', 'message']));
+    try {
+        Mail::to('mensagemclientes@cityofclouds.com.br')
+            ->send(new ContactMail(
+                $request->input('name'),
+                $request->input('email'),
+                $request->input('subject'),
+                $request->input('message'),
+            ));
+    } catch (\Exception $e) {
+        logger()->error('Erro ao enviar email de contato: ' . $e->getMessage());
+        return back()->with('error', 'Ocorreu um erro ao enviar sua mensagem. Tente novamente em instantes.');
+    }
 
-    return back()->with('success', 'Sua mensagem foi registrada com sucesso. Em breve retornaremos ao seu e-mail.');
+    return back()->with('success', 'Sua mensagem foi enviada com sucesso! Em breve entraremos em contato.');
 })->name('contact.send');
 
 /*

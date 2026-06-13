@@ -126,7 +126,7 @@
             {{-- Badge (Recomendado / 10% Desconto / etc) --}}
             @if($plan['badge'])
             <div class="absolute -top-4 right-8">
-                <span class="inline-block bg-[#0c0d14] border {{ $borderColor }} {{ $accentText }} text-[10px] font-black uppercase tracking-widest px-5 py-1.5 rounded-full animate-pulse {{ $glowShadow }}">
+                <span class="mt-5 inline-block bg-[#0c0d14] border {{ $borderColor }} {{ $accentText }} text-[10px] font-black uppercase tracking-widest px-5 py-1.5 rounded-full animate-pulse {{ $glowShadow }}">
                     {{ $plan['badge'] }}
                 </span>
             </div>
