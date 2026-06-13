@@ -196,7 +196,7 @@
             },
             startCanvas() {
                 if (this.animationFrame) return;
-                this.animate();
+                if (this.animateFn) this.animateFn();
             },
             stopCanvas() {
                 if (this.animationFrame) {
@@ -217,7 +217,7 @@
                 window.addEventListener('resize', resize);
                 resize();
 
-                const animate = () => {
+                this.animateFn = () => {
                     if (!this.sectionVisible) {
                         this.animationFrame = null;
                         return;
@@ -226,7 +226,6 @@
                     const parentRect = parent.getBoundingClientRect();
                     const coreRect = core.getBoundingClientRect();
 
-                    // Ponto Central de origem (X e Y)
                     const startX = (coreRect.left + coreRect.width / 2) - parentRect.left;
                     const startY = (coreRect.top + coreRect.height / 2) - parentRect.top;
 
@@ -235,46 +234,38 @@
                             const rect = card.getBoundingClientRect();
                             const isLeft = card.classList.contains('left');
 
-                            // Ponto de destino no Card
                             const endX = (isLeft ? rect.right : rect.left) - parentRect.left;
                             const endY = (rect.top + rect.height / 2) - parentRect.top;
 
                             ctx.beginPath();
                             ctx.moveTo(startX, startY);
 
-                            // EXPLICAÇÃO DO AJUSTE:
-                            // O bezierCurveTo usa (CP1x, CP1y, CP2x, CP2y, endX, endY)
-                            // Para "aumentar" o caminho, forçamos o ponto de controle 1 a ir mais para os lados
-                            const offsetCurva = isLeft ? -150 : 150; // Aumente esse valor para a linha abrir mais
+                            const offsetCurva = isLeft ? -150 : 150;
 
                             ctx.bezierCurveTo(
-                                startX + offsetCurva, startY, // Ponto de controle 1 (sai para o lado)
-                                endX - offsetCurva, endY, // Ponto de controle 2 (chega por trás)
-                                endX, endY // Destino final no card
+                                startX + offsetCurva, startY,
+                                endX - offsetCurva, endY,
+                                endX, endY
                             );
 
-                            // Estilização das Linhas
                             const isHovered = card.matches(':hover');
-                            ctx.shadowBlur = isHovered ? 20 : 5; // Aumentei o glow
+                            ctx.shadowBlur = isHovered ? 20 : 5;
                             ctx.shadowColor = isHovered ? '#ec4893' : 'rgba(168, 85, 247, 0.5)';
 
                             const gradient = ctx.createLinearGradient(startX, startY, endX, endY);
                             gradient.addColorStop(0, isHovered ? 'rgba(236, 72, 153, 0.9)' : 'rgba(168, 85, 247, 0.6)');
-                            gradient.addColorStop(1, 'transparent'); // Morre suave no card
+                            gradient.addColorStop(1, 'transparent');
 
                             ctx.strokeStyle = gradient;
-                            ctx.lineWidth = isHovered ? 3 : 1.8; // Linhas levemente mais grossas
-
-                            // Se quiser linha contínua, remova o setLineDash. 
-                            // Para teia gamer, mantive o pontilhado mas com traços maiores:
+                            ctx.lineWidth = isHovered ? 3 : 1.8;
                             ctx.setLineDash(isHovered ? [] : [10, 5]);
 
                             ctx.stroke();
                         }
                     });
-                    this.animationFrame = requestAnimationFrame(this.animate);
+                    this.animationFrame = requestAnimationFrame(this.animateFn);
                 };
-                this.animate();
+                this.animateFn();
             }
         }
     }
