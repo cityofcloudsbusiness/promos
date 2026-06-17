@@ -40,3 +40,144 @@
     stroke-dasharray: 6 4;
     animation: flowDash 1.6s linear infinite;
 }
+
+/* Brick / Block build-in animation */
+@keyframes brickIn {
+    0%   { opacity: 0; transform: translateY(48px) scale(0.9); }
+    65%  { transform: translateY(-5px) scale(1.015); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes brickSlideLeft {
+    0%   { opacity: 0; transform: translateX(-48px) scale(0.95); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes brickSlideRight {
+    0%   { opacity: 0; transform: translateX(48px) scale(0.95); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes fadeUp {
+    0%   { opacity: 0; transform: translateY(24px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes counterPulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.06); }
+}
+
+.brick-card {
+    opacity: 0;
+    will-change: transform, opacity;
+}
+.brick-card.is-visible {
+    animation: brickIn 0.55s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
+.slide-left { opacity: 0; }
+.slide-left.is-visible  { animation: brickSlideLeft  0.6s ease-out forwards; }
+.slide-right { opacity: 0; }
+.slide-right.is-visible { animation: brickSlideRight 0.6s ease-out forwards; }
+.fade-up { opacity: 0; }
+.fade-up.is-visible     { animation: fadeUp 0.55s ease-out forwards; }
+
+/* Filter button active state */
+.filter-btn { transition: all 0.2s ease; }
+.filter-btn.is-active {
+    background-color: #312e81;
+    color: white;
+    border-color: #312e81;
+}
+
+/* Navbar scroll shrink */
+.navbar-scrolled {
+    box-shadow: 0 1px 20px rgba(0,0,0,0.08);
+}
+
+/* ── Corner Widgets (lateral building block animations) ── */
+@keyframes cwBL {
+    0%   { opacity: 0; transform: translateX(-110%) scaleX(0.5); }
+    68%  { transform: translateX(5px) scaleX(1.03); }
+    100% { opacity: 1; transform: translateX(0) scaleX(1); }
+}
+@keyframes cwBR {
+    0%   { opacity: 0; transform: translateX(110%) scaleX(0.5); }
+    68%  { transform: translateX(-5px) scaleX(1.03); }
+    100% { opacity: 1; transform: translateX(0) scaleX(1); }
+}
+
+.cw-bk        { opacity: 0; will-change: transform, opacity; }
+.cw-bk.anim-l { animation: cwBL 0.58s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+.cw-bk.anim-r { animation: cwBR 0.58s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+
+.corner-widget {
+    position: fixed;
+    z-index: 45;
+    display: flex;
+    align-items: center;
+    pointer-events: auto;
+}
+.corner-widget.cw-left  { left: 0; flex-direction: row; }
+.corner-widget.cw-right { right: 0; flex-direction: row-reverse; }
+
+.cw-strip {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 8px 14px 0;
+    background: rgba(255,255,255,0.96);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-left: none;
+    border-radius: 0 14px 14px 0;
+    box-shadow: 3px 0 16px rgba(0,0,0,0.06);
+    transition: box-shadow 0.25s ease, padding 0.2s ease;
+    cursor: pointer;
+}
+.cw-right .cw-strip {
+    padding: 14px 0 14px 8px;
+    border-left: 1px solid rgba(0,0,0,0.07);
+    border-right: none;
+    border-radius: 14px 0 0 14px;
+    box-shadow: -3px 0 16px rgba(0,0,0,0.06);
+}
+.corner-widget:hover .cw-strip { box-shadow: 5px 0 22px rgba(0,0,0,0.11); }
+.corner-widget.cw-right:hover .cw-strip { box-shadow: -5px 0 22px rgba(0,0,0,0.11); }
+
+.cw-chevron {
+    margin: 5px auto 0;
+    opacity: 0.35;
+    transition: opacity 0.2s, transform 0.22s;
+}
+.corner-widget:hover .cw-chevron { opacity: 0.8; transform: translateX(3px); }
+.corner-widget.cw-right:hover .cw-chevron { transform: translateX(-3px); }
+
+/* Card panel — expands on hover */
+.cw-panel {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-width 0.42s cubic-bezier(0.34,1.1,0.64,1), opacity 0.22s ease;
+}
+.corner-widget:hover .cw-panel {
+    max-width: 300px;
+    opacity: 1;
+    pointer-events: auto;
+}
+.cw-panel-inner {
+    width: 276px;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-left: none;
+    border-radius: 0 16px 16px 0;
+    box-shadow: 10px 4px 32px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+.corner-widget.cw-right .cw-panel-inner {
+    border-right: none;
+    border-left: 1px solid rgba(0,0,0,0.07);
+    border-radius: 16px 0 0 16px;
+    box-shadow: -10px 4px 32px rgba(0,0,0,0.08);
+}
