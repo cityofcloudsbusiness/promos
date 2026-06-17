@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.bg-grid {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 64px 64px;
+}
+
+.bg-blueprint {
+    background-color: #f8fafc;
+    background-image:
+        linear-gradient(rgba(30, 64, 175, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 64, 175, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+}
+
+.bg-blueprint-dense {
+    background-color: #f1f5f9;
+    background-image:
+        linear-gradient(rgba(30, 64, 175, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 64, 175, 0.07) 1px, transparent 1px),
+        linear-gradient(rgba(30, 64, 175, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 64, 175, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px, 48px 48px, 12px 12px, 12px 12px;
+}
+
+@keyframes flowDash {
+    to { stroke-dashoffset: -24; }
+}
+.flow-animated {
+    stroke-dasharray: 6 4;
+    animation: flowDash 1.6s linear infinite;
+}
