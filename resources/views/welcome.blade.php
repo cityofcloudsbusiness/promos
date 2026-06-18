@@ -74,275 +74,230 @@
 <!-- ================================================================
      HERO — HEMISFÉRIOS EDGE-TO-EDGE
 ================================================================ -->
-<section id="diagnostico" class="relative pt-[4.5rem] min-h-screen bg-blueprint flex flex-col">
+<section id="diagnostico" class="relative pt-16 min-h-screen bg-blueprint flex flex-col">
 
     <!-- Blueprint corner markers -->
-    <span class="absolute top-20 left-3 text-[9px] font-mono text-indigo-800/15 select-none pointer-events-none">[0,0]</span>
-    <span class="absolute top-20 right-3 text-[9px] font-mono text-indigo-800/15 select-none pointer-events-none">[FF,0]</span>
-    <span class="absolute bottom-6 left-3 text-[9px] font-mono text-indigo-800/15 select-none pointer-events-none">[0,FF]</span>
-    <span class="absolute bottom-6 right-3 text-[9px] font-mono text-indigo-800/15 select-none pointer-events-none">[FF,FF]</span>
+    <span class="absolute top-20 left-3 text-[9px] font-mono text-indigo-800/20 select-none pointer-events-none">X:00 Y:00</span>
+    <span class="absolute top-20 right-3 text-[9px] font-mono text-indigo-800/20 select-none pointer-events-none">X:FF Y:00</span>
+    <span class="absolute bottom-20 left-3 text-[9px] font-mono text-indigo-800/20 select-none pointer-events-none">X:00 Y:FF</span>
+    <span class="absolute bottom-20 right-3 text-[9px] font-mono text-indigo-800/20 select-none pointer-events-none">X:FF Y:FF</span>
 
-    <!-- Hero header label + headline -->
-    <div class="relative text-center pt-12 pb-8 px-4">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-200 bg-indigo-50 text-indigo-800 text-[11px] font-bold tracking-widest uppercase">
+    <!-- Hero header -->
+    <div class="relative pt-10 pb-6 text-center px-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-200 bg-indigo-50 text-indigo-700 text-[11px] font-bold tracking-widest uppercase">
             <span class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
-            Diagnóstico de Transformação Corporativa — Protocolo v2.4
+            Diagnóstico de Transformação Corporativa
         </div>
-        <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight text-slate-900 max-w-5xl mx-auto">
+        <h1 class="mt-5 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-slate-900 max-w-3xl mx-auto">
             Sua empresa tem <span class="text-indigo-800">estrutura</span><br class="hidden sm:block"/>
             para o que está por vir?
         </h1>
-        <p class="mt-5 text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            Mapeamos, reorganizamos e implementamos. Treinamento integrado com IA, gestão de pessoas
-            e infraestrutura tecnológica — do caos à precisão corporativa.
+        <p class="mt-3 text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+            Mapeamos, reorganizamos e implementamos. Da rotina caótica ao sistema operando com precisão corporativa.
         </p>
     </div>
 
-    <!-- HEMISFÉRIOS — EDGE-TO-EDGE -->
-    <div class="relative flex-1 flex items-stretch w-full px-2 sm:px-4 pb-4 gap-2 sm:gap-3 min-h-[520px]">
+    <!-- HEMISFÉRIOS -->
+    <div class="relative flex-1 flex items-stretch w-full max-w-[1400px] mx-auto px-3 sm:px-6 pb-6 gap-2 sm:gap-3">
 
         <!-- ─── LEFT: O PROBLEMA ─── -->
-        <div class="flex-1 rounded-2xl sm:rounded-3xl bg-white/70 border border-red-200/60 overflow-hidden flex flex-col slide-left">
-            <div class="flex items-center justify-between px-5 py-3 border-b border-red-100/80 bg-gradient-to-r from-red-50 to-orange-50/60">
-                <div class="flex items-center gap-2">
-                    <div class="flex gap-1">
-                        <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span>
-                    </div>
-                    <span class="text-[10px] font-bold text-red-600 tracking-widest uppercase ml-1">ESTADO ATUAL</span>
+        <div class="flex-1 relative rounded-2xl bg-white/70 border border-red-200/70 overflow-hidden flex flex-col min-h-[460px] slide-left">
+            <div class="flex items-center justify-between px-4 py-2.5 border-b border-red-100 bg-red-50/60">
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-red-400"></span>
+                    <span class="text-[10px] font-bold text-red-600 tracking-widest uppercase">Estado Atual</span>
                 </div>
-                <span class="font-mono text-[9px] text-red-300 hidden sm:block">SYS_STATUS: CHAOS // ERR_0x3F</span>
+                <span class="font-mono text-[9px] text-red-300 hidden sm:block">MODULE_CHAOS // DESALINHADO</span>
             </div>
 
-            <div class="p-5 sm:p-8 flex flex-col flex-1">
-                <h2 class="text-base sm:text-lg font-bold text-slate-800 mb-1">A realidade da maioria das empresas</h2>
-                <p class="text-xs sm:text-sm text-slate-400 mb-6">Processos isolados, sem integração, sem tecnologia e sem direção.</p>
+            <div class="p-5 sm:p-7 flex flex-col flex-1">
+                <p class="text-xs font-semibold text-slate-700 mb-1">A realidade da maioria das empresas</p>
+                <p class="text-xs text-slate-400 mb-5">Processos isolados, sem integração e sem direção tecnológica.</p>
 
                 <div class="flex-1 grid grid-cols-2 gap-2.5">
-                    <div class="border border-red-200 bg-red-50/90 rounded-xl p-3.5 flex flex-col gap-2">
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-lg bg-red-100 flex items-center justify-center shrink-0">
-                                <svg class="w-3.5 h-3.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
-                            </div>
-                            <span class="text-[10px] font-bold text-red-700 uppercase tracking-wider">Gestão</span>
+                    <div class="border border-red-200 bg-red-50 rounded-xl p-3">
+                        <div class="flex items-center gap-1.5 mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                            <span class="text-[10px] font-bold text-red-700 uppercase">Gestão</span>
                         </div>
-                        <p class="text-[10px] text-red-600 leading-snug">Decisões sem dados. Reuniões sem resultado. Metas sem método.</p>
+                        <p class="text-[10px] text-red-500 leading-snug">Decisões sem dados reais</p>
                     </div>
-
-                    <div class="border border-orange-200 bg-orange-50/90 rounded-xl p-3.5 flex flex-col gap-2">
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-lg bg-orange-100 flex items-center justify-center shrink-0">
-                                <svg class="w-3.5 h-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
-                            </div>
-                            <span class="text-[10px] font-bold text-orange-700 uppercase tracking-wider">Tecnologia</span>
+                    <div class="border border-orange-200 bg-orange-50 rounded-xl p-3">
+                        <div class="flex items-center gap-1.5 mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-orange-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                            <span class="text-[10px] font-bold text-orange-700 uppercase">Tecnologia</span>
                         </div>
-                        <p class="text-[10px] text-orange-600 leading-snug">Sistemas legados. Planilhas no lugar de software. Zero automação.</p>
+                        <p class="text-[10px] text-orange-500 leading-snug">Sistemas legados e lentos</p>
                     </div>
-
-                    <!-- Broken connector row -->
-                    <div class="col-span-2 flex items-center gap-3 py-0.5">
+                    <div class="col-span-2 flex items-center gap-2 px-1">
                         <div class="flex-1 h-px border-t border-dashed border-red-200"></div>
-                        <span class="text-red-300 text-sm leading-none">✕</span>
-                        <div class="flex-1 h-px border-t border-dashed border-orange-200"></div>
-                        <span class="text-orange-300 text-sm leading-none">✕</span>
+                        <span class="text-red-300 text-xs">✕</span>
                         <div class="flex-1 h-px border-t border-dashed border-red-200"></div>
                     </div>
-
-                    <div class="border border-red-200 bg-red-50/90 rounded-xl p-3.5 flex flex-col gap-2">
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-lg bg-red-100 flex items-center justify-center shrink-0">
-                                <svg class="w-3.5 h-3.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
-                            </div>
-                            <span class="text-[10px] font-bold text-red-700 uppercase tracking-wider">Pessoas</span>
+                    <div class="border border-red-200 bg-red-50 rounded-xl p-3">
+                        <div class="flex items-center gap-1.5 mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                            <span class="text-[10px] font-bold text-red-700 uppercase">Pessoas</span>
                         </div>
-                        <p class="text-[10px] text-red-600 leading-snug">Equipes sem capacitação contínua. Alta rotatividade. Baixa performance.</p>
+                        <p class="text-[10px] text-red-500 leading-snug">Sem capacitação estruturada</p>
                     </div>
-
-                    <div class="border border-orange-200 bg-orange-50/90 rounded-xl p-3.5 flex flex-col gap-2">
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-lg bg-orange-100 flex items-center justify-center shrink-0">
-                                <svg class="w-3.5 h-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
-                            </div>
-                            <span class="text-[10px] font-bold text-orange-700 uppercase tracking-wider">Logística</span>
+                    <div class="border border-orange-200 bg-orange-50 rounded-xl p-3">
+                        <div class="flex items-center gap-1.5 mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-orange-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                            <span class="text-[10px] font-bold text-orange-700 uppercase">Processos</span>
                         </div>
-                        <p class="text-[10px] text-orange-600 leading-snug">Cadeia opaca. Entregas atrasadas. Custos invisíveis.</p>
+                        <p class="text-[10px] text-orange-500 leading-snug">Fluxos manuais e repetitivos</p>
                     </div>
-
-                    <div class="col-span-2 flex items-center gap-3 py-0.5">
+                    <div class="col-span-2 flex items-center gap-2 px-1">
                         <div class="flex-1 h-px border-t border-dashed border-red-200"></div>
-                        <span class="text-red-300 text-sm leading-none">✕</span>
-                        <div class="flex-1 h-px border-t border-dashed border-orange-200"></div>
-                        <span class="text-orange-300 text-sm leading-none">✕</span>
+                        <span class="text-red-300 text-xs">✕</span>
                         <div class="flex-1 h-px border-t border-dashed border-red-200"></div>
                     </div>
-
-                    <div class="col-span-2 border border-red-300/60 bg-red-100/50 rounded-xl p-3.5 flex items-center gap-3">
-                        <div class="w-6 h-6 rounded-lg bg-red-200 flex items-center justify-center shrink-0">
-                            <svg class="w-3.5 h-3.5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                    <div class="border border-red-200 bg-red-50 rounded-xl p-3">
+                        <div class="flex items-center gap-1.5 mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                            <span class="text-[10px] font-bold text-red-700 uppercase">Logística</span>
                         </div>
-                        <div>
-                            <p class="text-[10px] font-bold text-red-700 uppercase">Processos &amp; Recursos</p>
-                            <p class="text-[10px] text-red-600 leading-snug">Fluxos manuais, retrabalho constante e investimento sem ROI mensurável.</p>
+                        <p class="text-[10px] text-red-500 leading-snug">Sem visibilidade na cadeia</p>
+                    </div>
+                    <div class="border border-orange-200 bg-orange-50 rounded-xl p-3">
+                        <div class="flex items-center gap-1.5 mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-orange-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                            <span class="text-[10px] font-bold text-orange-700 uppercase">Recursos</span>
                         </div>
+                        <p class="text-[10px] text-orange-500 leading-snug">Investimento sem retorno</p>
                     </div>
                 </div>
 
-                <div class="mt-5 pt-4 border-t border-red-100 flex items-center justify-between">
+                <div class="mt-4 pt-4 border-t border-red-100 flex items-center justify-between">
                     <div class="flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-red-400"></span>
-                        <span class="text-[10px] text-red-500 font-semibold">7 vetores desalinhados</span>
+                        <span class="text-[10px] text-red-500 font-medium">6 módulos desconectados</span>
                     </div>
-                    <span class="font-mono text-[9px] text-red-300 hidden sm:block">RESULTADO: ESTAGNAÇÃO</span>
+                    <span class="font-mono text-[9px] text-red-300 hidden sm:block">STATUS: CAOS</span>
                 </div>
             </div>
         </div>
 
         <!-- ─── CENTER: TRANSFORMAÇÃO ─── -->
-        <div class="relative flex flex-col items-center justify-center w-12 sm:w-28 shrink-0 gap-3">
-            <!-- Animated vertical lines -->
-            <svg class="absolute top-0 bottom-1/2 w-full" preserveAspectRatio="none" viewBox="0 0 40 300">
-                <line x1="20" y1="0" x2="20" y2="300" stroke="#a5b4fc" stroke-width="1.5" stroke-dasharray="5 4" class="flow-animated"/>
+        <div class="relative flex flex-col items-center justify-center w-14 sm:w-24 shrink-0 gap-4">
+            <svg class="absolute top-0 bottom-1/2 w-full" preserveAspectRatio="none" viewBox="0 0 40 200">
+                <line x1="20" y1="0" x2="20" y2="200" stroke="#a5b4fc" stroke-width="1.5" stroke-dasharray="5 4" class="flow-animated"/>
             </svg>
-            <svg class="absolute top-1/2 bottom-0 w-full" preserveAspectRatio="none" viewBox="0 0 40 300">
-                <line x1="20" y1="0" x2="20" y2="300" stroke="#6ee7b7" stroke-width="1.5" stroke-dasharray="5 4" class="flow-animated"/>
+            <svg class="absolute top-1/2 bottom-0 w-full" preserveAspectRatio="none" viewBox="0 0 40 200">
+                <line x1="20" y1="0" x2="20" y2="200" stroke="#6ee7b7" stroke-width="1.5" stroke-dasharray="5 4" class="flow-animated"/>
             </svg>
-
-            <!-- Central Brand Node -->
             <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-indigo-400 border border-white shadow"></div>
-                <div class="w-10 h-10 sm:w-16 sm:h-16 rounded-2xl bg-indigo-900 border-4 border-white flex items-center justify-center shadow-2xl shadow-indigo-900/40">
-                    <img src="{{ Vite::asset('resources/imgs/icon_logo.webp') }}"
-                         alt="City of Clouds"
-                         class="w-6 h-6 sm:w-10 sm:h-10 object-contain brightness-200">
+                <svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-indigo-900 border-4 border-white flex items-center justify-center shadow-xl shadow-indigo-900/30">
+                    <img src="{{ Vite::asset('resources/imgs/icon_logo.webp') }}" alt="City of Clouds" class="w-6 h-6 sm:w-9 sm:h-9 object-contain brightness-200">
                 </div>
-                <div class="hidden sm:block text-center leading-tight mt-1">
-                    <p class="text-[8px] font-bold text-indigo-800 tracking-wider uppercase">City of<br/>Clouds</p>
+                <div class="text-center leading-tight">
+                    <p class="text-[8px] sm:text-[10px] font-bold text-indigo-800 tracking-wider uppercase">City of<br/>Clouds</p>
                 </div>
-                <div class="w-2 h-2 rounded-full bg-emerald-400 border border-white shadow"></div>
+                <svg class="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
             </div>
         </div>
 
         <!-- ─── RIGHT: A SOLUÇÃO ─── -->
-        <div class="flex-1 rounded-2xl sm:rounded-3xl bg-white/70 border border-indigo-200/70 overflow-hidden flex flex-col slide-right">
-            <div class="flex items-center justify-between px-5 py-3 border-b border-indigo-100/80 bg-gradient-to-r from-indigo-50/60 to-emerald-50/40">
-                <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <div class="flex-1 relative rounded-2xl bg-white/70 border border-indigo-200/70 overflow-hidden flex flex-col min-h-[460px] slide-right">
+            <div class="flex items-center justify-between px-4 py-2.5 border-b border-indigo-100 bg-indigo-50/60">
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span class="text-[10px] font-bold text-emerald-700 tracking-widest uppercase">Com City of Clouds</span>
                 </div>
-                <span class="font-mono text-[9px] text-indigo-300 hidden sm:block">SYS_STATUS: OPTIMIZED // v2.4</span>
+                <span class="font-mono text-[9px] text-indigo-300 hidden sm:block">MODULE_SYSTEM // INTEGRADO</span>
             </div>
 
-            <div class="p-5 sm:p-8 flex flex-col flex-1">
-                <h2 class="text-base sm:text-lg font-bold text-slate-800 mb-1">Infraestrutura corporativa integrada</h2>
-                <p class="text-xs sm:text-sm text-slate-400 mb-6">Módulos conectados, equipes treinadas, processos automatizados.</p>
+            <div class="p-5 sm:p-7 flex flex-col flex-1">
+                <p class="text-xs font-semibold text-slate-700 mb-1">Infraestrutura corporativa integrada</p>
+                <p class="text-xs text-slate-400 mb-5">Módulos conectados, equipes treinadas, processos automatizados.</p>
 
                 <div class="flex-1 space-y-2.5">
-                    <!-- Hub central -->
-                    <div class="border border-indigo-300 bg-indigo-900 rounded-xl p-4 flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
-                            <img src="{{ Vite::asset('resources/imgs/icon_logo.webp') }}" alt="" class="w-5 h-5 object-contain brightness-200">
+                    <div class="border border-indigo-300 bg-indigo-900 rounded-xl p-3 flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+                            <img src="{{ Vite::asset('resources/imgs/icon_logo.webp') }}" alt="" class="w-4 h-4 object-contain brightness-200">
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-[10px] sm:text-xs font-bold text-white tracking-wider uppercase">Hub Central de Treinamento &amp; Implementação</p>
-                            <p class="text-[10px] text-indigo-300 leading-snug mt-0.5 hidden sm:block">Todos os módulos sincronizados em tempo real</p>
+                            <p class="text-[10px] font-bold text-white tracking-wider uppercase truncate">Hub Central de Treinamento</p>
+                            <p class="text-[10px] text-indigo-300 leading-snug">Integração total entre módulos</p>
                         </div>
                         <div class="flex items-center gap-1 shrink-0">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span class="text-[9px] font-mono text-emerald-300">ATIVO</span>
                         </div>
                     </div>
-
-                    <!-- Grid connected modules -->
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="border border-indigo-200 bg-indigo-50 rounded-xl p-3 relative">
-                            <div class="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-400 border border-white"></div>
-                            <div class="flex items-center gap-1.5 mb-1.5">
-                                <svg class="w-3.5 h-3.5 text-indigo-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
-                                <span class="text-[10px] font-bold text-indigo-800 uppercase">IA Aplicada</span>
-                            </div>
-                            <p class="text-[10px] text-indigo-600 leading-snug">Automação e decisões por dados</p>
-                        </div>
-
-                        <div class="border border-emerald-200 bg-emerald-50 rounded-xl p-3 relative">
-                            <div class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-400 border border-white"></div>
-                            <div class="flex items-center gap-1.5 mb-1.5">
-                                <svg class="w-3.5 h-3.5 text-emerald-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
-                                <span class="text-[10px] font-bold text-emerald-800 uppercase">Tecnologia</span>
-                            </div>
-                            <p class="text-[10px] text-emerald-600 leading-snug">Sistemas modernos ativos</p>
-                        </div>
-                    </div>
-
-                    <!-- Connector -->
-                    <div class="flex items-center gap-2 px-2">
+                    <div class="flex items-center gap-2 px-1">
                         <div class="flex-1 h-px bg-indigo-200"></div>
                         <div class="w-2 h-2 rounded-full bg-indigo-400 border border-white"></div>
                         <div class="flex-1 h-px bg-indigo-200"></div>
                     </div>
-
                     <div class="grid grid-cols-2 gap-2">
-                        <div class="border border-violet-200 bg-violet-50 rounded-xl p-3">
-                            <div class="flex items-center gap-1.5 mb-1.5">
-                                <svg class="w-3.5 h-3.5 text-violet-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
-                                <span class="text-[10px] font-bold text-violet-800 uppercase">Pessoas</span>
+                        <div class="border border-indigo-200 bg-indigo-50 rounded-xl p-3 relative">
+                            <div class="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-400 border border-white"></div>
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <svg class="w-3.5 h-3.5 text-indigo-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+                                <span class="text-[10px] font-bold text-indigo-700 uppercase">IA Aplicada</span>
                             </div>
-                            <p class="text-[10px] text-violet-600 leading-snug">Equipes treinadas e direcionadas</p>
+                            <p class="text-[10px] text-indigo-500 leading-snug">Automação com dados reais</p>
                         </div>
-
-                        <div class="border border-amber-200 bg-amber-50 rounded-xl p-3">
-                            <div class="flex items-center gap-1.5 mb-1.5">
-                                <svg class="w-3.5 h-3.5 text-amber-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
-                                <span class="text-[10px] font-bold text-amber-800 uppercase">Logística</span>
+                        <div class="border border-emerald-200 bg-emerald-50 rounded-xl p-3 relative">
+                            <div class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-400 border border-white"></div>
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+                                <span class="text-[10px] font-bold text-emerald-700 uppercase">Tecnologia</span>
                             </div>
-                            <p class="text-[10px] text-amber-600 leading-snug">Cadeia otimizada e rastreável</p>
+                            <p class="text-[10px] text-emerald-500 leading-snug">Sistemas modernos ativos</p>
                         </div>
                     </div>
-
-                    <!-- Results bar -->
-                    <div class="border border-indigo-100 bg-indigo-50/80 rounded-xl p-3 flex items-center gap-3">
-                        <div class="flex-1 min-w-0">
-                            <p class="text-[10px] font-bold text-indigo-700 uppercase tracking-wider">Processos &amp; Recursos</p>
-                            <p class="text-[10px] text-indigo-600 leading-snug">Fluxos automatizados. ROI mensurável. Crescimento sustentável.</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="border border-violet-200 bg-violet-50 rounded-xl p-3">
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <svg class="w-3.5 h-3.5 text-violet-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                                <span class="text-[10px] font-bold text-violet-700 uppercase">Pessoas</span>
+                            </div>
+                            <p class="text-[10px] text-violet-500 leading-snug">Equipes capacitadas</p>
                         </div>
-                        <div class="shrink-0 flex items-end gap-0.5">
-                            <div class="w-1 h-3 rounded-full bg-indigo-200"></div>
-                            <div class="w-1 h-5 rounded-full bg-indigo-400"></div>
-                            <div class="w-1 h-7 rounded-full bg-indigo-600"></div>
-                            <div class="w-1 h-9 rounded-full bg-indigo-800"></div>
+                        <div class="border border-amber-200 bg-amber-50 rounded-xl p-3">
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+                                <span class="text-[10px] font-bold text-amber-700 uppercase">Logística</span>
+                            </div>
+                            <p class="text-[10px] text-amber-500 leading-snug">Cadeia otimizada e rastreável</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-5 pt-4 border-t border-indigo-100 flex items-center justify-between">
+                <div class="mt-4 pt-4 border-t border-indigo-100 flex items-center justify-between">
                     <div class="flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span class="text-[10px] text-emerald-600 font-semibold">7 módulos integrados e operando</span>
+                        <span class="text-[10px] text-emerald-600 font-medium">6 módulos integrados</span>
                     </div>
-                    <span class="font-mono text-[9px] text-emerald-400 hidden sm:block">RESULTADO: ESCALA</span>
+                    <span class="font-mono text-[9px] text-emerald-400 hidden sm:block">STATUS: OTIMIZADO</span>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Stats strip -->
-    <div class="border-t border-slate-200/60 bg-white/85 backdrop-blur-sm">
-        <div class="w-full">
+    <div class="border-t border-slate-200/70 bg-white/80 backdrop-blur-sm">
+        <div class="max-w-[1400px] mx-auto px-3 sm:px-6">
             <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-slate-200/60">
-                <div class="py-5 px-6 sm:px-10 text-center">
-                    <div class="text-2xl sm:text-3xl font-bold text-slate-900">+120</div>
-                    <div class="text-xs text-slate-400 mt-1 tracking-wide uppercase">Empresas Atendidas</div>
+                <div class="py-4 px-4 text-center">
+                    <div class="text-xl sm:text-2xl font-bold text-slate-900">+120</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5 tracking-wide">Empresas Atendidas</div>
                 </div>
-                <div class="py-5 px-6 sm:px-10 text-center">
-                    <div class="text-2xl sm:text-3xl font-bold text-slate-900">+8.000</div>
-                    <div class="text-xs text-slate-400 mt-1 tracking-wide uppercase">Profissionais Formados</div>
+                <div class="py-4 px-4 text-center">
+                    <div class="text-xl sm:text-2xl font-bold text-slate-900">+8.000</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5 tracking-wide">Profissionais Formados</div>
                 </div>
-                <div class="py-5 px-6 sm:px-10 text-center">
-                    <div class="text-2xl sm:text-3xl font-bold text-slate-900">+500h</div>
-                    <div class="text-xs text-slate-400 mt-1 tracking-wide uppercase">Conteúdo Corporativo</div>
+                <div class="py-4 px-4 text-center">
+                    <div class="text-xl sm:text-2xl font-bold text-slate-900">+500h</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5 tracking-wide">Conteúdo Corporativo</div>
                 </div>
-                <div class="py-5 px-6 sm:px-10 text-center">
-                    <div class="text-2xl sm:text-3xl font-bold text-indigo-800">98%</div>
-                    <div class="text-xs text-slate-400 mt-1 tracking-wide uppercase">Satisfação</div>
+                <div class="py-4 px-4 text-center">
+                    <div class="text-xl sm:text-2xl font-bold text-indigo-800">98%</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5 tracking-wide">Taxa de Satisfação</div>
                 </div>
             </div>
         </div>
