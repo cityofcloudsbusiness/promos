@@ -1,183 +1,204 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-.bg-grid {
-    background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 64px 64px;
-}
-
+/* ============================================================
+   BLUEPRINT BACKGROUND
+   ============================================================ */
 .bg-blueprint {
-    background-color: #f8fafc;
+    background-color: #f0f4ff;
     background-image:
-        linear-gradient(rgba(30, 64, 175, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30, 64, 175, 0.05) 1px, transparent 1px);
+        linear-gradient(rgba(99, 102, 241, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.07) 1px, transparent 1px);
     background-size: 48px 48px;
 }
 
 .bg-blueprint-dense {
-    background-color: #f1f5f9;
+    background-color: #eef2ff;
     background-image:
-        linear-gradient(rgba(30, 64, 175, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30, 64, 175, 0.07) 1px, transparent 1px),
-        linear-gradient(rgba(30, 64, 175, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30, 64, 175, 0.03) 1px, transparent 1px);
-    background-size: 48px 48px, 48px 48px, 12px 12px, 12px 12px;
+        linear-gradient(rgba(99, 102, 241, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.09) 1px, transparent 1px);
+    background-size: 24px 24px;
 }
 
-@keyframes flowDash {
-    to { stroke-dashoffset: -24; }
-}
-.flow-animated {
-    stroke-dasharray: 6 4;
-    animation: flowDash 1.6s linear infinite;
-}
-
-/* Brick / Block build-in animation */
-@keyframes brickIn {
-    0%   { opacity: 0; transform: translateY(48px) scale(0.9); }
-    65%  { transform: translateY(-5px) scale(1.015); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+/* ============================================================
+   NAVBAR SCROLL STATE
+   ============================================================ */
+.navbar-scrolled nav {
+    box-shadow: 0 2px 16px rgba(30, 27, 129, 0.08);
 }
 
-@keyframes brickSlideLeft {
-    0%   { opacity: 0; transform: translateX(-48px) scale(0.95); }
-    100% { opacity: 1; transform: translateX(0) scale(1); }
-}
-
-@keyframes brickSlideRight {
-    0%   { opacity: 0; transform: translateX(48px) scale(0.95); }
-    100% { opacity: 1; transform: translateX(0) scale(1); }
-}
-
-@keyframes fadeUp {
-    0%   { opacity: 0; transform: translateY(24px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes counterPulse {
-    0%, 100% { transform: scale(1); }
-    50%       { transform: scale(1.06); }
-}
-
+/* ============================================================
+   BRICK / BLOCK ENTRANCE ANIMATIONS
+   ============================================================ */
 .brick-card {
     opacity: 0;
-    will-change: transform, opacity;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .brick-card.is-visible {
-    animation: brickIn 0.55s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+    opacity: 1;
+    transform: translateY(0);
 }
-.slide-left { opacity: 0; }
-.slide-left.is-visible  { animation: brickSlideLeft  0.6s ease-out forwards; }
-.slide-right { opacity: 0; }
-.slide-right.is-visible { animation: brickSlideRight 0.6s ease-out forwards; }
-.fade-up { opacity: 0; }
-.fade-up.is-visible     { animation: fadeUp 0.55s ease-out forwards; }
 
-/* Filter button active state */
-.filter-btn { transition: all 0.2s ease; }
+.slide-left {
+    opacity: 0;
+    transform: translateX(-28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.slide-right {
+    opacity: 0;
+    transform: translateX(28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.slide-left.is-visible,
+.slide-right.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================================
+   INSIGHTS FILTER
+   ============================================================ */
+.insight-card {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.insight-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.filter-btn {
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    background: white;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.filter-btn:hover {
+    background: #f1f5f9;
+    color: #334155;
+}
 .filter-btn.is-active {
-    background-color: #312e81;
+    background: #312e81;
     color: white;
     border-color: #312e81;
 }
 
-/* Navbar scroll shrink */
-.navbar-scrolled {
-    box-shadow: 0 1px 20px rgba(0,0,0,0.08);
-}
-
-/* ── Corner Widgets (lateral building block animations) ── */
+/* ============================================================
+   CORNER WIDGETS — keyframe animations
+   ============================================================ */
 @keyframes cwBL {
-    0%   { opacity: 0; transform: translateX(-110%) scaleX(0.5); }
-    68%  { transform: translateX(5px) scaleX(1.03); }
-    100% { opacity: 1; transform: translateX(0) scaleX(1); }
+    from { transform: translateX(-130%); opacity: 0; }
+    to   { transform: translateX(0);     opacity: 1; }
 }
 @keyframes cwBR {
-    0%   { opacity: 0; transform: translateX(110%) scaleX(0.5); }
-    68%  { transform: translateX(-5px) scaleX(1.03); }
-    100% { opacity: 1; transform: translateX(0) scaleX(1); }
+    from { transform: translateX(130%);  opacity: 0; }
+    to   { transform: translateX(0);     opacity: 1; }
 }
 
-.cw-bk        { opacity: 0; will-change: transform, opacity; }
-.cw-bk.anim-l { animation: cwBL 0.58s cubic-bezier(0.34,1.4,0.64,1) forwards; }
-.cw-bk.anim-r { animation: cwBR 0.58s cubic-bezier(0.34,1.4,0.64,1) forwards; }
-
+/* ============================================================
+   CORNER WIDGETS — layout & positioning
+   ============================================================ */
 .corner-widget {
     position: fixed;
-    z-index: 45;
-    display: flex;
+    z-index: 40;
     align-items: center;
-    pointer-events: auto;
+    /* display is controlled by Tailwind hidden xl:flex */
 }
-.corner-widget.cw-left  { left: 0; flex-direction: row; }
-.corner-widget.cw-right { right: 0; flex-direction: row-reverse; }
 
+/* Left widgets: strip slides in from left, card opens to the right */
+.cw-left {
+    left: 0;
+    flex-direction: row;
+}
+
+/* Right widgets: strip slides in from right, card opens to the left */
+.cw-right {
+    right: 0;
+    flex-direction: row-reverse;
+}
+
+/* Strip: the vertical column of coloured blocks */
 .cw-strip {
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 14px 8px 14px 0;
-    background: rgba(255,255,255,0.96);
-    border: 1px solid rgba(0,0,0,0.07);
-    border-left: none;
-    border-radius: 0 14px 14px 0;
-    box-shadow: 3px 0 16px rgba(0,0,0,0.06);
-    transition: box-shadow 0.25s ease, padding 0.2s ease;
+    gap: 5px;
+    padding: 10px 4px;
     cursor: pointer;
 }
-.cw-right .cw-strip {
-    padding: 14px 0 14px 8px;
-    border-left: 1px solid rgba(0,0,0,0.07);
-    border-right: none;
-    border-radius: 14px 0 0 14px;
-    box-shadow: -3px 0 16px rgba(0,0,0,0.06);
-}
-.corner-widget:hover .cw-strip { box-shadow: 5px 0 22px rgba(0,0,0,0.11); }
-.corner-widget.cw-right:hover .cw-strip { box-shadow: -5px 0 22px rgba(0,0,0,0.11); }
 
+/* Individual coloured blocks — start hidden off-screen */
+.cw-bk {
+    display: block;
+    transform: translateX(-130%);
+    opacity: 0;
+    border-radius: 0 4px 4px 0; /* set per-widget in inline style */
+}
+.cw-right .cw-bk {
+    transform: translateX(130%);
+}
+
+/* JS adds these classes with a staggered setTimeout */
+.anim-l {
+    animation: cwBL 0.38s cubic-bezier(0.34, 1.3, 0.64, 1) forwards;
+}
+.anim-r {
+    animation: cwBR 0.38s cubic-bezier(0.34, 1.3, 0.64, 1) forwards;
+}
+
+/* Chevron arrow */
 .cw-chevron {
-    margin: 5px auto 0;
-    opacity: 0.35;
-    transition: opacity 0.2s, transform 0.22s;
+    display: block;
+    margin-top: 7px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
 }
-.corner-widget:hover .cw-chevron { opacity: 0.8; transform: translateX(3px); }
-.corner-widget.cw-right:hover .cw-chevron { transform: translateX(-3px); }
+.cw-left:hover .cw-chevron {
+    transform: rotate(180deg);
+}
+.cw-right:hover .cw-chevron {
+    transform: rotate(-180deg);
+}
 
-/* Card panel — expands on hover */
+/* Expandable panel — hidden by default, expands on hover */
 .cw-panel {
     max-width: 0;
     overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transition: max-width 0.42s cubic-bezier(0.34,1.1,0.64,1), opacity 0.22s ease;
+    transition: max-width 0.32s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .corner-widget:hover .cw-panel {
-    max-width: 300px;
-    opacity: 1;
-    pointer-events: auto;
+    max-width: 260px;
 }
+
+/* Inner panel card */
 .cw-panel-inner {
-    width: 276px;
+    width: 240px;
     background: white;
-    border: 1px solid rgba(0,0,0,0.07);
-    border-left: none;
-    border-radius: 0 16px 16px 0;
-    box-shadow: 10px 4px 32px rgba(0,0,0,0.08);
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(30, 27, 129, 0.14), 0 2px 8px rgba(0,0,0,0.06);
     overflow: hidden;
+    /* Left widgets appear to the right with a left margin */
 }
-.corner-widget.cw-right .cw-panel-inner {
-    border-right: none;
-    border-left: 1px solid rgba(0,0,0,0.07);
-    border-radius: 16px 0 0 16px;
-    box-shadow: -10px 4px 32px rgba(0,0,0,0.08);
+.cw-left .cw-panel-inner {
+    margin-left: 8px;
+}
+.cw-right .cw-panel-inner {
+    margin-right: 8px;
 }
