@@ -54,34 +54,66 @@
                         <p class="px-5 py-4 text-sm text-slate-400">Nenhuma aula ainda.</p>
                     @else
                         <ul class="divide-y divide-slate-100">
-                            @foreach($module->lessons as $lesson)
-                                <li class="px-5 py-3 flex items-center justify-between hover:bg-slate-50 transition">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-slate-300 text-xs font-mono w-4">{{ $loop->iteration }}</span>
-                                        @php
-                                            $icons = ['youtube' => '▶️', 'vimeo' => '🎬', 'local' => '📁', 'external' => '🔗'];
-                                        @endphp
-                                        <span class="text-sm">{{ $icons[$lesson->video_type] ?? '▶️' }}</span>
-                                        <div>
-                                            <p class="text-sm font-medium text-slate-700">{{ $lesson->title }}</p>
-                                            @if($lesson->duration_seconds > 0)
-                                                <p class="text-xs text-slate-400">
+                            @foreach($module->lessons->sortBy('order') as $lesson)
+                                <li class="px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition group">
+                                    {{-- Reorder buttons --}}
+                                    <div class="flex flex-col gap-0.5 mr-2 shrink-0 opacity-0 group-hover:opacity-100 transition">
+                                        <form method="POST"
+                                              action="{{ route('admin.courses.modules.lessons.reorder', [$course, $module, $lesson]) }}">
+                                            @csrf @method('PATCH')
+                                            <input type="hidden" name="direction" value="up">
+                                            <button type="submit" class="w-5 h-5 flex items-center justify-center text-slate-400 hover:text-indigo-600 rounded hover:bg-slate-100 transition text-xs leading-none">↑</button>
+                                        </form>
+                                        <form method="POST"
+                                              action="{{ route('admin.courses.modules.lessons.reorder', [$course, $module, $lesson]) }}">
+                                            @csrf @method('PATCH')
+                                            <input type="hidden" name="direction" value="down">
+                                            <button type="submit" class="w-5 h-5 flex items-center justify-center text-slate-400 hover:text-indigo-600 rounded hover:bg-slate-100 transition text-xs leading-none">↓</button>
+                                        </form>
+                                    </div>
+
+                                    <div class="flex items-center gap-3 flex-1 min-w-0">
+                                        <span class="text-slate-300 text-xs font-mono w-4 shrink-0">{{ $loop->iteration }}</span>
+
+                                        {{-- Content type badge --}}
+                                        @if($lesson->isPdf())
+                                            <span class="shrink-0 flex items-center gap-1 px-2 py-0.5 bg-rose-50 text-rose-600 border border-rose-100 rounded-lg text-xs font-medium">
+                                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                PDF
+                                            </span>
+                                        @else
+                                            <span class="shrink-0 flex items-center gap-1 px-2 py-0.5 bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-lg text-xs font-medium">
+                                                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                                Vídeo
+                                            </span>
+                                        @endif
+
+                                        <div class="min-w-0">
+                                            <p class="text-sm font-medium text-slate-700 truncate">{{ $lesson->title }}</p>
+                                            <p class="text-xs text-slate-400">
+                                                @if($lesson->isPdf())
+                                                    {{ $lesson->pdf_path ? basename($lesson->pdf_path) : 'PDF não enviado' }}
+                                                @elseif($lesson->duration_seconds > 0)
                                                     {{ gmdate('H:i:s', $lesson->duration_seconds) }}
-                                                </p>
-                                            @endif
+                                                @else
+                                                    {{ $lesson->contentTypeLabel() }}
+                                                @endif
+                                            </p>
                                         </div>
+
                                         @if($lesson->is_free_preview)
-                                            <span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-600 text-xs rounded">preview</span>
+                                            <span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-600 text-xs rounded shrink-0">preview</span>
                                         @endif
                                     </div>
-                                    <div class="flex gap-2">
+
+                                    <div class="flex gap-2 shrink-0 ml-2">
                                         <a href="{{ route('admin.courses.modules.lessons.edit', [$course, $module, $lesson]) }}"
-                                           class="text-xs text-slate-400 hover:text-indigo-600">✏️</a>
+                                           class="text-xs text-slate-400 hover:text-indigo-600 transition">✏️</a>
                                         <form method="POST"
                                               action="{{ route('admin.courses.modules.lessons.destroy', [$course, $module, $lesson]) }}"
-                                              onsubmit="return confirm('Remover esta aula?')">
+                                              onsubmit="return confirm('Remover este conteúdo?')">
                                             @csrf @method('DELETE')
-                                            <button type="submit" class="text-xs text-slate-400 hover:text-red-500">🗑️</button>
+                                            <button type="submit" class="text-xs text-slate-400 hover:text-red-500 transition">🗑️</button>
                                         </form>
                                     </div>
                                 </li>

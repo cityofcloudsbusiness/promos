@@ -12,8 +12,9 @@ class Lesson extends Model
     use HasFactory;
 
     protected $fillable = [
-        'module_id', 'title', 'description', 'video_url',
-        'video_type', 'duration_seconds', 'order', 'is_free_preview',
+        'module_id', 'title', 'description',
+        'content_type', 'video_url', 'video_type',
+        'pdf_path', 'duration_seconds', 'order', 'is_free_preview',
     ];
 
     protected $casts = [
@@ -33,6 +34,29 @@ class Lesson extends Model
     public function progress(): HasMany
     {
         return $this->hasMany(LessonProgress::class);
+    }
+
+    public function isPdf(): bool
+    {
+        return $this->content_type === 'apostila';
+    }
+
+    public function contentTypeLabel(): string
+    {
+        return $this->isPdf() ? 'Apostila PDF' : 'Vídeo';
+    }
+
+    public function contentIcon(): string
+    {
+        if ($this->isPdf()) return '📄';
+
+        return match ($this->video_type) {
+            'youtube'  => '▶️',
+            'vimeo'    => '🎬',
+            'local'    => '📁',
+            'external' => '🔗',
+            default    => '▶️',
+        };
     }
 
     public function getEmbedUrlAttribute(): string

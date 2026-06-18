@@ -25,10 +25,26 @@ class PlayerController extends Controller
 
         $course->load(['modules.lessons.materials']);
 
-        // If no lesson specified, load the first one
+        // Pre-sort all lessons by order for correct navigation
+        $allLessons = $course->modules->flatMap(function ($module) {
+            return $module->lessons->sortBy('order')->values();
+        })->values();
+
         if (!$lesson) {
-            $lesson = $course->modules->first()?->lessons->first();
+            $lesson = $allLessons->first();
         }
+
+        $currentIdx = $allLessons->search(function ($l) use ($lesson) {
+            return $l->id === $lesson?->id;
+        });
+
+        $prevLesson = ($currentIdx !== false && $currentIdx > 0)
+            ? $allLessons[$currentIdx - 1]
+            : null;
+
+        $nextLesson = ($currentIdx !== false && $currentIdx < $allLessons->count() - 1)
+            ? $allLessons[$currentIdx + 1]
+            : null;
 
         $progress = $lesson
             ? LessonProgress::where('user_id', $request->user()->id)
@@ -41,7 +57,11 @@ class PlayerController extends Controller
             ->pluck('lesson_id')
             ->toArray();
 
-        return view('aluno.player', compact('course', 'lesson', 'progress', 'completed_ids'));
+        return view('aluno.player', compact(
+            'course', 'lesson', 'allLessons',
+            'prevLesson', 'nextLesson',
+            'progress', 'completed_ids'
+        ));
     }
 
     public function markProgress(Request $request, Lesson $lesson): JsonResponse

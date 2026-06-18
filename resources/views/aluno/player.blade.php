@@ -1,65 +1,71 @@
 @extends('layouts.aluno')
 
 @section('title', ($lesson?->title ?? 'Player') . ' · ' . $course->title)
+@section('page-title', $course->title)
 
 @section('content')
-<div class="flex h-[calc(100vh-3.5rem)] overflow-hidden">
+<div class="flex overflow-hidden" style="height: calc(100vh - 3.5rem);">
 
-    {{-- ───── Sidebar Lateral ───── --}}
-    <aside class="w-80 shrink-0 bg-slate-900 text-white overflow-y-auto flex flex-col">
-        {{-- Header sidebar --}}
-        <div class="px-5 py-4 border-b border-slate-700">
+    {{-- ══════════════════════════════════════════════
+         SIDEBAR — módulos e lista de conteúdos
+         ══════════════════════════════════════════════ --}}
+    <aside class="w-80 shrink-0 bg-slate-900 text-white overflow-y-auto flex flex-col border-r border-slate-800">
+
+        <div class="px-5 py-4 border-b border-slate-700 shrink-0">
             <a href="{{ route('aluno.dashboard') }}"
                class="text-xs text-slate-400 hover:text-white flex items-center gap-1 mb-3 transition">
                 ← Voltar aos Cursos
             </a>
-            <h2 class="font-bold text-sm leading-tight">{{ $course->title }}</h2>
+            <h2 class="font-bold text-sm leading-snug">{{ $course->title }}</h2>
             @if($course->area)
                 <p class="text-xs text-indigo-400 mt-0.5">{{ $course->area }}</p>
             @endif
         </div>
 
-        {{-- Lista de módulos e aulas --}}
-        <nav class="flex-1 py-4">
+        <nav class="flex-1 py-3">
             @foreach($course->modules as $module)
-                <div class="mb-2">
-                    {{-- Módulo header --}}
-                    <button class="w-full px-5 py-3 flex items-center justify-between text-left hover:bg-slate-800 transition"
+                <div class="mb-1">
+                    <button class="w-full px-5 py-2.5 flex items-center justify-between text-left hover:bg-slate-800 transition"
                             onclick="toggleModule({{ $module->id }})">
-                        <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                        <span class="text-[11px] font-semibold text-slate-300 uppercase tracking-wider">
                             {{ $loop->iteration }}. {{ $module->title }}
                         </span>
                         <span class="text-slate-500 text-xs" id="arrow-{{ $module->id }}">▾</span>
                     </button>
 
-                    {{-- Aulas do módulo --}}
-                    <ul id="module-{{ $module->id }}" class="mt-1">
-                        @foreach($module->lessons as $lsn)
+                    <ul id="module-{{ $module->id }}">
+                        @foreach($module->lessons->sortBy('order') as $lsn)
                             @php
                                 $isActive    = $lesson && $lesson->id === $lsn->id;
                                 $isCompleted = in_array($lsn->id, $completed_ids);
+                                $activeColor = $lsn->isPdf() ? 'bg-rose-700' : 'bg-indigo-700';
+                                $badgeColor  = $lsn->isPdf() ? 'text-rose-700' : 'text-indigo-700';
                             @endphp
                             <li>
                                 <a href="{{ route('aluno.player.lesson', [$course, $lsn]) }}"
                                    class="flex items-start gap-3 px-5 py-3 text-sm transition
-                                          {{ $isActive ? 'bg-indigo-700 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                          {{ $isActive ? $activeColor . ' text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
 
-                                    {{-- Ícone status --}}
-                                    <span class="mt-0.5 w-4 h-4 shrink-0 rounded-full flex items-center justify-center text-xs
-                                                 {{ $isCompleted ? 'bg-emerald-500 text-white' : ($isActive ? 'bg-white text-indigo-700' : 'bg-slate-700 text-slate-400') }}">
+                                    <span class="mt-0.5 w-5 h-5 shrink-0 rounded-full flex items-center justify-center text-[10px] font-bold
+                                                 {{ $isCompleted ? 'bg-emerald-500 text-white' : ($isActive ? 'bg-white ' . $badgeColor : 'bg-slate-700 text-slate-400') }}">
                                         {{ $isCompleted ? '✓' : $loop->iteration }}
                                     </span>
 
                                     <div class="flex-1 min-w-0">
-                                        <p class="truncate font-medium leading-snug">{{ $lsn->title }}</p>
-                                        <p class="text-xs mt-0.5 {{ $isActive ? 'text-indigo-200' : 'text-slate-500' }}">
-                                            @if($lsn->duration_seconds > 0)
+                                        <p class="truncate font-medium leading-snug text-[13px]">{{ $lsn->title }}</p>
+                                        <p class="text-[11px] mt-0.5 flex items-center gap-1
+                                                   {{ $isActive ? ($lsn->isPdf() ? 'text-rose-200' : 'text-indigo-200') : 'text-slate-500' }}">
+                                            @if($lsn->isPdf())
+                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                </svg>
+                                                Apostila PDF
+                                            @elseif($lsn->duration_seconds > 0)
+                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                                                 {{ gmdate('i:s', $lsn->duration_seconds) }}
                                             @else
+                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                                                 Vídeo
-                                            @endif
-                                            @if($lsn->is_free_preview && !$isActive)
-                                                · <span class="text-emerald-400">preview</span>
                                             @endif
                                         </p>
                                     </div>
@@ -72,12 +78,84 @@
         </nav>
     </aside>
 
-    {{-- ───── Área Principal do Player ───── --}}
-    <main class="flex-1 bg-slate-950 overflow-y-auto flex flex-col">
+    {{-- ══════════════════════════════════════════════
+         ÁREA PRINCIPAL
+         ══════════════════════════════════════════════ --}}
+    <main class="flex-1 overflow-y-auto flex flex-col min-w-0 {{ $lesson?->isPdf() ? 'bg-slate-800' : 'bg-slate-950' }}">
 
         @if($lesson)
-            {{-- Player --}}
-            <div class="w-full bg-black" id="player-container">
+
+            @if($lesson->isPdf())
+            {{-- ─── PDF VIEWER ──────────────────────────────── --}}
+            <div class="flex flex-col h-full">
+
+                {{-- Toolbar --}}
+                <div class="flex items-center justify-between px-5 py-3 bg-slate-900 border-b border-slate-700 shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-rose-600/20 border border-rose-500/30 flex items-center justify-center shrink-0">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-sm font-semibold text-white leading-none">{{ $lesson->title }}</h1>
+                            <p class="text-xs text-slate-400 mt-0.5">{{ $lesson->module?->title }}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button id="btn-complete"
+                                onclick="markComplete()"
+                                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition
+                                       {{ ($progress && $progress->completed) ? 'bg-emerald-600 text-white' : 'bg-rose-600 hover:bg-rose-500 text-white' }}">
+                            @if($progress && $progress->completed)
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                Leitura concluída
+                            @else
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Marcar como lida
+                            @endif
+                        </button>
+                    </div>
+                </div>
+
+                {{-- PDF iframe (fills remaining height) --}}
+                <div class="flex-1 relative min-h-0">
+                    <iframe
+                        id="pdf-frame"
+                        src="{{ route('apostila.serve', $lesson) }}#toolbar=0&navpanes=0"
+                        class="absolute inset-0 w-full h-full border-0"
+                        title="{{ $lesson->title }}"
+                        oncontextmenu="return false;">
+                        <p class="text-slate-300 p-8 text-sm">Seu navegador não suporta exibição inline de PDFs.</p>
+                    </iframe>
+                </div>
+
+                {{-- Footer navegação --}}
+                <div class="flex items-center justify-between px-5 py-3 bg-slate-900 border-t border-slate-700 shrink-0">
+                    @if($prevLesson)
+                        <a href="{{ route('aluno.player.lesson', [$course, $prevLesson]) }}"
+                           class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs transition">
+                            ← Anterior
+                        </a>
+                    @else
+                        <div></div>
+                    @endif
+                    @if($nextLesson)
+                        <a href="{{ route('aluno.player.lesson', [$course, $nextLesson]) }}"
+                           class="flex items-center gap-1.5 px-4 py-1.5 text-white rounded-lg text-xs font-medium transition
+                                  {{ $nextLesson->isPdf() ? 'bg-rose-600 hover:bg-rose-500' : 'bg-indigo-600 hover:bg-indigo-500' }}">
+                            Próximo →
+                        </a>
+                    @else
+                        <span class="px-4 py-1.5 bg-emerald-700 text-white rounded-lg text-xs">🎉 Trilha concluída!</span>
+                    @endif
+                </div>
+            </div>
+
+            @else
+            {{-- ─── VIDEO PLAYER ────────────────────────────── --}}
+            <div class="w-full bg-black shrink-0">
                 @if(in_array($lesson->video_type, ['youtube', 'vimeo']))
                     <div class="relative w-full" style="padding-top: 56.25%">
                         <iframe id="video-iframe"
@@ -88,17 +166,13 @@
                                 allowfullscreen>
                         </iframe>
                     </div>
-                @elseif($lesson->video_type === 'local' || $lesson->video_type === 'external')
+                @elseif(in_array($lesson->video_type, ['local', 'external']))
                     <div class="relative w-full" style="padding-top: 56.25%">
-                        <video id="video-player"
-                               class="absolute inset-0 w-full h-full"
-                               controls
-                               src="{{ $lesson->video_url }}">
-                        </video>
+                        <video class="absolute inset-0 w-full h-full" controls src="{{ $lesson->video_url }}"></video>
                     </div>
                 @else
-                    <div class="flex items-center justify-center h-64 text-slate-500">
-                        <p>Nenhum vídeo configurado para esta aula.</p>
+                    <div class="flex items-center justify-center h-48 text-slate-500">
+                        <p class="text-sm">Nenhum vídeo configurado.</p>
                     </div>
                 @endif
             </div>
@@ -109,19 +183,18 @@
                     <div>
                         <h1 class="text-xl font-bold text-white mb-1">{{ $lesson->title }}</h1>
                         <p class="text-sm text-slate-400">
-                            {{ $course->title }}
-                            @if($lesson->module)
-                                · {{ $lesson->module->title }}
-                            @endif
+                            {{ $course->title }}@if($lesson->module) · {{ $lesson->module->title }}@endif
                         </p>
                     </div>
 
-                    {{-- Botão Marcar Concluído --}}
                     <button id="btn-complete"
                             onclick="markComplete()"
-                            class="shrink-0 px-5 py-2.5 rounded-xl text-sm font-medium transition
+                            class="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition
                                    {{ ($progress && $progress->completed) ? 'bg-emerald-600 text-white' : 'bg-slate-700 text-slate-200 hover:bg-emerald-600 hover:text-white' }}">
-                        {{ ($progress && $progress->completed) ? '✅ Concluída' : '⬜ Marcar como Concluída' }}
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        {{ ($progress && $progress->completed) ? 'Concluída' : 'Marcar como Concluída' }}
                     </button>
                 </div>
 
@@ -129,26 +202,18 @@
                     <p class="text-slate-300 text-sm leading-relaxed mb-6">{{ $lesson->description }}</p>
                 @endif
 
-                {{-- Materiais de Apoio --}}
                 @if($lesson->materials->isNotEmpty())
-                    <div class="border-t border-slate-800 pt-6">
+                    <div class="border-t border-slate-800 pt-6 mb-6">
                         <h3 class="text-sm font-semibold text-slate-300 mb-3">📎 Materiais de Apoio</h3>
                         <ul class="space-y-2">
                             @foreach($lesson->materials as $material)
                                 <li>
-                                    <a href="{{ Storage::url($material->file_path) }}"
-                                       target="_blank"
+                                    <a href="{{ Storage::url($material->file_path) }}" target="_blank"
                                        class="flex items-center gap-3 px-4 py-3 bg-slate-800 rounded-xl hover:bg-slate-700 transition text-sm text-slate-200">
-                                        @php
-                                            $typeIcon = ['pdf' => '📄', 'doc' => '📝', 'spreadsheet' => '📊', 'link' => '🔗', 'other' => '📁'];
-                                        @endphp
-                                        <span>{{ $typeIcon[$material->type] ?? '📁' }}</span>
+                                        @php $ti = ['pdf'=>'📄','doc'=>'📝','spreadsheet'=>'📊','link'=>'🔗','other'=>'📁']; @endphp
+                                        <span>{{ $ti[$material->type] ?? '📁' }}</span>
                                         <span class="flex-1 truncate">{{ $material->title }}</span>
-                                        @if($material->file_size)
-                                            <span class="text-xs text-slate-500">
-                                                {{ round($material->file_size / 1024) }}KB
-                                            </span>
-                                        @endif
+                                        @if($material->file_size)<span class="text-xs text-slate-500">{{ round($material->file_size/1024) }}KB</span>@endif
                                         <span class="text-xs text-slate-500">↓</span>
                                     </a>
                                 </li>
@@ -157,52 +222,50 @@
                     </div>
                 @endif
 
-                {{-- Navegação entre aulas --}}
-                @php
-                    $allLessons = $course->modules->flatMap->lessons;
-                    $currentIdx = $allLessons->search(fn($l) => $l->id === $lesson->id);
-                    $prevLesson = $currentIdx > 0 ? $allLessons[$currentIdx - 1] : null;
-                    $nextLesson = $currentIdx < $allLessons->count() - 1 ? $allLessons[$currentIdx + 1] : null;
-                @endphp
-
-                <div class="flex items-center justify-between border-t border-slate-800 mt-6 pt-6">
+                <div class="flex items-center justify-between border-t border-slate-800 pt-6">
                     @if($prevLesson)
                         <a href="{{ route('aluno.player.lesson', [$course, $prevLesson]) }}"
                            class="flex items-center gap-2 px-4 py-2.5 bg-slate-800 text-slate-200 rounded-xl text-sm hover:bg-slate-700 transition">
-                            ← Aula Anterior
+                            ← Anterior
                         </a>
                     @else
                         <div></div>
                     @endif
-
                     @if($nextLesson)
                         <a href="{{ route('aluno.player.lesson', [$course, $nextLesson]) }}"
-                           class="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-sm hover:bg-indigo-700 transition">
-                            Próxima Aula →
+                           class="flex items-center gap-2 px-4 py-2.5 text-white rounded-xl text-sm font-medium transition
+                                  {{ $nextLesson->isPdf() ? 'bg-rose-600 hover:bg-rose-500' : 'bg-indigo-600 hover:bg-indigo-700' }}">
+                            Próximo →
                         </a>
                     @else
-                        <span class="px-4 py-2.5 bg-emerald-700 text-white rounded-xl text-sm">
-                            🎉 Curso Concluído!
-                        </span>
+                        <span class="px-4 py-2.5 bg-emerald-700 text-white rounded-xl text-sm">🎉 Concluído!</span>
                     @endif
                 </div>
             </div>
+            @endif
 
         @else
-            {{-- Nenhuma aula selecionada --}}
             <div class="flex-1 flex items-center justify-center text-center px-8">
                 <div>
-                    <p class="text-6xl mb-4">▶️</p>
-                    <h2 class="text-xl font-semibold text-white mb-2">Selecione uma aula</h2>
-                    <p class="text-slate-400">Escolha uma aula na barra lateral para começar.</p>
+                    <p class="text-5xl mb-4">▶️</p>
+                    <h2 class="text-xl font-semibold text-white mb-2">Selecione um conteúdo</h2>
+                    <p class="text-slate-400 text-sm">Escolha uma aula ou apostila na barra lateral.</p>
                 </div>
             </div>
         @endif
-
     </main>
 </div>
 
 <script>
+@if($lesson?->isPdf())
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && ['s','S','p','P','u','U'].includes(e.key)) {
+        e.preventDefault();
+        return false;
+    }
+});
+@endif
+
 function toggleModule(id) {
     const ul    = document.getElementById('module-' + id);
     const arrow = document.getElementById('arrow-' + id);
@@ -215,9 +278,10 @@ function markComplete() {
     if (!lessonId) return;
 
     const btn = document.getElementById('btn-complete');
-    btn.disabled = true;
+    btn.disabled     = true;
+    btn.style.opacity = '0.7';
 
-    fetch('{{ route("aluno.progress", $lesson ?? 0) }}'.replace('/0', '/' + lessonId), {
+    fetch('/minha-area/aulas/' + lessonId + '/progresso', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -227,11 +291,12 @@ function markComplete() {
     })
     .then(r => r.json())
     .then(() => {
-        btn.textContent  = '✅ Concluída';
-        btn.className    = btn.className.replace('bg-slate-700 text-slate-200 hover:bg-emerald-600 hover:text-white', 'bg-emerald-600 text-white');
-        btn.disabled     = false;
+        btn.innerHTML     = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Concluída';
+        btn.className     = btn.className.replace(/bg-\S+/g, 'bg-emerald-600').replace(/hover:bg-\S+/g, 'hover:bg-emerald-700');
+        btn.style.opacity = '1';
+        btn.disabled      = false;
     })
-    .catch(() => { btn.disabled = false; });
+    .catch(() => { btn.style.opacity = '1'; btn.disabled = false; });
 }
 </script>
 @endsection

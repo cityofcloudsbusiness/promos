@@ -60,8 +60,9 @@ Route::middleware(['auth', 'verified', 'role:professor,admin'])
             Route::get('modules/{module}/lessons/create',       [Admin\LessonController::class, 'create'])->name('modules.lessons.create');
             Route::post('modules/{module}/lessons',             [Admin\LessonController::class, 'store'])->name('modules.lessons.store');
             Route::get('modules/{module}/lessons/{lesson}/edit', [Admin\LessonController::class, 'edit'])->name('modules.lessons.edit');
-            Route::patch('modules/{module}/lessons/{lesson}',   [Admin\LessonController::class, 'update'])->name('modules.lessons.update');
-            Route::delete('modules/{module}/lessons/{lesson}',  [Admin\LessonController::class, 'destroy'])->name('modules.lessons.destroy');
+            Route::patch('modules/{module}/lessons/{lesson}',          [Admin\LessonController::class, 'update'])->name('modules.lessons.update');
+            Route::patch('modules/{module}/lessons/{lesson}/reorder', [Admin\LessonController::class, 'reorder'])->name('modules.lessons.reorder');
+            Route::delete('modules/{module}/lessons/{lesson}',        [Admin\LessonController::class, 'destroy'])->name('modules.lessons.destroy');
         });
     });
 
@@ -81,6 +82,11 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::patch('cursos/{course}/instructor',   [SuperAdmin\CourseAssignmentController::class, 'updateInstructor'])->name('courses.updateInstructor');
         Route::patch('cursos/{course}/area',         [SuperAdmin\CourseAssignmentController::class, 'updateArea'])->name('courses.updateArea');
     });
+
+// ── PDF Apostila (autenticado, todos os papéis) ───────────────────────────────
+Route::middleware(['auth', 'verified'])
+    ->get('/apostilas/{lesson}', [Aluno\PdfController::class, 'serve'])
+    ->name('apostila.serve');
 
 // ── Área do Aluno ─────────────────────────────────────────────────────────────
 Route::middleware(['auth', 'verified', 'role:aluno'])
