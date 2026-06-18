@@ -40,6 +40,16 @@ class User extends Authenticatable
         return $this->role === 'aluno';
     }
 
+    public function isEmpresa(): bool
+    {
+        return $this->role === 'empresa';
+    }
+
+    public function empresa()
+    {
+        return $this->hasOne(\App\Models\Empresa::class, 'gestor_id');
+    }
+
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class, 'instructor_id');

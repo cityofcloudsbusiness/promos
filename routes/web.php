@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Aluno;
+use App\Http\Controllers\Empresa;
 use App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', function (Request $re
     return match (true) {
         $user->isAdmin()     => redirect()->route('superadmin.dashboard'),
         $user->isProfessor() => redirect()->route('admin.dashboard'),
+        $user->isEmpresa()   => redirect()->route('empresa.dashboard'),
         default              => redirect()->route('aluno.dashboard'),
     };
 })->name('dashboard');
@@ -81,6 +83,25 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::get('cursos',                         [SuperAdmin\CourseAssignmentController::class, 'index'])->name('courses.index');
         Route::patch('cursos/{course}/instructor',   [SuperAdmin\CourseAssignmentController::class, 'updateInstructor'])->name('courses.updateInstructor');
         Route::patch('cursos/{course}/area',         [SuperAdmin\CourseAssignmentController::class, 'updateArea'])->name('courses.updateArea');
+    });
+
+// ── Auth: Empresa (cadastro/login corporativo) ───────────────────────────────
+Route::middleware('guest')->prefix('empresa')->name('empresa.auth.')->group(function () {
+    Route::get('entrar',  fn () => view('auth.empresa-login'))->name('login');
+    Route::get('cadastro', [\App\Http\Controllers\Auth\EmpresaRegisterController::class, 'create'])->name('register');
+    Route::post('cadastro', [\App\Http\Controllers\Auth\EmpresaRegisterController::class, 'store']);
+});
+
+// ── Área da Empresa (B2B) ────────────────────────────────────────────────────
+Route::middleware(['auth', 'verified', 'role:empresa'])
+    ->prefix('empresa')
+    ->name('empresa.')
+    ->group(function () {
+        Route::get('/', [Empresa\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('funcionarios', [Empresa\FuncionariosController::class, 'index'])->name('funcionarios');
+        Route::get('treinamentos', [Empresa\TreinamentosController::class, 'index'])->name('treinamentos');
+        Route::get('diagnostico',  [Empresa\DiagnosticoController::class, 'index'])->name('diagnostico');
+        Route::get('comunicacao',  [Empresa\ComunicacaoController::class, 'index'])->name('comunicacao');
     });
 
 // ── PDF Apostila (autenticado, todos os papéis) ───────────────────────────────

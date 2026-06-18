@@ -43,10 +43,10 @@
                     <a href="/login" class="hidden md:inline-block text-sm text-slate-500 hover:text-slate-900 font-medium transition-colors px-3 py-2">
                         Entrar
                     </a>
-                    <a href="#contato" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-indigo-200 text-indigo-800 text-sm font-semibold hover:bg-indigo-50 transition-all duration-150">
+                    <a href="/login" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-indigo-200 text-indigo-800 text-sm font-semibold hover:bg-indigo-50 transition-all duration-150">
                         Para Profissionais
                     </a>
-                    <a href="#contato" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-indigo-900 hover:bg-indigo-800 text-white text-sm font-semibold transition-all duration-150 shadow-lg shadow-indigo-900/20">
+                    <a href="{{ route('empresa.auth.login') }}" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-indigo-900 hover:bg-indigo-800 text-white text-sm font-semibold transition-all duration-150 shadow-lg shadow-indigo-900/20">
                         Para Empresas
                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </a>
